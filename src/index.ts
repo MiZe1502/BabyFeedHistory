@@ -1,8 +1,8 @@
-const express = require('express');
-const { ApolloServer, gql } = require('apollo-server-express');
+import express from "express";
+import { ApolloServer, gql } from 'apollo-server-express';
 
 const port = 3000;
-const host = 'http://localhost'
+const hostname = 'localhost'
 
 const typeDefs = gql`
     type Query {
@@ -16,13 +16,12 @@ const resolvers = {
     },
 };
 
-
 const server = new ApolloServer({typeDefs, resolvers});
 
 const app = express();
 
 server.applyMiddleware({ app });
 
-app.listen({ port }, () =>
-    console.log(`Server is running at ${host}:${port}${server.graphqlPath}`)
+app.listen(port, hostname, () =>
+    console.log(`Server is running at ${hostname}:${port}${server.graphqlPath}`)
 );
