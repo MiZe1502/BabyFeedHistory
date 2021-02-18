@@ -1,0 +1,4 @@
+- make basic project structure
+- init express server
+- init mongodb connection
+- create and read config from json
