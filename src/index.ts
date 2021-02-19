@@ -1,8 +1,10 @@
 import express from "express";
 import { ApolloServer, gql } from 'apollo-server-express';
+import {getCurrentConfig} from './configuration'
 
-const port = 3000;
-const hostname = 'localhost'
+const config = getCurrentConfig();
+const port = config.port;
+const hostname = config.hostname;
 
 const typeDefs = gql`
     type Query {
