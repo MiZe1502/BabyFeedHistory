@@ -3,6 +3,9 @@ import { ApolloServer, gql } from 'apollo-server-express';
 import {getCurrentConfig} from './configuration'
 
 const config = getCurrentConfig();
+
+console.log(process.env.NODE_ENV, config)
+
 const port = config.port;
 const hostname = config.hostname;
 
