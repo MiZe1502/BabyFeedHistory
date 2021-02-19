@@ -3,11 +3,13 @@ import config from 'config';
 export interface Config {
     port: number;
     hostname: string;
+    db: string;
 }
 
 const initialConfig: Config = {
     port: 3000,
-    hostname: ''
+    hostname: '',
+    db: ''
 }
 
 export const getCurrentConfig = (): Config => {
