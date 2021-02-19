@@ -1,5 +1,5 @@
 {
-  "name": "BabyFeedHistory",
+  "name": "babyfeedhistory",
   "version": "1.0.0",
   "description": "Backend for app to store baby feeding history",
   "main": "dist/index.js",
