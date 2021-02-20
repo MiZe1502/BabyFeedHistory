@@ -1,5 +1,5 @@
 import express from "express";
-import { ApolloServer, gql } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server-express';
 import { getCurrentConfig } from './configuration'
 import { connectToDb } from "./db";
 import {typeDefs} from "./api/types";

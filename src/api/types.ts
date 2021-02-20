@@ -7,8 +7,19 @@ export const typeDefs = gql`
         name: String
     }
 
+    input UserInput {
+        login: String!
+        password: String
+        name: String
+    }
+
     type Query {
         userByName(name: String!): User
         userByLogin(login: String!): User
+    }
+    
+    type Mutation {
+        auth(login: String!, password: String!): String
+        createUser(user: UserInput!): User
     }
 `;
