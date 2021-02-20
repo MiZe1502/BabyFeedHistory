@@ -1,4 +1,4 @@
-import mongoose, {Mongoose} from 'mongoose'
+import mongoose, { Mongoose } from 'mongoose'
 
 export const connectToDb = async (dbConnectionString: string): Promise<Mongoose> => {
     return await mongoose.connect(dbConnectionString, {

@@ -1,7 +1,7 @@
 import express from "express";
 import { ApolloServer, gql } from 'apollo-server-express';
-import {getCurrentConfig} from './configuration'
-import {connectToDb} from "./db";
+import { getCurrentConfig } from './configuration'
+import { connectToDb } from "./db";
 
 const config = getCurrentConfig();
 
