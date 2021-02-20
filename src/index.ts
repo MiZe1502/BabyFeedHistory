@@ -2,6 +2,8 @@ import express from "express";
 import { ApolloServer, gql } from 'apollo-server-express';
 import { getCurrentConfig } from './configuration'
 import { connectToDb } from "./db";
+import {typeDefs} from "./api/types";
+import {resolvers} from "./api/resolvers";
 
 const config = getCurrentConfig();
 
@@ -17,18 +19,6 @@ const dbConnectionString = config.db;
         console.log(`error connecting to db: ${err}`)
     }
 })()
-
-const typeDefs = gql`
-    type Query {
-        hello: String
-    }
-`;
-
-const resolvers = {
-    Query: {
-        hello: () => 'Hello world!',
-    },
-};
 
 const server = new ApolloServer({typeDefs, resolvers});
 
