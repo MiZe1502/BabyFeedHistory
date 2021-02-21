@@ -1,18 +1,33 @@
 import { IResolvers } from "apollo-server-express";
 import {createNewUser, getUserByLogin, getUserByName} from "../db/repos/users";
 import {User, UserDocument} from "../db/schemas/users";
-import {createToken, isPasswordValid} from "../utils";
+import {
+    checkAuthorization,
+    createToken,
+    isPasswordValid,
+    TokenUserData
+} from "../utils";
 
 export const resolvers: IResolvers = {
     Query: {
         userByName:
-            async (_, {name}): Promise<UserDocument | null> => getUserByName(name),
+            async (_, {name}, context): Promise<UserDocument | null> => {
+                const curUser = checkAuthorization(context)
+
+                if (!curUser) {
+                    return null;
+                }
+
+                return getUserByName(name)
+            },
         userByLogin:
             async (_, {name}): Promise<UserDocument | null> => getUserByLogin(name),
     },
     Mutation: {
-        auth:
+        login:
             async (_, {login, password}): Promise<string> => {
+                //TODO: validate user data
+
                 const user = await getUserByLogin(login)
 
                 if (!user) {
@@ -26,7 +41,7 @@ export const resolvers: IResolvers = {
 
                 return createToken({login: user.login, name: user.name});
             },
-        createUser: async (_, {user}): Promise<User | null> => {
+        register: async (_, {user}): Promise<User | null> => {
             return await createNewUser(user)
         }
     }

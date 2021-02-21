@@ -20,7 +20,9 @@ const dbConnectionString = config.db;
     }
 })()
 
-const server = new ApolloServer({typeDefs, resolvers});
+const server = new ApolloServer({typeDefs,
+    resolvers,
+    context: ({req}) => ({req})});
 
 const app = express();
 

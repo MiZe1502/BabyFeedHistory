@@ -3,11 +3,13 @@ import { UserModel } from "../models/users";
 
 const Schema = mongoose.Schema;
 
-export interface User extends Document {
+export interface UserData {
     login: string;
     name: string;
     password: string;
 }
+
+export interface User extends UserData, Document {}
 
 export interface UserDocument extends User, Document {}
 
