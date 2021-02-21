@@ -1,7 +1,7 @@
-import jwt, {TokenExpiredError} from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import {UserData} from "./db/schemas/users";
-import {getConfigValueByKey} from "./configuration";
+import {UserData} from "../db/schemas/users";
+import {getConfigValueByKey} from "../configuration";
 import {AuthenticationError, ExpressContext} from "apollo-server-express";
 
 export type TokenUserData = Omit<UserData, 'password'>

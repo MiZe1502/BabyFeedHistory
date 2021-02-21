@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 export interface UserData {
     login: string;
-    name: string;
+    name?: string;
     password: string;
 }
 

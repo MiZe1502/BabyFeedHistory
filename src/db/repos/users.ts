@@ -1,6 +1,6 @@
 import {userModel} from "../models/users";
 import {User, UserDocument} from "../schemas/users";
-import {createPasswordHash} from "../../utils";
+import {createPasswordHash} from "../../utils/utils";
 
 export const getUserByLogin = async (login: string): Promise<UserDocument | null> => {
     return userModel.findOne({login});

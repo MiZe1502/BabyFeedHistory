@@ -1,12 +1,12 @@
-import { IResolvers } from "apollo-server-express";
+import { IResolvers, UserInputError } from "apollo-server-express";
 import {createNewUser, getUserByLogin, getUserByName} from "../db/repos/users";
-import {User, UserDocument} from "../db/schemas/users";
+import {User, UserData, UserDocument} from "../db/schemas/users";
 import {
     checkAuthorization,
     createToken,
     isPasswordValid,
-    TokenUserData
-} from "../utils";
+} from "../utils/utils";
+import {validateLoginData} from "../utils/validation";
 
 export const resolvers: IResolvers = {
     Query: {
@@ -25,18 +25,24 @@ export const resolvers: IResolvers = {
     },
     Mutation: {
         login:
-            async (_, {login, password}): Promise<string> => {
-                //TODO: validate user data
+            async (_: unknown, {login, password}: UserData): Promise<string> => {
+                const {errors, isValid} = validateLoginData({login, password})
+
+                if (!isValid) {
+                    throw new UserInputError('Incorrect user data', {errors})
+                }
 
                 const user = await getUserByLogin(login)
 
                 if (!user) {
-                    throw "User not found"
+                    errors.general = 'User not found'
+                    throw new UserInputError(errors.general, {errors})
                 }
 
                 const isPassCorrect = await isPasswordValid(password, user.password)
                 if (!isPassCorrect) {
-                    throw "Password is incorrect"
+                    errors.general = 'Password is incorrect'
+                    throw new UserInputError(errors.general, {errors})
                 }
 
                 return createToken({login: user.login, name: user.name});
