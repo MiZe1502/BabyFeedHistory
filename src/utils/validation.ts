@@ -1,4 +1,4 @@
-import {UserData} from "../db/schemas/users";
+import {UserData, UserRegistrationData} from "../db/schemas/users";
 
 interface Errors {
     login?: string;
@@ -10,6 +10,23 @@ interface Errors {
 interface ValidationResult {
     errors: Errors;
     isValid: boolean;
+}
+
+export const validateRegistrationData =
+    ({login, password, confirmPassword}: UserRegistrationData): ValidationResult => {
+    let errors: Errors = {};
+
+    errors = {
+        ...errors,
+        ...validateLogin(login),
+        ...validatePassword(password),
+        ...comparePasswords(password, confirmPassword)
+    }
+
+    return {
+        errors,
+        isValid: Object.keys(errors).length === 0
+    }
 }
 
 export const validateLoginData = ({login, password}: UserData): ValidationResult => {
@@ -42,6 +59,17 @@ export const validatePassword = (password: string): Errors => {
 
     if (!password || password.length === 0) {
         errors.password = 'User password must not be empty';
+    }
+
+    return errors;
+}
+
+export const comparePasswords =
+    (password: string, confirmPassword: string): Errors => {
+    const errors: Errors = {};
+
+    if (password !== confirmPassword) {
+        errors.confirmPassword = 'Passwords are not equal';
     }
 
     return errors;

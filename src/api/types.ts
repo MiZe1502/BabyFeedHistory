@@ -5,11 +5,13 @@ export const typeDefs = gql`
         login: String!
         password: String
         name: String
+        token: String
     }
 
     input UserInput {
         login: String!
-        password: String
+        password: String!
+        confirmPassword: String!
         name: String
     }
 

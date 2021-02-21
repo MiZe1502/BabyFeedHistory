@@ -9,6 +9,14 @@ export interface UserData {
     password: string;
 }
 
+export interface UserRegistrationData extends UserData {
+    confirmPassword: string;
+}
+
+export interface RegisteredUser extends Omit<UserData, 'password'> {
+    token: string;
+}
+
 export interface User extends UserData, Document {}
 
 export interface UserDocument extends User, Document {}

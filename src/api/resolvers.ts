@@ -1,12 +1,17 @@
 import { IResolvers, UserInputError } from "apollo-server-express";
 import {createNewUser, getUserByLogin, getUserByName} from "../db/repos/users";
-import {User, UserData, UserDocument} from "../db/schemas/users";
+import {
+    RegisteredUser,
+    UserData,
+    UserDocument,
+    UserRegistrationData
+} from "../db/schemas/users";
 import {
     checkAuthorization,
     createToken,
     isPasswordValid,
 } from "../utils/utils";
-import {validateLoginData} from "../utils/validation";
+import {validateLoginData, validateRegistrationData} from "../utils/validation";
 
 export const resolvers: IResolvers = {
     Query: {
@@ -47,8 +52,34 @@ export const resolvers: IResolvers = {
 
                 return createToken({login: user.login, name: user.name});
             },
-        register: async (_, {user}): Promise<User | null> => {
-            return await createNewUser(user)
+        register: async (_: unknown, {user}: {user: UserRegistrationData}):
+            Promise<RegisteredUser | null> => {
+            const {errors, isValid} = validateRegistrationData(user)
+
+            if (!isValid) {
+                throw new UserInputError('Incorrect user data', {errors})
+            }
+
+            const existedUser = await getUserByLogin(user.login)
+            if (existedUser) {
+                errors.general = 'User with this login already exists'
+                throw new UserInputError(errors.general, {errors})
+            }
+
+            const createdUser = await createNewUser(user)
+
+            if (createdUser) {
+                const token = createToken({login: user.login, name: user.name})
+                return {
+                    login: createdUser.login,
+                    name: createdUser.name,
+                    token,
+                }
+            } else {
+                errors.general =
+                    'Unexpected error occurred while creating the new user'
+                throw new UserInputError(errors.general, {errors})
+            }
         }
     }
 };
