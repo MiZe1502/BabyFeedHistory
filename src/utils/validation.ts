@@ -1,4 +1,5 @@
 import {UserData, UserRegistrationData} from "../db/schemas/users";
+import {UserInputError} from "apollo-server-express";
 
 interface Errors {
     login?: string;
@@ -73,4 +74,9 @@ export const comparePasswords =
     }
 
     return errors;
+}
+
+export const throwGeneralError = (msg: string, errors: Errors): void => {
+    errors.general = msg;
+    throw new UserInputError(errors.general, {errors});
 }

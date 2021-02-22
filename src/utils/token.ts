@@ -1,7 +1,6 @@
-import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
 import {UserData} from "../db/schemas/users";
 import {getConfigValueByKey} from "../configuration";
+import jwt from "jsonwebtoken";
 import {AuthenticationError, ExpressContext} from "apollo-server-express";
 
 export type TokenUserData = Omit<UserData, 'password'>
@@ -36,29 +35,19 @@ export const parseToken = (token: string): TokenUserData | null | void => {
     }
 }
 
-export const createPasswordHash = async (password: string): Promise<string> => {
-    const saltRounds = getConfigValueByKey('saltRounds')
-    return await bcrypt.hash( password, saltRounds);
-}
-
-export const isPasswordValid =
-    async (plainPassword: string, hashPassword: string): Promise<boolean> => {
-    return await bcrypt.compare(plainPassword, hashPassword);
-}
-
 export const checkAuthorization =
     (context: ExpressContext): {currentUser: TokenUserData} => {
-    const token = context.req.headers.authorization || '';
+        const token = context.req.headers.authorization || '';
 
-    if (!token || token.length === 0) {
-        throw new AuthenticationError('Token not provided');
+        if (!token || token.length === 0) {
+            throw new AuthenticationError('Token not provided');
+        }
+
+        const userFromToken = parseToken(token);
+
+        if (!userFromToken) {
+            throw new AuthenticationError('Authentication error');
+        }
+
+        return { currentUser: userFromToken };
     }
-
-    const userFromToken = parseToken(token);
-
-    if (!userFromToken) {
-        throw new AuthenticationError('Authentication error');
-    }
-
-    return { currentUser: userFromToken };
-}

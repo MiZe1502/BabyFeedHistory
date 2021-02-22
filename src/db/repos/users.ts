@@ -1,6 +1,5 @@
 import {userModel} from "../models/users";
 import {User, UserData, UserDocument} from "../schemas/users";
-import {createPasswordHash} from "../../utils/utils";
 
 export const getUserByLogin = async (login: string): Promise<UserDocument | null> => {
     return userModel.findOne({login});
@@ -11,9 +10,7 @@ export const getUserByName = async (name: string): Promise<UserDocument | null> 
 }
 
 export const createNewUser = async (userData: UserData): Promise<UserData | null> => {
-    const hashPassword = await createPasswordHash(userData.password)
-    const userWithHashPassword = {...userData, password: hashPassword}
-    return userModel.create(userWithHashPassword)
+    return userModel.create(userData)
 }
 
 export const updateUserByLogin =
