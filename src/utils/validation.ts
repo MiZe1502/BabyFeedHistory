@@ -45,7 +45,7 @@ export const validateLoginData = ({login, password}: UserData): ValidationResult
     }
 }
 
-export const validateLogin = (login: string): Errors => {
+export const validateLogin = (login?: string): Errors => {
     const errors: Errors = {};
 
     if (!login || login.trim().length === 0) {

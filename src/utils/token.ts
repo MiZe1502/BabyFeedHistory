@@ -36,7 +36,7 @@ export const parseToken = (token: string): TokenUserData | null | void => {
 }
 
 export const checkAuthorization =
-    (context: ExpressContext): {currentUser: TokenUserData} => {
+    (context: ExpressContext): TokenUserData => {
         const token = context.req.headers.authorization || '';
 
         if (!token || token.length === 0) {
@@ -49,5 +49,5 @@ export const checkAuthorization =
             throw new AuthenticationError('Authentication error');
         }
 
-        return { currentUser: userFromToken };
+        return userFromToken;
     }

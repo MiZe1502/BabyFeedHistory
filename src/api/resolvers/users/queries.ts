@@ -1,23 +1,36 @@
-import {ExpressContext} from "apollo-server-express";
-import {UserDocument} from "../../../db/schemas/users";
-import {getUserByLogin, getUserByName} from "../../../db/repos/users";
+import {AuthenticationError,
+    ExpressContext, UserInputError} from "apollo-server-express";
+import {UserData} from "../../../db/schemas/users";
+import {getUserByLogin} from "../../../db/repos/users";
 import {checkAuthorization} from "../../../utils/token";
+import {validateLogin} from "../../../utils/validation";
 
-const userByName = async (_: unknown, {name}: {name: string},
-           context: ExpressContext): Promise<UserDocument | null> => {
-    const curUser = checkAuthorization(context)
+const userByLogin = async (_: unknown, {login}: Partial<UserData>,
+      context: ExpressContext): Promise<Omit<UserData, 'password'> | null> => {
+    const errors = validateLogin(login);
 
-    if (!curUser) {
-        return null;
+    if (Object.keys(errors).length > 0) {
+        throw new UserInputError('Incorrect user login', {errors})
     }
 
-    return getUserByName(name)
+    const curUser = checkAuthorization(context)
+
+    if (curUser.login !== login?.trim()) {
+        throw new AuthenticationError('Authorization error')
+    }
+
+    const user = await getUserByLogin(login)
+
+    if (!user) {
+        throw new UserInputError('User not found', {errors})
+    }
+
+    return {
+        login: user?.login,
+        name: user?.name
+    }
 }
 
-const userByLogin = async (_: unknown, {name}: {name: string}):
-    Promise<UserDocument | null> => getUserByLogin(name)
-
 export const queries = {
-    userByName,
     userByLogin,
 }

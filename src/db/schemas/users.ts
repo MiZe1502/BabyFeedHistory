@@ -17,9 +17,7 @@ export interface RegisteredUser extends Omit<UserData, 'password'> {
     token: string;
 }
 
-export interface User extends UserData, Document {}
-
-export interface UserDocument extends User, Document {}
+export interface UserDocument extends UserData, Document {}
 
 export const userSchema = new Schema<UserDocument, UserModel>({
     login: {type: String, required: true},
