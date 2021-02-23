@@ -1,20 +1,29 @@
 import {
     RegisteredUser,
     UserData,
-    UserRegistrationData
+    UserRegistrationData, UserUpdateData
 } from "../../../db/schemas/users";
 import {
-    throwGeneralError,
+    isValid,
+    throwGeneralError, validateLogin,
     validateLoginData,
-    validateRegistrationData
+    validateRegistrationData, validateUpdatingData
 } from "../../../utils/validation";
-import {UserInputError} from "apollo-server-express";
-import {createNewUser, getUserByLogin} from "../../../db/repos/users";
+import {
+    AuthenticationError,
+    ExpressContext,
+    UserInputError
+} from "apollo-server-express";
+import {
+    createNewUser,
+    getUserByLogin,
+    updateUserByLogin
+} from "../../../db/repos/users";
 import {
     createPasswordHash,
     isPasswordValid
 } from "../../../utils/password";
-import {createToken} from "../../../utils/token";
+import {checkAuthorization, createToken} from "../../../utils/token";
 
 const login = async (_: unknown, {login, password}: UserData):
     Promise<string | void> => {
@@ -67,7 +76,65 @@ const register = async (_: unknown, {user}: {user: UserRegistrationData}):
     }
 }
 
+const updateUser = async (_: unknown, {user}: {user: UserUpdateData},
+         context: ExpressContext): Promise<RegisteredUser | null | void> => {
+        const curUser = checkAuthorization(context)
+
+        if (curUser.login !== user.oldLogin?.trim()) {
+            throw new AuthenticationError('Authorization error')
+        }
+
+        const {errors, isValid: isDataValid} = validateUpdatingData(user)
+        if (!isDataValid) {
+            throw new UserInputError('Incorrect user data', {errors})
+        }
+
+        if (user.login !== user.oldLogin) {
+            const errors = validateLogin(user.login);
+
+            if (!isValid(errors)) {
+                throw new UserInputError('Incorrect user login', {errors})
+            }
+
+            const existedUser = await getUserByLogin(user.login)
+            if (existedUser) {
+                return throwGeneralError('User with this login already exists',
+                    errors)
+            }
+        }
+
+        let hashPassword = ''
+        if (user.password) {
+            hashPassword = await createPasswordHash(user.password)
+        }
+
+        const newUserData: UserData = {
+            login: user.login,
+            name: user.name,
+            password: ''
+        }
+
+        if (hashPassword) {
+            newUserData.password = hashPassword
+        }
+
+        const updatedUser = await updateUserByLogin(user.oldLogin, newUserData);
+
+        if (updatedUser) {
+            const token = createToken({login: user.login, name: user.name})
+            return {
+                login: updatedUser.login,
+                name: updatedUser.name,
+                token,
+            }
+        } else {
+            return throwGeneralError(
+                'Unexpected error occurred while creating the new user', errors)
+        }
+    }
+
 export const mutations = {
     login,
-    register
+    register,
+    updateUser
 }

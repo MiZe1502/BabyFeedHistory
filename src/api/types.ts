@@ -14,6 +14,14 @@ export const typeDefs = gql`
         confirmPassword: String!
         name: String
     }
+    
+    input UpdateUserInput {
+        login: String
+        oldLogin: String
+        password: String
+        confirmPassword: String
+        name: String
+    }
 
     type Query {
         userByName(name: String!): User
@@ -23,5 +31,6 @@ export const typeDefs = gql`
     type Mutation {
         login(login: String!, password: String!): String
         register(user: UserInput!): User
+        updateUser(user: UpdateUserInput!): User
     }
 `;

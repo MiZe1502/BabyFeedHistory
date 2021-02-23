@@ -13,6 +13,10 @@ export interface UserRegistrationData extends UserData {
     confirmPassword: string;
 }
 
+export interface UserUpdateData extends UserRegistrationData {
+    oldLogin?: string;
+}
+
 export interface RegisteredUser extends Omit<UserData, 'password'> {
     token: string;
 }

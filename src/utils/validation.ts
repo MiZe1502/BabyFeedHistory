@@ -1,4 +1,8 @@
-import {UserData, UserRegistrationData} from "../db/schemas/users";
+import {
+    UserData,
+    UserRegistrationData,
+    UserUpdateData
+} from "../db/schemas/users";
 import {UserInputError} from "apollo-server-express";
 
 interface Errors {
@@ -13,6 +17,32 @@ interface ValidationResult {
     isValid: boolean;
 }
 
+//TODO: try to merge validateUpdatingData and validateRegistrationData
+export const validateUpdatingData =
+    (user: UserUpdateData): ValidationResult => {
+        const {login, password, confirmPassword} = user
+        let errors: Errors = {};
+
+        errors = {
+            ...errors,
+            ...validateLogin(login),
+        }
+
+        //if password is being updated
+        if (password) {
+            errors = {
+                ...errors,
+                ...validatePassword(password),
+                ...comparePasswords(password, confirmPassword)
+            }
+        }
+
+        return {
+            errors,
+            isValid: isValid(errors)
+        }
+    }
+
 export const validateRegistrationData =
     ({login, password, confirmPassword}: UserRegistrationData): ValidationResult => {
     let errors: Errors = {};
@@ -26,7 +56,7 @@ export const validateRegistrationData =
 
     return {
         errors,
-        isValid: Object.keys(errors).length === 0
+        isValid: isValid(errors)
     }
 }
 
@@ -79,4 +109,8 @@ export const comparePasswords =
 export const throwGeneralError = (msg: string, errors: Errors): void => {
     errors.general = msg;
     throw new UserInputError(errors.general, {errors});
+}
+
+export const isValid = (errors?: Errors): boolean => {
+    return !errors || Object.keys(errors).length === 0
 }

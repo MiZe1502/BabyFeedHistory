@@ -3,13 +3,13 @@ import {AuthenticationError,
 import {UserData} from "../../../db/schemas/users";
 import {getUserByLogin} from "../../../db/repos/users";
 import {checkAuthorization} from "../../../utils/token";
-import {validateLogin} from "../../../utils/validation";
+import {isValid, validateLogin} from "../../../utils/validation";
 
 const userByLogin = async (_: unknown, {login}: Partial<UserData>,
       context: ExpressContext): Promise<Omit<UserData, 'password'> | null> => {
     const errors = validateLogin(login);
 
-    if (Object.keys(errors).length > 0) {
+    if (!isValid(errors)) {
         throw new UserInputError('Incorrect user login', {errors})
     }
 
