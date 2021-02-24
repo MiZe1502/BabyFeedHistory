@@ -31,6 +31,6 @@ export const typeDefs = gql`
     type Mutation {
         login(login: String!, password: String!): String
         register(user: UserInput!): User
-        updateUser(user: UpdateUserInput!): User
+        updateUser(user: UpdateUserInput): User
     }
 `;

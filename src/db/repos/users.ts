@@ -10,6 +10,7 @@ export const createNewUser = async (userData: UserData): Promise<UserData | null
 }
 
 export const updateUserByLogin =
-    async (oldLogin: string, newUserData: UserData): Promise<UserData | null> => {
+    async (oldLogin: string, newUserData: UserData):
+        Promise<{ok: number} | null> => {
     return userModel.updateOne({login: oldLogin}, newUserData)
 }

@@ -85,6 +85,7 @@ const updateUser = async (_: unknown, {user}: {user: UserUpdateData},
         }
 
         const {errors, isValid: isDataValid} = validateUpdatingData(user)
+
         if (!isDataValid) {
             throw new UserInputError('Incorrect user data', {errors})
         }
@@ -103,24 +104,24 @@ const updateUser = async (_: unknown, {user}: {user: UserUpdateData},
             }
         }
 
+        const updatedUser = await getUserByLogin(user.oldLogin);
+        if (!updatedUser) {
+            return throwGeneralError('Updated user does not exist',
+                errors)
+        }
+
+        updatedUser.login = user.login;
+        updatedUser.name = user.name;
+
         let hashPassword = ''
         if (user.password) {
             hashPassword = await createPasswordHash(user.password)
+            updatedUser.password = hashPassword;
         }
 
-        const newUserData: UserData = {
-            login: user.login,
-            name: user.name,
-            password: ''
-        }
+        const res = await updateUserByLogin(user.oldLogin, updatedUser);
 
-        if (hashPassword) {
-            newUserData.password = hashPassword
-        }
-
-        const updatedUser = await updateUserByLogin(user.oldLogin, newUserData);
-
-        if (updatedUser) {
+        if (res && res.ok) {
             const token = createToken({login: user.login, name: user.name})
             return {
                 login: updatedUser.login,
