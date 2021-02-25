@@ -10,5 +10,6 @@ Just to learn new libraries and technologies.
 
 - Backend: Node.js + apollo-server-express + mongoose
 - DB: MongoDB
-- ClientSide: React Native + Apollo
+- ClientSide #1: React Native + Apollo
+- ClientSide #2: React + Apollo + Context + MaterialUI + Lazy/Suspense + React hook forms
 - Common: TS + eslint 
