@@ -1,6 +1,11 @@
 import {gql} from "apollo-server-express";
 
 export const typeDefs = gql`
+    type Feed {
+        key: String!
+        timestamp: Float!
+    }
+    
     type User {
         login: String!
         password: String
@@ -26,6 +31,7 @@ export const typeDefs = gql`
     type Query {
         userByName(name: String!): User
         userByLogin(login: String!): User
+        lastMonthFeeds: [Feed]
     }
     
     type Mutation {
