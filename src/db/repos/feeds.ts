@@ -17,7 +17,8 @@ export const getFeedsForLastMonth =
 
 export const createNewFeed = async (userLogin: string): Promise<FeedData | null> => {
     const curDate = new Date();
-    const key = `${curDate.getFullYear()}-${curDate.getMonth() + 1}`
+    const key =
+        `${curDate.getFullYear()}-${curDate.getMonth() + 1}-${curDate.getDate()}`
     const newFeedItem: FeedData = {
         key,
         timestamp: curDate.getTime(),

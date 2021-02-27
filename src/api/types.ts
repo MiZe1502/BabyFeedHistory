@@ -38,5 +38,6 @@ export const typeDefs = gql`
         login(login: String!, password: String!): String
         register(user: UserInput!): User
         updateUser(user: UpdateUserInput): User
+        createFeed: Feed
     }
 `;
