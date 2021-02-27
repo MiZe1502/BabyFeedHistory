@@ -27,6 +27,10 @@ export const typeDefs = gql`
         confirmPassword: String
         name: String
     }
+    
+    input FeedInput {
+        timestamp: Float!
+    }
 
     type Query {
         userByName(name: String!): User
@@ -38,6 +42,6 @@ export const typeDefs = gql`
         login(login: String!, password: String!): String
         register(user: UserInput!): User
         updateUser(user: UpdateUserInput): User
-        createFeed: Feed
+        createFeed(feed: FeedInput): Feed
     }
 `;
