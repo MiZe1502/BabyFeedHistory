@@ -1,9 +1,6 @@
 1. feed items
-    1.1. mongo schema: key - date, fields - datetime, array of details
-    1.4. create new feed item
     1.5. update feed item
 2. feed details
-    2.1. mongo schema: key - id, fields - type, possible options, name
     2.2. mongo repo
     2.3. create new details item
     2.4. query to get possible details for new feed item
