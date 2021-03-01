@@ -15,7 +15,8 @@ const createFeed =
         throw new UserInputError('Incorrect feed item data', {})
     }
 
-    const createdFeed = await createNewFeed(curUser.login, feed.timestamp)
+    const createdFeed =
+        await createNewFeed(curUser.login, feed.timestamp, feed.details)
     if (!createdFeed) {
         return throwGeneralError(
             'Unexpected error occurred while creating the new feed item', {})

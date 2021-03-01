@@ -4,11 +4,14 @@ import {ExpressContext} from "apollo-server-express";
 import {getFeedsForLastMonth} from "../../../db/repos/feeds";
 
 const lastMonthFeeds =
-        async (_: unknown, data: unknown, context: ExpressContext):
-            Promise<FeedData[] | null> => {
+        async (_: unknown,
+               data: { year: number, month: number }, context: ExpressContext):
+                Promise<FeedData[] | null> => {
     const curUser = checkAuthorization(context)
 
-    return getFeedsForLastMonth(curUser.login);
+    //TODO: implement month validation
+
+    return getFeedsForLastMonth(curUser.login, data.year, data.month);
 }
 
 export const queries = {

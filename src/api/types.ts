@@ -4,6 +4,15 @@ export const typeDefs = gql`
     type Feed {
         key: String!
         timestamp: Float!
+        details: [FeedDetails]!
+    }
+    
+    type FeedDetails {
+        type: String!
+        name: String!
+        amount: Int
+        amountOfWhat: String
+        wasGiven: Boolean
     }
     
     type User {
@@ -35,7 +44,7 @@ export const typeDefs = gql`
     type Query {
         userByName(name: String!): User
         userByLogin(login: String!): User
-        lastMonthFeeds: [Feed]
+        lastMonthFeeds(year: Int!, month: Int!): [Feed]
     }
     
     type Mutation {
