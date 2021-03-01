@@ -2,17 +2,21 @@ import {FeedData} from "../../../db/schemas/feeds";
 import {checkAuthorization} from "../../../utils/token";
 import {ExpressContext, UserInputError} from "apollo-server-express";
 import {createNewFeed} from "../../../db/repos/feeds";
-import {throwGeneralError} from "../../../utils/validation";
+import {
+    isValid,
+    throwGeneralError,
+    validateFeedsData
+} from "../../../utils/validation";
 
 const createFeed =
         async (_: unknown, {feed}: {feed: FeedData}, context: ExpressContext):
             Promise<FeedData | null |  void> => {
     const curUser = checkAuthorization(context)
 
-    //TODO: Validate input data
+    const errors = validateFeedsData(feed)
 
-    if (!feed.timestamp) {
-        throw new UserInputError('Incorrect feed item data', {})
+    if (!isValid(errors)) {
+        throw new UserInputError('Incorrect input data', {errors})
     }
 
     const createdFeed =

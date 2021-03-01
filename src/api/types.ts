@@ -15,6 +15,14 @@ export const typeDefs = gql`
         wasGiven: Boolean
     }
     
+    input FeedDetailsInput {
+        type: String!
+        name: String!
+        amount: Int
+        amountOfWhat: String
+        wasGiven: Boolean
+    }
+    
     type User {
         login: String!
         password: String
@@ -39,6 +47,7 @@ export const typeDefs = gql`
     
     input FeedInput {
         timestamp: Float!
+        details: [FeedDetailsInput]
     }
 
     type Query {

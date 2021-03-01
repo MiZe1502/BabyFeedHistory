@@ -4,12 +4,22 @@ import {
     UserUpdateData
 } from "../db/schemas/users";
 import {UserInputError} from "apollo-server-express";
+import {FeedData} from "../db/schemas/feeds";
 
 interface Errors {
     login?: string;
     password?: string;
     confirmPassword?: string;
     general?: string;
+    timestamp?: string;
+    details?: DetailsErrors[];
+}
+
+interface DetailsErrors {
+    type?: string;
+    name?: string;
+    amount?: string;
+    amountOfWhat?: string;
 }
 
 interface ValidationResult {
@@ -91,6 +101,50 @@ export const validateQueryFeedsData = (year: number, month: number): Errors => {
     if (!year || month < 0 || month > 11) {
         errors.general = 'Incorrect query data';
     }
+
+    return errors;
+}
+
+export const validateFeedsData = (feedData: FeedData): Errors => {
+    const {details, timestamp } = feedData;
+    const errors: Errors = {};
+
+    if (!timestamp || timestamp < 0) {
+        errors.timestamp = "Incorrect datetime for feed"
+    }
+
+    if (!details || details.length === 0) {
+        return errors;
+    }
+
+    details.forEach((item) => {
+        const error: DetailsErrors = {};
+
+        if (!item.type) {
+            error.type = "Incorrect feed details type"
+        }
+
+        if (!item.name) {
+            error.name = "Name for feed details must be provided"
+        }
+
+        if (item.type === "valueWithAmount") {
+            if (!item.amount || item.amount < 0) {
+                error.amount = "Incorrect amount value"
+            }
+
+            if (!item.amountOfWhat) {
+                error.amountOfWhat = "Incorrect value for amount target"
+            }
+        }
+
+        if (Object.keys(error).length > 0) {
+            if (!errors.details) {
+                errors.details = []
+            }
+            errors.details?.push(error)
+        }
+    })
 
     return errors;
 }

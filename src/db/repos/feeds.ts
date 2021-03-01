@@ -7,8 +7,6 @@ import {FeedDetailsData} from "../schemas/feedDetails";
 export const getFeedsForLastMonth =
         async (userLogin: string, year: number, month: number):
             Promise<FeedData[] | null> => {
-    //TODO: implement validation
-
     const firstDayOfMonth = new Date(year, month, 1).getTime();
 
     const yearForSearch = month === 12 ? year + 1 : year
