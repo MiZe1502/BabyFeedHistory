@@ -85,6 +85,16 @@ export const validateLogin = (login?: string): Errors => {
     return errors;
 }
 
+export const validateQueryFeedsData = (year: number, month: number): Errors => {
+    const errors: Errors = {};
+
+    if (!year || month < 0 || month > 11) {
+        errors.general = 'Incorrect query data';
+    }
+
+    return errors;
+}
+
 export const validatePassword = (password: string): Errors => {
     const errors: Errors = {};
 
