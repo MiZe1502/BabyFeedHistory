@@ -61,5 +61,6 @@ export const typeDefs = gql`
         register(user: UserInput!): User
         updateUser(user: UpdateUserInput): User
         createFeed(feed: FeedInput): Feed
+        removeFeed(key: String!): Boolean
     }
 `;

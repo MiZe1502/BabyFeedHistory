@@ -1,1 +1,1 @@
-export type QueryResult = Promise<{ok:number} | null>
+export type QueryResult = Promise<{ok:number, deletedCount?: number} | null>

@@ -1,7 +1,7 @@
 import {FeedData} from "../../../db/schemas/feeds";
 import {checkAuthorization} from "../../../utils/token";
 import {ExpressContext, UserInputError} from "apollo-server-express";
-import {createNewFeed} from "../../../db/repos/feeds";
+import {createNewFeed, removeFeedByKey} from "../../../db/repos/feeds";
 import {
     isValid,
     throwGeneralError,
@@ -29,6 +29,14 @@ const createFeed =
     }
 }
 
+const removeFeed = async (_: unknown, {key}: {key: string}, context: ExpressContext):
+    Promise<boolean | null | void> => {
+    const curUser = checkAuthorization(context)
+    const res = await removeFeedByKey(curUser.login, key);
+    return res?.ok === 1 && res?.deletedCount === 1;
+}
+
 export const mutations = {
     createFeed,
+    removeFeed,
 }
