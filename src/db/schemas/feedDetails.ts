@@ -11,6 +11,7 @@ export interface FeedDetailsData {
     amount?: number;
     amountOfWhat?: string;
     wasGiven?: boolean;
+    createdBy: string;
 }
 
 export interface FeedDetailsDocument extends FeedDetailsData, Document {}
