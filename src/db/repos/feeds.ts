@@ -35,10 +35,15 @@ export const createNewFeed =
     return feedModel.create(newFeedItem)
 }
 
-// export const updateFeed =
-//         async (newFeedData: FeedData): QueryResult => {
-//     return feedModel.updateOne({key: newFeedData.key}, newFeedData);
-// }
+export const updateFeedItem =
+        async (userLogin: string, newFeedData: FeedData): QueryResult => {
+    return feedModel.updateOne({
+        $and: [
+            { key: newFeedData.key },
+            { createdBy: userLogin }
+        ]
+        }, newFeedData);
+}
 
 export const removeFeedByKey =
     async (userLogin: string, key: string): QueryResult => {

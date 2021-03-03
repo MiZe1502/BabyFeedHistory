@@ -1,7 +1,11 @@
 import {FeedData} from "../../../db/schemas/feeds";
 import {checkAuthorization} from "../../../utils/token";
 import {ExpressContext, UserInputError} from "apollo-server-express";
-import {createNewFeed, removeFeedByKey} from "../../../db/repos/feeds";
+import {
+    createNewFeed,
+    removeFeedByKey,
+    updateFeedItem
+} from "../../../db/repos/feeds";
 import {
     isValid,
     throwGeneralError,
@@ -23,11 +27,32 @@ const createFeed =
         await createNewFeed(curUser.login, feed.timestamp, feed.details)
     if (!createdFeed) {
         return throwGeneralError(
-            'Unexpected error occurred while creating the new feed item', {})
+            'Unexpected error occurred while creating the new feed item', errors)
     } else {
         return createdFeed
     }
 }
+
+const updateFeed =
+    async (_: unknown, {feed}: {feed: FeedData}, context: ExpressContext):
+        Promise<FeedData | null | void> => {
+        const curUser = checkAuthorization(context)
+
+        const errors = validateFeedsData(feed)
+
+        if (!isValid(errors)) {
+            throw new UserInputError('Incorrect input data', {errors})
+        }
+
+        const res = await updateFeedItem(curUser.login, feed)
+
+        if (res && res.ok) {
+            return feed;
+        } else {
+            return throwGeneralError(
+                'Unexpected error occurred while updating the feed item', errors)
+        }
+    }
 
 const removeFeed = async (_: unknown, {key}: {key: string}, context: ExpressContext):
     Promise<boolean | null | void> => {
@@ -38,5 +63,6 @@ const removeFeed = async (_: unknown, {key}: {key: string}, context: ExpressCont
 
 export const mutations = {
     createFeed,
+    updateFeed,
     removeFeed,
 }

@@ -49,6 +49,12 @@ export const typeDefs = gql`
         timestamp: Float!
         details: [FeedDetailsInput]
     }
+    
+    input ExistedFeedInput {
+        key: String!
+        timestamp: Float!
+        details: [FeedDetailsInput] 
+    }
 
     type Query {
         userByName(name: String!): User
@@ -61,6 +67,7 @@ export const typeDefs = gql`
         register(user: UserInput!): User
         updateUser(user: UpdateUserInput): User
         createFeed(feed: FeedInput): Feed
+        updateFeed(feed: ExistedFeedInput): Feed
         removeFeed(key: String!): Boolean
     }
 `;
