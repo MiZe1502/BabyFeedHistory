@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 export type FeedDetailsType = "valueWithAmount" | "checkedValue"
 
 export interface FeedDetailsData {
+    key: string;
     type: FeedDetailsType;
     name: string;
     amount?: number;
@@ -17,9 +18,11 @@ export interface FeedDetailsData {
 export interface FeedDetailsDocument extends FeedDetailsData, Document {}
 
 export const feedDetailsSchema = new Schema<FeedDetailsDocument, FeedDetailsModel>({
-    name: {type: String, required: true},
+    key: {type: String, required: true},
+    name: {type: String, required: true, unique: true},
     type: {type: String, required: true},
     amount: {type: Number},
     amountOfWhat: {type: String},
-    wasGiven: {type: Boolean}
+    wasGiven: {type: Boolean},
+    createdBy: {type: String, required: true},
 })

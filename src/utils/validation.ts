@@ -5,6 +5,7 @@ import {
 } from "../db/schemas/users";
 import {UserInputError} from "apollo-server-express";
 import {FeedData} from "../db/schemas/feeds";
+import {FeedDetailsData} from "../db/schemas/feedDetails";
 
 interface Errors {
     login?: string;
@@ -16,6 +17,7 @@ interface Errors {
 }
 
 interface DetailsErrors {
+    general?: string;
     type?: string;
     name?: string;
     amount?: string;
@@ -105,6 +107,29 @@ export const validateQueryFeedsData = (year: number, month: number): Errors => {
     return errors;
 }
 
+export const validateFeedDetails =
+    (feedDetails: FeedDetailsData, errors: DetailsErrors = {}): DetailsErrors => {
+    if (!feedDetails.type) {
+        errors.type = "Incorrect feed details type"
+    }
+
+    if (!feedDetails.name) {
+        errors.name = "Name for feed details must be provided"
+    }
+
+    if (feedDetails.type === "valueWithAmount") {
+        if (!feedDetails.amount || feedDetails.amount < 0) {
+            errors.amount = "Incorrect amount value"
+        }
+
+        if (!feedDetails.amountOfWhat) {
+            errors.amountOfWhat = "Incorrect value for amount target"
+        }
+    }
+
+    return errors;
+}
+
 export const validateFeedsData = (feedData: FeedData): Errors => {
     const {details, timestamp } = feedData;
     const errors: Errors = {};
@@ -118,25 +143,9 @@ export const validateFeedsData = (feedData: FeedData): Errors => {
     }
 
     details.forEach((item) => {
-        const error: DetailsErrors = {};
+        let error: DetailsErrors = {};
 
-        if (!item.type) {
-            error.type = "Incorrect feed details type"
-        }
-
-        if (!item.name) {
-            error.name = "Name for feed details must be provided"
-        }
-
-        if (item.type === "valueWithAmount") {
-            if (!item.amount || item.amount < 0) {
-                error.amount = "Incorrect amount value"
-            }
-
-            if (!item.amountOfWhat) {
-                error.amountOfWhat = "Incorrect value for amount target"
-            }
-        }
+        error = validateFeedDetails(item, error)
 
         if (Object.keys(error).length > 0) {
             if (!errors.details) {
@@ -170,11 +179,12 @@ export const comparePasswords =
     return errors;
 }
 
-export const throwGeneralError = (msg: string, errors: Errors): void => {
+export const throwGeneralError =
+    (msg: string, errors: Errors | DetailsErrors): void => {
     errors.general = msg;
     throw new UserInputError(errors.general, {errors});
 }
 
-export const isValid = (errors?: Errors): boolean => {
+export const isValid = (errors?: Errors | DetailsErrors): boolean => {
     return !errors || Object.keys(errors).length === 0
 }
