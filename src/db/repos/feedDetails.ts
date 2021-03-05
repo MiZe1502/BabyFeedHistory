@@ -2,7 +2,7 @@ import {FeedDetailsData} from "../schemas/feedDetails";
 import {feedDetailsModel} from "../models/feedDetails";
 import {QueryResult} from "../../utils/types";
 
-export const getAvailableFeedDetails = async (userLogin: string):
+export const getAvailableFeedDetailsForUser = async (userLogin: string):
     Promise<FeedDetailsData[] | null> => feedDetailsModel.find({createdBy: userLogin})
 
 export const createNewFeedDetails =

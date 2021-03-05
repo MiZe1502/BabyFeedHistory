@@ -60,6 +60,7 @@ export const typeDefs = gql`
         userByName(name: String!): User
         userByLogin(login: String!): User
         lastMonthFeeds(year: Int!, month: Int!): [Feed]
+        getAvailableFeedDetails: [FeedDetails]
     }
     
     type Mutation {
