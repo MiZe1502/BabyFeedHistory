@@ -1,4 +1,5 @@
 import config from 'config';
+import depthLimit from "graphql-depth-limit";
 
 export interface Config {
     port: number;
@@ -7,6 +8,8 @@ export interface Config {
     secret: string;
     exp: string;
     saltRounds: number;
+    maxRequestSize: string;
+    gqlDepthLimit: number;
 }
 
 const initialConfig: Config = {
@@ -15,7 +18,9 @@ const initialConfig: Config = {
     db: '',
     secret: '',
     exp: '1m',
-    saltRounds: 10
+    saltRounds: 10,
+    maxRequestSize: '1mb',
+    gqlDepthLimit: 10,
 }
 
 export const getCurrentConfig = (): Config => {
