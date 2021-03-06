@@ -1,6 +1,5 @@
 3. security
     3.1. cors
-    3.2. helmet
     3.3. check with autocannon
     3.4. limit request length
     3.5. limit gql response depth
