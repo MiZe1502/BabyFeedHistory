@@ -30,10 +30,10 @@ export const updateFeedDetailsItem =
 }
 
 export const removeFeedDetailsItem =
-    async (userLogin: string, name: string): QueryResult => {
+    async (userLogin: string, key: string): QueryResult => {
     return feedDetailsModel.remove({
         $and: [
-            { name },
+            { key },
             { createdBy: userLogin }
         ]
     })

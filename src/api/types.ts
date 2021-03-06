@@ -82,5 +82,6 @@ export const typeDefs = gql`
         removeFeed(key: String!): Boolean
         createFeedDetails(feedDetails: FeedDetailsInput!): FeedDetails
         updateFeedDetails(feedDetails: ExistedFeedDetailsInput!): FeedDetails
+        removeFeedDetails(key: String!): Boolean
     }
 `;

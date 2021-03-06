@@ -7,7 +7,7 @@ import {
     validateFeedDetails
 } from "../../../utils/validation";
 import {
-    createNewFeedDetails,
+    createNewFeedDetails, removeFeedDetailsItem,
     updateFeedDetailsItem
 } from "../../../db/repos/feedDetails";
 
@@ -54,7 +54,17 @@ const updateFeedDetails =
         }
     }
 
+const removeFeedDetails =
+    async (_: unknown, {key}: {key: string}, context: ExpressContext):
+        Promise<boolean | null | void> => {
+    const curUser = checkAuthorization(context)
+    const res = await removeFeedDetailsItem(curUser.login, key);
+    return res?.ok === 1 && res?.deletedCount === 1;
+
+}
+
 export const mutations = {
     createFeedDetails,
-    updateFeedDetails
+    updateFeedDetails,
+    removeFeedDetails,
 }
