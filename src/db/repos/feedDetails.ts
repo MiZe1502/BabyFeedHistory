@@ -19,11 +19,11 @@ export const createNewFeedDetails =
 }
 
 export const updateFeedDetailsItem =
-    async (userLogin: string, oldName: string, newFeedDetailsData: FeedDetailsData):
+    async (userLogin: string, newFeedDetailsData: FeedDetailsData):
         QueryResult => {
     return feedDetailsModel.updateOne({
       $and: [
-          { name: oldName },
+          { key: newFeedDetailsData.key },
           { createdBy: userLogin }
       ]
     }, newFeedDetailsData)

@@ -1,6 +1,5 @@
 2. feed details
     2.4. remove feed details item
-    2.5. update details item
 3. security
     3.1. cors
     3.2. helmet

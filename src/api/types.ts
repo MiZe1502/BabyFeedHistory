@@ -23,6 +23,15 @@ export const typeDefs = gql`
         amountOfWhat: String
         wasGiven: Boolean
     }
+
+    input ExistedFeedDetailsInput {
+        key: String!
+        type: String!
+        name: String!
+        amount: Int
+        amountOfWhat: String
+        wasGiven: Boolean
+    }
     
     type User {
         login: String!
@@ -72,5 +81,6 @@ export const typeDefs = gql`
         updateFeed(feed: ExistedFeedInput): Feed
         removeFeed(key: String!): Boolean
         createFeedDetails(feedDetails: FeedDetailsInput!): FeedDetails
+        updateFeedDetails(feedDetails: ExistedFeedDetailsInput!): FeedDetails
     }
 `;
