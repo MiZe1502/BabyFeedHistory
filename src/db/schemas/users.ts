@@ -24,7 +24,7 @@ export interface RegisteredUser extends Omit<UserData, 'password'> {
 export interface UserDocument extends UserData, Document {}
 
 export const userSchema = new Schema<UserDocument, UserModel>({
-    login: {type: String, required: true},
+    login: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     name: String,
 });

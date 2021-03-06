@@ -14,7 +14,7 @@ export interface FeedData {
 export interface FeedDocument extends FeedData, Document {}
 
 export const feedSchema = new Schema<FeedDocument, FeedModel>({
-    key: {type: String, required: true},
+    key: {type: String, required: true, unique: true},
     timestamp: {type: Number, required: true},
     createdBy: {type: String, required: true},
     details: {type: [feedDetailsSchema], default: []}

@@ -18,8 +18,8 @@ export interface FeedDetailsData {
 export interface FeedDetailsDocument extends FeedDetailsData, Document {}
 
 export const feedDetailsSchema = new Schema<FeedDetailsDocument, FeedDetailsModel>({
-    key: {type: String, required: true},
-    name: {type: String, required: true, unique: true},
+    key: {type: String, required: true, unique: true},
+    name: {type: String, required: true},
     type: {type: String, required: true},
     amount: {type: Number},
     amountOfWhat: {type: String},

@@ -4,6 +4,7 @@ import { getCurrentConfig } from './configuration'
 import { connectToDb } from "./db";
 import {typeDefs} from "./api/types";
 import {resolvers} from "./api/resolvers";
+import helmet from "helmet/dist";
 
 const config = getCurrentConfig();
 
@@ -25,6 +26,8 @@ const server = new ApolloServer({typeDefs,
     context: ({req}) => ({req})});
 
 const app = express();
+
+app.use(helmet())
 
 server.applyMiddleware({ app });
 
