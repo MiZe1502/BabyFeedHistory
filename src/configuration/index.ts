@@ -10,6 +10,9 @@ export interface Config {
     saltRounds: number;
     maxRequestSize: string;
     gqlDepthLimit: number;
+    corsOrigin: string;
+    corsMethods: string[];
+    corsHeaders: string[];
 }
 
 const initialConfig: Config = {
@@ -21,6 +24,9 @@ const initialConfig: Config = {
     saltRounds: 10,
     maxRequestSize: '1mb',
     gqlDepthLimit: 10,
+    corsOrigin: "http://localhost:3000",
+    corsMethods: [],
+    corsHeaders: [],
 }
 
 export const getCurrentConfig = (): Config => {

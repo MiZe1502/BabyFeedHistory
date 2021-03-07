@@ -6,11 +6,25 @@ import {typeDefs} from "./api/types";
 import {resolvers} from "./api/resolvers";
 import helmet from "helmet/dist";
 import depthLimit from "graphql-depth-limit";
+import cors from "cors";
 
 const config = getCurrentConfig();
 
+const {
+    port,
+    hostname,
+    db,
+    maxRequestSize,
+    gqlDepthLimit,
+    corsOrigin,
+    corsHeaders,
+    corsMethods} = config;
 
-const {port, hostname, db, maxRequestSize, gqlDepthLimit} = config;
+const corsOptions = {
+    origin: corsOrigin,
+    methods: corsMethods,
+    allowedHeaders: corsHeaders
+};
 
 (async function () {
     try {
@@ -30,6 +44,7 @@ const app = express();
 
 app.use(helmet())
 app.use(json({ limit: maxRequestSize }));
+app.use(cors(corsOptions));
 
 server.applyMiddleware({ app });
 

@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt'
 import {getConfigValueByKey} from "../configuration";
 
 export const createPasswordHash = async (password: string): Promise<string> => {
-    const saltRounds = getConfigValueByKey('saltRounds')
+    const saltRounds = getConfigValueByKey('saltRounds') as number
     return await bcrypt.hash( password, saltRounds);
 }
 

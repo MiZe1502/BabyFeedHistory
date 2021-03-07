@@ -13,6 +13,10 @@ export const createToken = (userData: TokenUserData): string => {
         throw 'Incorrect secret for token generation'
     }
 
+    if (typeof exp !== 'string') {
+        throw 'Incorrect expiration value for token generation'
+    }
+
     return jwt.sign(
         userData ,
         secret,
