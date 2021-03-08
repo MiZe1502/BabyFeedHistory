@@ -1,5 +1,5 @@
 import express, {json} from "express";
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, PubSub } from 'apollo-server-express';
 import { getCurrentConfig } from './configuration'
 import { connectToDb } from "./db";
 import {typeDefs} from "./api/types";
@@ -36,9 +36,16 @@ const corsOptions = {
 })()
 
 const server = new ApolloServer({typeDefs,
+    subscriptions: {
+        path: '/subscriptions'
+    },
     validationRules: [ depthLimit(gqlDepthLimit) ],
     resolvers,
-    context: ({req}) => ({req})});
+    context: ({req}) => {
+        const pubsub = new PubSub();
+        return {req, pubsub}
+    }
+});
 
 const app = express();
 
