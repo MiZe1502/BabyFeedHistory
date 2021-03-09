@@ -1,6 +1,6 @@
 import {FeedData} from "../../../db/schemas/feeds";
 import {checkAuthorization} from "../../../utils/token";
-import {ExpressContext, UserInputError} from "apollo-server-express";
+import {UserInputError} from "apollo-server-express";
 import {
     createNewFeed,
     removeFeedByKey,
@@ -11,9 +11,11 @@ import {
     throwGeneralError,
     validateFeedsData
 } from "../../../utils/validation";
+import {FEED_CREATED_KEY} from "./subscriptions";
+import {Context} from "../../../utils/types";
 
 const createFeed =
-        async (_: unknown, {feed}: {feed: FeedData}, context: ExpressContext):
+        async (_: unknown, {feed}: {feed: FeedData}, context: Context):
             Promise<FeedData | null |  void> => {
     const curUser = checkAuthorization(context)
 
@@ -29,12 +31,13 @@ const createFeed =
         return throwGeneralError(
             'Unexpected error occurred while creating the new feed item', errors)
     } else {
+        await context.pubsub.publish(FEED_CREATED_KEY, { feedCreated: createdFeed });
         return createdFeed
     }
 }
 
 const updateFeed =
-    async (_: unknown, {feed}: {feed: FeedData}, context: ExpressContext):
+    async (_: unknown, {feed}: {feed: FeedData}, context: Context):
         Promise<FeedData | null | void> => {
         const curUser = checkAuthorization(context)
 
@@ -54,7 +57,7 @@ const updateFeed =
         }
     }
 
-const removeFeed = async (_: unknown, {key}: {key: string}, context: ExpressContext):
+const removeFeed = async (_: unknown, {key}: {key: string}, context: Context):
     Promise<boolean | null | void> => {
     const curUser = checkAuthorization(context)
     const res = await removeFeedByKey(curUser.login, key);

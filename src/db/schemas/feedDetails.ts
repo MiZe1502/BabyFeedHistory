@@ -24,5 +24,5 @@ export const feedDetailsSchema = new Schema<FeedDetailsDocument, FeedDetailsMode
     amount: {type: Number},
     amountOfWhat: {type: String},
     wasGiven: {type: Boolean},
-    createdBy: {type: String, required: true},
+    createdBy: {type: String},
 })

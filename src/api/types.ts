@@ -17,6 +17,7 @@ export const typeDefs = gql`
     }
     
     input FeedDetailsInput {
+        key: String
         type: String!
         name: String!
         amount: Int
@@ -83,5 +84,9 @@ export const typeDefs = gql`
         createFeedDetails(feedDetails: FeedDetailsInput!): FeedDetails
         updateFeedDetails(feedDetails: ExistedFeedDetailsInput!): FeedDetails
         removeFeedDetails(key: String!): Boolean
+    }
+
+    type Subscription {
+        feedCreated: Feed
     }
 `;

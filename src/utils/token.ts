@@ -1,7 +1,8 @@
 import {UserData} from "../db/schemas/users";
 import {getConfigValueByKey} from "../configuration";
 import jwt from "jsonwebtoken";
-import {AuthenticationError, ExpressContext} from "apollo-server-express";
+import {AuthenticationError} from "apollo-server-express";
+import {Context} from "./types";
 
 export type TokenUserData = Omit<UserData, 'password'>
 
@@ -40,7 +41,7 @@ export const parseToken = (token: string): TokenUserData | null | void => {
 }
 
 export const checkAuthorization =
-    (context: ExpressContext): TokenUserData => {
+    (context: Context): TokenUserData => {
         const token = context.req.headers.authorization || '';
 
         if (!token || token.length === 0) {

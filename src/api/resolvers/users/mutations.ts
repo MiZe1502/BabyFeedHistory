@@ -11,7 +11,6 @@ import {
 } from "../../../utils/validation";
 import {
     AuthenticationError,
-    ExpressContext,
     UserInputError
 } from "apollo-server-express";
 import {
@@ -24,6 +23,7 @@ import {
     isPasswordValid
 } from "../../../utils/password";
 import {checkAuthorization, createToken} from "../../../utils/token";
+import {Context} from "../../../utils/types";
 
 const login = async (_: unknown, {login, password}: UserData):
     Promise<string | void> => {
@@ -77,7 +77,7 @@ const register = async (_: unknown, {user}: {user: UserRegistrationData}):
 }
 
 const updateUser = async (_: unknown, {user}: {user: UserUpdateData},
-         context: ExpressContext): Promise<RegisteredUser | null | void> => {
+         context: Context): Promise<RegisteredUser | null | void> => {
         const curUser = checkAuthorization(context)
 
         if (curUser.login !== user.oldLogin?.trim()) {

@@ -1,5 +1,5 @@
 import {FeedDetailsData} from "../../../db/schemas/feedDetails";
-import {ExpressContext, UserInputError} from "apollo-server-express";
+import {UserInputError} from "apollo-server-express";
 import {checkAuthorization} from "../../../utils/token";
 import {
     isValid,
@@ -10,10 +10,11 @@ import {
     createNewFeedDetails, removeFeedDetailsItem,
     updateFeedDetailsItem
 } from "../../../db/repos/feedDetails";
+import {Context} from "../../../utils/types";
 
 const createFeedDetails =
     async (_: unknown, {feedDetails}: {feedDetails: FeedDetailsData},
-           context: ExpressContext): Promise<FeedDetailsData | null | void> => {
+           context: Context): Promise<FeedDetailsData | null | void> => {
     const curUser = checkAuthorization(context)
 
     const errors = validateFeedDetails(feedDetails)
@@ -34,7 +35,7 @@ const createFeedDetails =
 
 const updateFeedDetails =
     async (_: unknown, {feedDetails}: {feedDetails: FeedDetailsData},
-           context: ExpressContext): Promise<FeedDetailsData | null | void> => {
+           context: Context): Promise<FeedDetailsData | null | void> => {
         const curUser = checkAuthorization(context)
 
         const errors = validateFeedDetails(feedDetails)
@@ -55,7 +56,7 @@ const updateFeedDetails =
     }
 
 const removeFeedDetails =
-    async (_: unknown, {key}: {key: string}, context: ExpressContext):
+    async (_: unknown, {key}: {key: string}, context: Context):
         Promise<boolean | null | void> => {
     const curUser = checkAuthorization(context)
     const res = await removeFeedDetailsItem(curUser.login, key);

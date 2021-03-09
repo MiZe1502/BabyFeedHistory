@@ -1,5 +1,5 @@
 import express, {json} from "express";
-import { ApolloServer, PubSub } from 'apollo-server-express';
+import {ApolloServer, PubSub} from 'apollo-server-express';
 import { getCurrentConfig } from './configuration'
 import { connectToDb } from "./db";
 import {typeDefs} from "./api/types";
@@ -35,27 +35,29 @@ const corsOptions = {
     }
 })()
 
+const pubsub = new PubSub();
+
 const server = new ApolloServer({typeDefs,
-    subscriptions: {
-        path: '/subscriptions'
-    },
     validationRules: [ depthLimit(gqlDepthLimit) ],
     resolvers,
-    context: ({req}) => {
-        const pubsub = new PubSub();
-        return {req, pubsub}
+    context: ({req}) => ({req, pubsub}),
+    subscriptions: {
+        path: "/subscriptions",
+        onConnect: () => console.log('connected')
     }
 });
 
 const app = express();
 
-app.use(helmet())
+// app.use(helmet())
 app.use(json({ limit: maxRequestSize }));
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
 
 server.applyMiddleware({ app });
 
-app.listen(port, hostname, () =>
+app.listen(port, hostname, () => {
     console.log(`Server is running at ${hostname}:${port}${server.graphqlPath}`)
-);
+    console.log(`Subscriptions is running at 
+        ${hostname}:${port}${server.subscriptionsPath}`)
+});
 

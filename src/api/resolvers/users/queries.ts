@@ -1,12 +1,13 @@
 import {AuthenticationError,
-    ExpressContext, UserInputError} from "apollo-server-express";
+    UserInputError} from "apollo-server-express";
 import {UserData} from "../../../db/schemas/users";
 import {getUserByLogin} from "../../../db/repos/users";
 import {checkAuthorization} from "../../../utils/token";
 import {isValid, validateLogin} from "../../../utils/validation";
+import {Context} from "../../../utils/types";
 
 const userByLogin = async (_: unknown, {login}: Partial<UserData>,
-      context: ExpressContext): Promise<Omit<UserData, 'password'> | null> => {
+      context: Context): Promise<Omit<UserData, 'password'> | null> => {
     const errors = validateLogin(login);
 
     if (!isValid(errors)) {
