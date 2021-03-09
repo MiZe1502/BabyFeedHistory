@@ -13,6 +13,7 @@ export interface Config {
     corsOrigin: string;
     corsMethods: string[];
     corsHeaders: string[];
+    useHelmet: boolean;
 }
 
 const initialConfig: Config = {
@@ -27,6 +28,7 @@ const initialConfig: Config = {
     corsOrigin: "http://localhost:3000",
     corsMethods: [],
     corsHeaders: [],
+    useHelmet: true,
 }
 
 export const getCurrentConfig = (): Config => {

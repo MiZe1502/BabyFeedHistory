@@ -7,6 +7,7 @@ import {resolvers} from "./api/resolvers";
 import helmet from "helmet/dist";
 import depthLimit from "graphql-depth-limit";
 import cors from "cors";
+import * as http from "http";
 
 const config = getCurrentConfig();
 
@@ -18,7 +19,8 @@ const {
     gqlDepthLimit,
     corsOrigin,
     corsHeaders,
-    corsMethods} = config;
+    corsMethods,
+    useHelmet} = config;
 
 const corsOptions = {
     origin: corsOrigin,
@@ -43,21 +45,24 @@ const server = new ApolloServer({typeDefs,
     context: ({req}) => ({req, pubsub}),
     subscriptions: {
         path: "/subscriptions",
-        onConnect: () => console.log('connected')
-    }
+        onConnect: () => console.log('Client connected'),
+        onDisconnect: () => console.log('Client disconnected'),
+    },
 });
 
 const app = express();
+const httpServer = http.createServer(app);
+server.installSubscriptionHandlers(httpServer);
 
-// app.use(helmet())
+useHelmet && app.use(helmet())
 app.use(json({ limit: maxRequestSize }));
-//app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 server.applyMiddleware({ app });
 
-app.listen(port, hostname, () => {
+httpServer.listen(port, hostname, () => {
     console.log(`Server is running at ${hostname}:${port}${server.graphqlPath}`)
-    console.log(`Subscriptions is running at 
-        ${hostname}:${port}${server.subscriptionsPath}`)
+    // eslint-disable-next-line max-len
+    console.log(`Subscriptions are running at ws://${hostname}:${port}${server.subscriptionsPath}`)
 });
 
