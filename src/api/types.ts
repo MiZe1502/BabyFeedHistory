@@ -80,7 +80,7 @@ export const typeDefs = gql`
         updateUser(user: UpdateUserInput): User
         createFeed(feed: FeedInput): Feed
         updateFeed(feed: ExistedFeedInput): Feed
-        removeFeed(key: String!): Boolean
+        removeFeed(key: String!): Feed
         createFeedDetails(feedDetails: FeedDetailsInput!): FeedDetails
         updateFeedDetails(feedDetails: ExistedFeedDetailsInput!): FeedDetails
         removeFeedDetails(key: String!): Boolean
@@ -89,6 +89,6 @@ export const typeDefs = gql`
     type Subscription {
         feedCreated: Feed
         feedUpdated: Feed
-        feedRemoved: String
+        feedRemoved: Feed
     }
 `;

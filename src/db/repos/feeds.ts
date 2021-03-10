@@ -36,21 +36,22 @@ export const createNewFeed =
 }
 
 export const updateFeedItem =
-        async (userLogin: string, newFeedData: FeedData): QueryResult => {
-    return feedModel.updateOne({
+        async (userLogin: string, newFeedData: FeedData):
+            Promise<FeedData | null> => {
+    return feedModel.findOneAndUpdate({
         $and: [
             { key: newFeedData.key },
             { createdBy: userLogin }
         ]
-        }, newFeedData);
+        }, newFeedData, {new: true});
 }
 
 export const removeFeedByKey =
-    async (userLogin: string, key: string): QueryResult => {
-    return feedModel.remove({
+    async (userLogin: string, key: string): Promise<FeedData | null> => {
+    return feedModel.findOneAndRemove({
         $and: [
             { key: key },
             { createdBy: userLogin }
         ]
-    })
+    }, {new: true})
 }

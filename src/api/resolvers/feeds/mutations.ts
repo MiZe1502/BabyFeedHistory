@@ -51,11 +51,10 @@ const updateFeed =
             throw new UserInputError('Incorrect input data', {errors})
         }
 
-        const res = await updateFeedItem(curUser.login, feed)
-
-        if (res && res.ok) {
-            await pubsub.publish(FEED_UPDATED_KEY, { feedUpdated: feed });
-            return feed;
+        const updatedFeed = await updateFeedItem(curUser.login, feed)
+        if (updatedFeed) {
+            await pubsub.publish(FEED_UPDATED_KEY, { feedUpdated: updatedFeed });
+            return updatedFeed;
         } else {
             return throwGeneralError(
                 'Unexpected error occurred while updating the feed item', errors)
@@ -63,16 +62,17 @@ const updateFeed =
     }
 
 const removeFeed = async (_: unknown, {key}: {key: string}, {token, pubsub}: Context):
-    Promise<boolean | null | void> => {
+    Promise<FeedData | null | void> => {
     const curUser = checkAuthorization(token)
-    const res = await removeFeedByKey(curUser.login, key);
+    const removedFeed = await removeFeedByKey(curUser.login, key);
 
-    const result = res?.ok === 1 && res?.deletedCount === 1
-    if (result) {
-        await pubsub.publish(FEED_REMOVED_KEY, { feedRemoved: key });
+    if (removedFeed) {
+        await pubsub.publish(FEED_REMOVED_KEY, { feedRemoved: removedFeed });
+        return removedFeed
+    } else {
+        return throwGeneralError(
+            'Unexpected error occurred while removing the feed item', {})
     }
-
-    return result;
 }
 
 export const mutations = {
