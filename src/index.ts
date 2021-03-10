@@ -42,10 +42,20 @@ const pubsub = new PubSub();
 const server = new ApolloServer({typeDefs,
     validationRules: [ depthLimit(gqlDepthLimit) ],
     resolvers,
-    context: ({req}) => ({req, pubsub}),
+    context: ({ req, connection }) => {
+        if (connection) { // Operation is a Subscription
+            const token = connection.context.authorization || '';
+            return { token, pubsub };
+        } else {
+            return {token: req.headers.authorization || '', pubsub}
+        }
+    },
     subscriptions: {
         path: "/subscriptions",
-        onConnect: () => console.log('Client connected'),
+        onConnect: (connectionParams: Record<string, any>) => {
+            console.log('Client connected')
+            return connectionParams // pass headers to connection context
+        },
         onDisconnect: () => console.log('Client disconnected'),
     },
 });
