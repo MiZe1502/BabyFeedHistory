@@ -7,10 +7,10 @@ import {Context} from "../../../utils/types";
 
 const lastMonthFeeds =
         async (_: unknown,
-               data: { year: number, month: number }, context: Context):
+               data: { year: number, month: number }, {token}: Context):
                 Promise<FeedData[] | null> => {
     const {year, month} = data;
-    const curUser = checkAuthorization(context)
+    const curUser = checkAuthorization(token)
 
     const errors = validateQueryFeedsData(year, month)
 

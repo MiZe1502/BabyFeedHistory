@@ -11,13 +11,17 @@ import {
     throwGeneralError,
     validateFeedsData
 } from "../../../utils/validation";
-import {FEED_CREATED_KEY} from "./subscriptions";
+import {
+    FEED_CREATED_KEY,
+    FEED_REMOVED_KEY,
+    FEED_UPDATED_KEY
+} from "./subscriptions";
 import {Context} from "../../../utils/types";
 
 const createFeed =
-        async (_: unknown, {feed}: {feed: FeedData}, context: Context):
+        async (_: unknown, {feed}: {feed: FeedData}, {token, pubsub}: Context):
             Promise<FeedData | null |  void> => {
-    const curUser = checkAuthorization(context)
+    const curUser = checkAuthorization(token)
 
     const errors = validateFeedsData(feed)
 
@@ -31,15 +35,15 @@ const createFeed =
         return throwGeneralError(
             'Unexpected error occurred while creating the new feed item', errors)
     } else {
-        await context.pubsub.publish(FEED_CREATED_KEY, { feedCreated: createdFeed });
+        await pubsub.publish(FEED_CREATED_KEY, { feedCreated: createdFeed });
         return createdFeed
     }
 }
 
 const updateFeed =
-    async (_: unknown, {feed}: {feed: FeedData}, context: Context):
+    async (_: unknown, {feed}: {feed: FeedData}, {token, pubsub}: Context):
         Promise<FeedData | null | void> => {
-        const curUser = checkAuthorization(context)
+        const curUser = checkAuthorization(token)
 
         const errors = validateFeedsData(feed)
 
@@ -50,6 +54,7 @@ const updateFeed =
         const res = await updateFeedItem(curUser.login, feed)
 
         if (res && res.ok) {
+            await pubsub.publish(FEED_UPDATED_KEY, { feedUpdated: feed });
             return feed;
         } else {
             return throwGeneralError(
@@ -57,11 +62,17 @@ const updateFeed =
         }
     }
 
-const removeFeed = async (_: unknown, {key}: {key: string}, context: Context):
+const removeFeed = async (_: unknown, {key}: {key: string}, {token, pubsub}: Context):
     Promise<boolean | null | void> => {
-    const curUser = checkAuthorization(context)
+    const curUser = checkAuthorization(token)
     const res = await removeFeedByKey(curUser.login, key);
-    return res?.ok === 1 && res?.deletedCount === 1;
+
+    const result = res?.ok === 1 && res?.deletedCount === 1
+    if (result) {
+        await pubsub.publish(FEED_REMOVED_KEY, { feedRemoved: key });
+    }
+
+    return result;
 }
 
 export const mutations = {

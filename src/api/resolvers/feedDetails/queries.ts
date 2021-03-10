@@ -4,9 +4,9 @@ import {getAvailableFeedDetailsForUser} from "../../../db/repos/feedDetails";
 import {Context} from "../../../utils/types";
 
 const getAvailableFeedDetails =
-    async (_: unknown, __: unknown, context: Context):
+    async (_: unknown, __: unknown, {token}: Context):
         Promise<FeedDetailsData[] | null> => {
-        const curUser = checkAuthorization(context)
+        const curUser = checkAuthorization(token)
 
         return getAvailableFeedDetailsForUser(curUser.login);
     }

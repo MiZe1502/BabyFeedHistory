@@ -41,18 +41,16 @@ export const parseToken = (token: string): TokenUserData | null | void => {
 }
 
 export const checkAuthorization =
-    (context: Context): TokenUserData => {
-        const token = context.req.headers.authorization || '';
-
-        if (!token || token.length === 0) {
-            throw new AuthenticationError('Token not provided');
-        }
-
-        const userFromToken = parseToken(token);
-
-        if (!userFromToken) {
-            throw new AuthenticationError('Authentication error');
-        }
-
-        return userFromToken;
+    (token: string): TokenUserData => {
+    if (!token || token.length === 0) {
+        throw new AuthenticationError('Token not provided');
     }
+
+    const userFromToken = parseToken(token);
+
+    if (!userFromToken) {
+        throw new AuthenticationError('Authentication error');
+    }
+
+    return userFromToken;
+}

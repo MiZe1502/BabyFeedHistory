@@ -14,8 +14,8 @@ import {Context} from "../../../utils/types";
 
 const createFeedDetails =
     async (_: unknown, {feedDetails}: {feedDetails: FeedDetailsData},
-           context: Context): Promise<FeedDetailsData | null | void> => {
-    const curUser = checkAuthorization(context)
+           {token, pubsub}: Context): Promise<FeedDetailsData | null | void> => {
+    const curUser = checkAuthorization(token)
 
     const errors = validateFeedDetails(feedDetails)
 
@@ -35,8 +35,8 @@ const createFeedDetails =
 
 const updateFeedDetails =
     async (_: unknown, {feedDetails}: {feedDetails: FeedDetailsData},
-           context: Context): Promise<FeedDetailsData | null | void> => {
-        const curUser = checkAuthorization(context)
+           {token, pubsub}: Context): Promise<FeedDetailsData | null | void> => {
+        const curUser = checkAuthorization(token)
 
         const errors = validateFeedDetails(feedDetails)
 
@@ -56,9 +56,9 @@ const updateFeedDetails =
     }
 
 const removeFeedDetails =
-    async (_: unknown, {key}: {key: string}, context: Context):
+    async (_: unknown, {key}: {key: string}, {token, pubsub}: Context):
         Promise<boolean | null | void> => {
-    const curUser = checkAuthorization(context)
+    const curUser = checkAuthorization(token)
     const res = await removeFeedDetailsItem(curUser.login, key);
     return res?.ok === 1 && res?.deletedCount === 1;
 

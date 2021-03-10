@@ -1,7 +1,8 @@
-import {ExpressContext, PubSub} from "apollo-server-express";
+import {PubSub} from "apollo-server-express";
 
 export type QueryResult = Promise<{ok:number, deletedCount?: number} | null>
 
-export interface Context extends ExpressContext {
-    pubsub: PubSub
+export interface Context {
+    pubsub: PubSub,
+    token: string,
 }

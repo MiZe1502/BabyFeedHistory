@@ -88,5 +88,7 @@ export const typeDefs = gql`
 
     type Subscription {
         feedCreated: Feed
+        feedUpdated: Feed
+        feedRemoved: String
     }
 `;

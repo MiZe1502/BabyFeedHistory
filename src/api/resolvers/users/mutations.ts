@@ -77,8 +77,8 @@ const register = async (_: unknown, {user}: {user: UserRegistrationData}):
 }
 
 const updateUser = async (_: unknown, {user}: {user: UserUpdateData},
-         context: Context): Promise<RegisteredUser | null | void> => {
-        const curUser = checkAuthorization(context)
+         {token}: Context): Promise<RegisteredUser | null | void> => {
+        const curUser = checkAuthorization(token)
 
         if (curUser.login !== user.oldLogin?.trim()) {
             throw new AuthenticationError('Authorization error')

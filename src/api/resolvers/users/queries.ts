@@ -7,14 +7,14 @@ import {isValid, validateLogin} from "../../../utils/validation";
 import {Context} from "../../../utils/types";
 
 const userByLogin = async (_: unknown, {login}: Partial<UserData>,
-      context: Context): Promise<Omit<UserData, 'password'> | null> => {
+      {token}: Context): Promise<Omit<UserData, 'password'> | null> => {
     const errors = validateLogin(login);
 
     if (!isValid(errors)) {
         throw new UserInputError('Incorrect user login', {errors})
     }
 
-    const curUser = checkAuthorization(context)
+    const curUser = checkAuthorization(token)
 
     if (curUser.login !== login?.trim()) {
         throw new AuthenticationError('Authorization error')
