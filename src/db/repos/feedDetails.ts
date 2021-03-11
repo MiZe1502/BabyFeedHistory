@@ -1,6 +1,5 @@
 import {FeedDetailsData} from "../schemas/feedDetails";
 import {feedDetailsModel} from "../models/feedDetails";
-import {QueryResult} from "../../utils/types";
 import {v4 as uuidv4} from "uuid";
 
 export const getAvailableFeedDetailsForUser = async (userLogin: string):
@@ -20,21 +19,21 @@ export const createNewFeedDetails =
 
 export const updateFeedDetailsItem =
     async (userLogin: string, newFeedDetailsData: FeedDetailsData):
-        QueryResult => {
-    return feedDetailsModel.updateOne({
+        Promise<FeedDetailsData | null> => {
+    return feedDetailsModel.findOneAndUpdate({
       $and: [
           { key: newFeedDetailsData.key },
           { createdBy: userLogin }
       ]
-    }, newFeedDetailsData)
+    }, newFeedDetailsData, {new: true})
 }
 
 export const removeFeedDetailsItem =
-    async (userLogin: string, key: string): QueryResult => {
-    return feedDetailsModel.remove({
+    async (userLogin: string, key: string): Promise<FeedDetailsData | null> => {
+    return feedDetailsModel.findOneAndRemove({
         $and: [
             { key },
             { createdBy: userLogin }
         ]
-    })
+    }, {new: true})
 }

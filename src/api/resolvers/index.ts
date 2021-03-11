@@ -2,7 +2,11 @@ import { IResolvers } from "apollo-server-express";
 
 import {userMutations, userQueries} from "./users";
 import {feedMutations, feedQueries, feedSubscriptions} from "./feeds";
-import {feedDetailsMutations, feedDetailsQueries} from "./feedDetails";
+import {
+    feedDetailsMutations,
+    feedDetailsQueries,
+    feedDetailsSubscriptions
+} from "./feedDetails";
 
 export const resolvers: IResolvers = {
     Query: {
@@ -16,6 +20,7 @@ export const resolvers: IResolvers = {
         ...feedDetailsMutations,
     },
     Subscription: {
-        ...feedSubscriptions
+        ...feedSubscriptions,
+        ...feedDetailsSubscriptions,
     }
 };

@@ -90,5 +90,8 @@ export const typeDefs = gql`
         feedCreated: Feed
         feedUpdated: Feed
         feedRemoved: Feed
+        feedDetailsCreated: FeedDetails
+        feedDetailsUpdated: FeedDetails
+        feedDetailsRemoved: FeedDetails
     }
 `;

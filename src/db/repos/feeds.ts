@@ -1,7 +1,6 @@
 import {FeedData} from "../schemas/feeds";
 import {feedModel} from "../models/feeds";
 import { v4 as uuidv4 } from 'uuid';
-import {QueryResult} from "../../utils/types";
 import {FeedDetailsData} from "../schemas/feedDetails";
 
 export const getFeedsForLastMonth =
