@@ -119,13 +119,14 @@ const updateUser = async (_: unknown, {user}: {user: UserUpdateData},
             updatedUser.password = hashPassword;
         }
 
-        const res = await updateUserByLogin(user.oldLogin, updatedUser);
+        const updatedUserData = await updateUserByLogin(user.oldLogin, updatedUser);
 
-        if (res && res.ok) {
-            const token = createToken({login: user.login, name: user.name})
+        if (updatedUserData) {
+            const token = createToken({login: updatedUserData.login,
+                    name: updatedUserData.name})
             return {
-                login: updatedUser.login,
-                name: updatedUser.name,
+                login: updatedUserData.login,
+                name: updatedUserData.name,
                 token,
             }
         } else {
