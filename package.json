@@ -4,11 +4,12 @@
   "description": "Backend for app to store baby feeding history",
   "main": "dist/index.js",
   "scripts": {
-    "start_dev": "tsc && cross-env NODE_ENV=development node dist/index.js",
+    "start": "node dist/index.js",
+    "start_dev": "tsc && NODE_ENV=development HOST=http://localhost node dist/index.js",
     "start_prod": "tsc && cross-env NODE_ENV=production node dist/index.js",
     "build_dev": "cross-env NODE_ENV=development tsc",
     "build_prod": "cross-env NODE_ENV=production tsc",
-    "watch": "cross-env NODE_ENV=development nodemon --exec ts-node -- ./src/index.ts",
+    "watch": "cross-env NODE_ENV=development HOST=http://localhost nodemon --exec ts-node -- ./src/index.ts",
     "lint": "eslint . --ext .ts"
   },
   "repository": {

@@ -1,4 +1,3 @@
 1. deploy on heroku
-3. security
-    3.3. check with autocannon
-    3.6. https://blog.risingstack.com/node-js-security-checklist/
+2. security
+    2.2. add static ip to heroku and provide access to db through it

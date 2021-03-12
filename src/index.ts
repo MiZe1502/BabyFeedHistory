@@ -9,11 +9,16 @@ import depthLimit from "graphql-depth-limit";
 import cors from "cors";
 import * as http from "http";
 
+console.log(process.env.NODE_ENV)
+console.log(process.env.HOST)
+console.log(process.env.PORT)
+
 const config = getCurrentConfig();
 
+const hostname = process.env.HOST || config.hostname;
+const port = process.env.PORT || config.port;
+
 const {
-    port,
-    hostname,
     db,
     maxRequestSize,
     gqlDepthLimit,
@@ -70,7 +75,7 @@ app.use(cors(corsOptions));
 
 server.applyMiddleware({ app });
 
-httpServer.listen(port, hostname, () => {
+httpServer.listen(port, () => {
     console.log(`Server is running at ${hostname}:${port}${server.graphqlPath}`)
     // eslint-disable-next-line max-len
     console.log(`Subscriptions are running at ws://${hostname}:${port}${server.subscriptionsPath}`)
