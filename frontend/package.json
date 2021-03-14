@@ -1,0 +1,38 @@
+{
+  "name": "babyfeedhistory",
+  "version": "1.0.0",
+  "description": "Client for app to store baby feeding history",
+  "scripts": {
+    "webpack-dev-server": "webpack serve",
+    "dev": "webpack serve --mode=development",
+    "prod": "webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiZe1502/BabyFeedHistory.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MiZe1502/BabyFeedHistory/issues"
+  },
+  "homepage": "https://github.com/MiZe1502/BabyFeedHistory#readme",
+  "author": "MiZe1502",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-react": "^7.12.13",
+    "babel-loader": "^8.2.2",
+    "html-webpack-plugin": "^5.3.1",
+    "path": "^0.12.7",
+    "webpack": "^5.25.1",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "css-loader": "^5.1.2",
+    "file-loader": "^6.2.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "style-loader": "^2.0.0"
+  }
+}

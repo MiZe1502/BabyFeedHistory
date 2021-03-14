@@ -11,5 +11,6 @@
   ],
   "rules": {
     "max-len": [2, { "code": 86 }]
-  }
+  },
+  "ignorePatterns": ["frontend"]
 }
