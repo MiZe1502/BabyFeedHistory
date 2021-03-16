@@ -1,38 +1,48 @@
 const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    mode: 'none',
     entry: {
         app: path.join(__dirname, 'src', 'index.tsx')
     },
-    target: 'web',
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle-[hash].js',
+    },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx']
+        extensions: ['.ts', '.tsx', '.js']
     },
     module: {
         rules: [
             {
-                test: /\.(tsx|ts)?$/,
+                test: /\.tsx?$/,
                 use: 'ts-loader',
                 exclude: '/node_modules/'
-            },
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
-            },         {
-                test: /\.(png|j?g|svg|gif)?$/,
-                use: 'file-loader'
             }
         ],
     },
-    output: {
-        filename: '[name].js',
-        path: path.resolve(__dirname, 'public')
-    },
     plugins: [
+        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'src', 'index.html')
-        })
-    ]
+            template: path.join(__dirname, 'src', 'index.html'),
+            filename: 'index.html',
+            minify: {
+                collapseWhitespace: true,
+                removeComments: true,
+                removeRedundantAttributes: true,
+                useShortDoctype: true,
+            },
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'style-[hash].css',
+        }),
+    ],
+    devServer: {
+        contentBase: 'dist',
+        compress: true,
+        port: 8080,
+    },
 }

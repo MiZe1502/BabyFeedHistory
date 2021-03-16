@@ -15,11 +15,15 @@ export const App = () => {
         .then((res) => console.log(res));
 
     console.log(data)
-    return <ApolloProvider client={client}>
-        <div>
+    return <div>
             My App Component
         </div>
+}
+
+export const ConnectedApp = () => {
+    return <ApolloProvider client={client}>
+        <App/>
     </ApolloProvider>
 }
 
-export default App
+export default ConnectedApp
