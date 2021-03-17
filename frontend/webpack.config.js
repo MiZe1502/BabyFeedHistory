@@ -4,7 +4,15 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const dev = process.env.NODE_ENV !== "production";
+const prod = process.env.NODE_ENV === "production";
+
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`)
+console.log(`dev: ${dev}`)
+console.log(`prod: ${prod}`)
+
 module.exports = {
+    mode: dev ? "development" : "production",
     entry: {
         app: path.join(__dirname, 'src', 'index.tsx')
     },
