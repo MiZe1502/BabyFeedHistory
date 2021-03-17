@@ -1,6 +1,5 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -11,13 +10,15 @@ console.log(`NODE_ENV: ${process.env.NODE_ENV}`)
 console.log(`dev: ${dev}`)
 console.log(`prod: ${prod}`)
 
+const outputDir = path.resolve(__dirname, 'dist');
+
 module.exports = {
     mode: dev ? "development" : "production",
     entry: {
         app: path.join(__dirname, 'src', 'index.tsx')
     },
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: outputDir,
         filename: 'bundle-[hash].js',
     },
     resolve: {
@@ -48,6 +49,25 @@ module.exports = {
                     },
                     'sass-loader'
                 ]
+            },
+            {
+                test: /\.(svg|png|jpg|jpeg|gif)$/,
+                include: path.join(__dirname, 'src'),
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        options: {
+                            name() {
+                                if (dev) {
+                                    return '[path][name].[ext]';
+                                }
+
+                                return '[contenthash].[ext]';
+                            },
+                        },
+                        outputPath: outputDir
+                    }
+                }
             }
         ],
     },

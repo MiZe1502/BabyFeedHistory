@@ -2,6 +2,9 @@ import React from 'react';
 import {ApolloProvider, gql, useMutation} from "@apollo/client";
 import {client} from "./api";
 
+// @ts-ignore
+import sv from './test.svg';
+
 import css from "./test.scss";
 
 const MUTATION_AUTH = gql`
@@ -19,6 +22,8 @@ export const App = () => {
     console.log(data)
     return <div className={css.test}>
             My App Component
+
+        <img src={sv}></img>
         </div>
 }
 
