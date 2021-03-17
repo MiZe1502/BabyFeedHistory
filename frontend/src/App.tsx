@@ -2,6 +2,8 @@ import React from 'react';
 import {ApolloProvider, gql, useMutation} from "@apollo/client";
 import {client} from "./api";
 
+import css from "./test.scss";
+
 const MUTATION_AUTH = gql`
     mutation Auth($login: String!, $password: String!) {
         login(login: $login, password: $password)
@@ -15,7 +17,7 @@ export const App = () => {
         .then((res) => console.log(res));
 
     console.log(data)
-    return <div>
+    return <div className={css.test}>
             My App Component
         </div>
 }

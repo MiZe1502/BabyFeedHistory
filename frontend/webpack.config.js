@@ -26,9 +26,28 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.html/,
+                use: ['html-loader']
+            },
+            {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
                 exclude: '/node_modules/'
+            },
+            {
+                test: /\.s(a|c)ss$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                localIdentName: dev ? '[local]' : '[hash]'
+                            },
+                        }
+                    },
+                    'sass-loader'
+                ]
             }
         ],
     },
