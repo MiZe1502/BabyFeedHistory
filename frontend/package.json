@@ -4,6 +4,7 @@
   "description": "Client for app to store baby feeding history",
   "scripts": {
     "start:dev": "cross-env NODE_ENV=development webpack serve",
+    "start:prod": "cross-env NODE_ENV=production webpack serve",
     "build:dev": "cross-env NODE_ENV=development webpack",
     "build:prod": "cross-env NODE_ENV=production webpack"
   },
@@ -40,6 +41,7 @@
     "sass": "^1.32.8",
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
+    "terser-webpack-plugin": "^5.1.1",
     "ts-loader": "^8.0.18",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
     "typescript": "^4.2.3",

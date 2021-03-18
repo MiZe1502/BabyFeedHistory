@@ -2,6 +2,7 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const dev = process.env.NODE_ENV !== "production";
 const prod = process.env.NODE_ENV === "production";
@@ -14,6 +15,7 @@ const outputDir = path.resolve(__dirname, 'dist');
 
 module.exports = {
     mode: dev ? "development" : "production",
+    devtool: dev? 'source-map': 'hidden-source-map',
     entry: {
         app: path.join(__dirname, 'src', 'index.tsx')
     },
@@ -33,7 +35,7 @@ module.exports = {
             {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
-                exclude: '/node_modules/'
+                exclude: '/node_modules/',
             },
             {
                 test: /\.s(a|c)ss$/,
@@ -43,7 +45,7 @@ module.exports = {
                         loader: 'css-loader',
                         options: {
                             modules: {
-                                localIdentName: dev ? '[local]' : '[hash]'
+                                localIdentName: dev ? '[local]' : '[hash:base64:5]'
                             },
                         }
                     },
@@ -86,6 +88,16 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'style-[hash].css',
         }),
+        new TerserPlugin({
+            parallel: true,
+            terserOptions: {
+                compress: prod,
+                mangle: prod,
+                format: {
+                    comments: dev,
+                },
+            },
+        })
     ],
     devServer: {
         contentBase: 'dist',
