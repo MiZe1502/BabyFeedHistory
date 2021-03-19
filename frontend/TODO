@@ -1,1 +1,7 @@
-3. Gql wrapper
+1. auth
+    1.1. router app with private routes
+    1.2. save token to context on login
+    1.3. save token to local storage on login
+    1.4. remove token from context on logout
+    1.5. remove token from context on logout
+2. registration
