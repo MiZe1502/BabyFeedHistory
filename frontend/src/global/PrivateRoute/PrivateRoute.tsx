@@ -9,7 +9,7 @@ export const PrivateRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
         <Route
             {...rest}
             render={({ location }) =>
-                auth.token ? (
+                auth?.token ? (
                     children
                 ) : (
                     <Redirect

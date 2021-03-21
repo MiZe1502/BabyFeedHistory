@@ -1,7 +1,20 @@
 import {useState} from "react";
-import {gql, useMutation} from "@apollo/client";
 
 export const useAuthorizedApp = () => {
     const [token, setToken] = useState("");
 
+    const updateToken = (token: string) => {
+        console.log(token)
+        setToken(token);
+    }
+
+    const removeToken = () => {
+        setToken("");
+    }
+
+    return {
+        token,
+        updateToken,
+        removeToken,
+    }
 }

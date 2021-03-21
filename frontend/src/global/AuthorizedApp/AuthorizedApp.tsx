@@ -1,15 +1,18 @@
 import React from 'react';
 import {createContext} from "react";
-import {useAuth} from "../../common/hooks/useAuth";
+import {useAuthorizedApp} from "./useAuthorizedApp";
 
 export interface AuthContext {
     token?: string;
+    updateToken: (token: string) => void;
+    removeToken: () => void;
 }
 
-export const authContext = createContext<AuthContext>({});
+export const authContext = createContext<AuthContext | undefined>(undefined);
 
 export const AuthorizedApp: React.FC = ({ children }) => {
-    const auth = useAuth();
+    const auth = useAuthorizedApp();
+
     return (
         <authContext.Provider value={auth}>
             {children}
