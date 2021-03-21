@@ -3,12 +3,12 @@ import {
     Dialog, DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle, TextField
+    DialogTitle, TextField, Typography
 } from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import {gql, useMutation} from "@apollo/client";
 import {useAuth} from "../../common/hooks/useAuth";
-
+import ErrorIcon from '@material-ui/icons/Error';
 import css from "./LoginPage.scss"
 import {useForm} from "react-hook-form";
 
@@ -34,7 +34,8 @@ export const LoginPage = () => {
 
     const { register, handleSubmit, formState: {
         errors
-    }, formState } = useForm<LoginForm>();
+    } } = useForm<LoginForm>({
+    });
 
     const [authMethod, { error, data, loading }] = useMutation<LoginResp>(MUTATION_AUTH);
 
@@ -50,18 +51,16 @@ export const LoginPage = () => {
     }
 
     const onSubmit = (data: LoginForm) => {
-        console.log(formState)
         signIn(data.login, data.password);
     }
 
-    return <div>
-        <Dialog open={true} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Authorize</DialogTitle>
+    return <Dialog open={true} aria-labelledby="form-dialog-title">
+            <DialogTitle id="form-dialog-title">Authorization</DialogTitle>
             <DialogContent>
                 <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
                     <TextField
                         inputRef={register({
-                            required: 'Email address field should not be empty',
+                            required: 'Should not be empty',
                         })}
                         autoFocus
                         margin="dense"
@@ -73,11 +72,11 @@ export const LoginPage = () => {
                         fullWidth
                         disabled={loading}
                         error={Boolean(errors.login)}
-                        helperText={errors.login}
+                        helperText={errors.login?.message}
                     />
                     <TextField
                         inputRef={register({
-                            required: 'Password field should not be empty'
+                            required: 'Should not be empty'
                         })}
                         autoFocus
                         defaultValue=""
@@ -89,8 +88,12 @@ export const LoginPage = () => {
                         fullWidth
                         disabled={loading}
                         error={Boolean(errors.password)}
-                        helperText={errors.password}
+                        helperText={errors.password?.message}
                     />
+                    {error && <Typography className={css.FlexHorCenter} color="error" variant="h6" component="h6">
+                        <ErrorIcon className={css.ErrorIcon} color="error" fontSize="small"/>
+                            {error.message}
+                    </Typography>}
                     <DialogActions>
                         {loading ?
                             <CircularProgress className={css.Loading} size={16} disableShrink /> :
@@ -103,6 +106,5 @@ export const LoginPage = () => {
                     </DialogActions>
                 </form>
             </DialogContent>
-        </Dialog>
-    </div>;
+        </Dialog>;
 }
