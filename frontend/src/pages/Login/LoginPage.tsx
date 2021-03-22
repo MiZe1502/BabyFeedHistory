@@ -9,6 +9,7 @@ import ErrorIcon from '@material-ui/icons/Error';
 import css from "./LoginPage.scss"
 import { FormattedMessage } from "react-intl";
 import {useLoginPage} from "./useLoginPage";
+import {ButtonWithLoading} from "../../common/components/ButtonWithLoading/ButtonWithLoading";
 
 export const LoginPage = () => {
     const {
@@ -28,6 +29,7 @@ export const LoginPage = () => {
             <DialogContent>
                 <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
                     <TextField
+                        className={css.LoginField}
                         inputRef={register({
                             required: intl.formatMessage({id: "Login.Validation.Field.Required"}),
                         })}
@@ -64,11 +66,7 @@ export const LoginPage = () => {
                             {error.message}
                     </Typography>}
                     <DialogActions>
-                        {loading ?
-                            <CircularProgress className={css.Loading} size={16} disableShrink /> :
-                            <Button type="submit" color="primary">
-                                <FormattedMessage id="Login.Buttons.SignIn" />
-                        </Button>}
+                        <ButtonWithLoading loading={loading} locId="Login.Buttons.SignIn" />
                         <Button onClick={() => {}} color="secondary">
                             <FormattedMessage id="Login.Buttons.SignUp" />
                         </Button>

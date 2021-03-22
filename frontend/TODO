@@ -7,11 +7,9 @@
 3. common
     3.2. linter
 4. login page
-    4.2. wrap button to center loading spinner
     4.3. margin between fields
     4.4. useCallback for methods
     4.5. redirect to home on login
     4.6. change form on sign up click
 5. components
-    5.1. button with loading
     5.2. error message for errors from backend

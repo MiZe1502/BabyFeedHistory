@@ -1,17 +1,8 @@
 import {useAuth} from "../../common/hooks/useAuth";
 import {useIntl} from "react-intl";
 import {useForm} from "react-hook-form";
-import {gql, useMutation} from "@apollo/client";
-
-const MUTATION_AUTH = gql`
-    mutation Auth($login: String!, $password: String!) {
-        login(login: $login, password: $password)
-    }
-`
-
-export interface LoginResp {
-    login: string;
-}
+import {useMutation} from "@apollo/client";
+import {LoginResp, MUTATION_AUTH} from "./api";
 
 interface LoginForm {
     login: string;
