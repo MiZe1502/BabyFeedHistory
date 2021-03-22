@@ -7,7 +7,6 @@
 3. common
     3.2. linter
 4. login page
-    4.1. custom hook
     4.2. wrap button to center loading spinner
     4.3. margin between fields
     4.4. useCallback for methods

@@ -2,59 +2,24 @@ import {
     Button, CircularProgress,
     Dialog, DialogActions,
     DialogContent,
-    DialogContentText,
     DialogTitle, TextField, Typography
 } from "@material-ui/core";
-import React, {useEffect, useState} from "react";
-import {gql, useMutation} from "@apollo/client";
-import {useAuth} from "../../common/hooks/useAuth";
+import React from "react";
 import ErrorIcon from '@material-ui/icons/Error';
 import css from "./LoginPage.scss"
-import {useForm} from "react-hook-form";
-import { FormattedMessage, useIntl } from "react-intl";
-
-const MUTATION_AUTH = gql`
-    mutation Auth($login: String!, $password: String!) {
-        login(login: $login, password: $password)
-    }
-`
-
-export interface LoginResp {
-    login: string;
-}
-
-interface LoginForm {
-    login: string;
-    password: string;
-}
-
-// signIn("abs updated login 2", "qwerty12")
+import { FormattedMessage } from "react-intl";
+import {useLoginPage} from "./useLoginPage";
 
 export const LoginPage = () => {
-    const auth = useAuth();
-    const intl = useIntl();
-
-    const { register, handleSubmit, formState: {
-        errors
-    } } = useForm<LoginForm>({
-    });
-
-    const [authMethod, { error, data, loading }] = useMutation<LoginResp>(MUTATION_AUTH);
-
-    const signIn = (login: string, password: string) => {
-        authMethod({ variables: { login, password } })
-            .then((res) => {
-                console.log(auth, res, data)
-                auth?.updateToken(res?.data?.login || "")
-            })
-            .catch((err) => {
-                console.log(err)
-            });
-    }
-
-    const onSubmit = (data: LoginForm) => {
-        signIn(data.login, data.password);
-    }
+    const {
+        handleSubmit,
+        register,
+        onSubmit,
+        loading,
+        errors,
+        intl,
+        error,
+    } = useLoginPage();
 
     return <Dialog open={true} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">
