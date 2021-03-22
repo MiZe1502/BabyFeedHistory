@@ -7,6 +7,7 @@
 3. common
     3.2. linter
 4. login page
+    4.1. prettify the error message
     4.3. margin between fields
     4.4. useCallback for methods
     4.5. redirect to home on login
