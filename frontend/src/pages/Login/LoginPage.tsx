@@ -11,6 +11,7 @@ import {useAuth} from "../../common/hooks/useAuth";
 import ErrorIcon from '@material-ui/icons/Error';
 import css from "./LoginPage.scss"
 import {useForm} from "react-hook-form";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const MUTATION_AUTH = gql`
     mutation Auth($login: String!, $password: String!) {
@@ -31,6 +32,7 @@ interface LoginForm {
 
 export const LoginPage = () => {
     const auth = useAuth();
+    const intl = useIntl();
 
     const { register, handleSubmit, formState: {
         errors
@@ -55,19 +57,21 @@ export const LoginPage = () => {
     }
 
     return <Dialog open={true} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Authorization</DialogTitle>
+            <DialogTitle id="form-dialog-title">
+                <FormattedMessage id="Login.Title" />
+            </DialogTitle>
             <DialogContent>
                 <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
                     <TextField
                         inputRef={register({
-                            required: 'Should not be empty',
+                            required: intl.formatMessage({id: "Login.Validation.Field.Required"}),
                         })}
                         autoFocus
                         margin="dense"
                         defaultValue=""
                         id="login"
                         name="login"
-                        label="Email Address"
+                        label={intl.formatMessage({id: "Login.Fields.Login"})}
                         type="email"
                         fullWidth
                         disabled={loading}
@@ -76,14 +80,14 @@ export const LoginPage = () => {
                     />
                     <TextField
                         inputRef={register({
-                            required: 'Should not be empty'
+                            required: intl.formatMessage({id: "Login.Validation.Field.Required"}),
                         })}
                         autoFocus
                         defaultValue=""
                         margin="dense"
                         id="password"
                         name="password"
-                        label="Password"
+                        label={intl.formatMessage({id: "Login.Fields.Password"})}
                         type="password"
                         fullWidth
                         disabled={loading}
@@ -98,10 +102,10 @@ export const LoginPage = () => {
                         {loading ?
                             <CircularProgress className={css.Loading} size={16} disableShrink /> :
                             <Button type="submit" color="primary">
-                            Sign In
+                                <FormattedMessage id="Login.Buttons.SignIn" />
                         </Button>}
                         <Button onClick={() => {}} color="secondary">
-                            Sign Up
+                            <FormattedMessage id="Login.Buttons.SignUp" />
                         </Button>
                     </DialogActions>
                 </form>

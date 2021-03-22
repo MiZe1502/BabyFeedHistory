@@ -5,7 +5,6 @@
     1.5. remove token from context on logout
 2. registration
 3. common
-    3.1. react-intl + move all strings to loc file
     3.2. linter
 4. login page
     4.1. custom hook
