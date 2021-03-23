@@ -3,6 +3,8 @@ import {useIntl} from "react-intl";
 import {useForm} from "react-hook-form";
 import {useMutation} from "@apollo/client";
 import {LoginResp, MUTATION_AUTH} from "./api";
+import { useHistory } from "react-router-dom";
+import {routes} from "../../utils/routes";
 
 interface LoginForm {
     login: string;
@@ -14,6 +16,7 @@ interface LoginForm {
 export const useLoginPage = () => {
     const auth = useAuth();
     const intl = useIntl();
+    const history = useHistory();
 
     const { register, handleSubmit, formState: {
         errors
@@ -28,6 +31,7 @@ export const useLoginPage = () => {
                 console.log(auth, res, data)
                 auth?.updateToken(res?.data?.login || "")
             })
+            .then(() => history.push(routes.history))
             .catch((err) => {
                 console.log(err)
             });
