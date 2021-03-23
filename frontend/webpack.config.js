@@ -22,6 +22,7 @@ module.exports = {
     output: {
         path: outputDir,
         filename: 'bundle-[hash].js',
+        publicPath: '/'
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
@@ -103,5 +104,6 @@ module.exports = {
         contentBase: 'dist',
         compress: true,
         port: 8080,
+        historyApiFallback: true,
     },
 }

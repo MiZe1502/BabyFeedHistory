@@ -5,6 +5,7 @@ import {useMutation} from "@apollo/client";
 import {LoginResp, MUTATION_AUTH} from "./api";
 import { useHistory } from "react-router-dom";
 import {routes} from "../../utils/routes";
+import {addDataToLocalStorage, SESSION_TOKEN} from "../../utils/localStorage";
 
 interface LoginForm {
     login: string;
@@ -30,6 +31,7 @@ export const useLoginPage = () => {
             .then((res) => {
                 console.log(auth, res, data)
                 auth?.updateToken(res?.data?.login || "")
+                addDataToLocalStorage(SESSION_TOKEN, res?.data?.login)
             })
             .then(() => history.push(routes.history))
             .catch((err) => {

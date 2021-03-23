@@ -7,8 +7,9 @@
 3. common
     3.2. linter
 4. login page
+    4.1. save token to local storage
+    4.2. get token from storage on page load
     4.4. useCallback for methods
-    4.5. redirect to home on login
     4.6. change form on sign up click
 5. components
     5.1. common text field component

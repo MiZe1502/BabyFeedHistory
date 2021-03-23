@@ -1,6 +1,6 @@
 export const routes = {
-    login: '/login',
-    history: '/',
+    auth: '/auth',
+    history: '/history',
     account: '/account',
     dayInHistory: '/history/:date'
 }

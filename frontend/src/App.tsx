@@ -15,7 +15,7 @@ import {HistoryPage} from "./pages/History/HistoryPage";
 export const App = () => {
     return <BrowserRouter>
             <Switch>
-                <Route path={routes.login}>
+                <Route path={routes.auth}>
                     <LoginPage />
                 </Route>
                 <PrivateRoute path={routes.history}>
