@@ -28,40 +28,43 @@ export const LoginPage = () => {
             </DialogTitle>
             <DialogContent>
                 <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
-                    <TextField
-                        className={css.LoginField}
-                        inputRef={register({
-                            required: intl.formatMessage({id: "Login.Validation.Field.Required"}),
-                        })}
-                        autoFocus
-                        margin="dense"
-                        defaultValue=""
-                        id="login"
-                        name="login"
-                        label={intl.formatMessage({id: "Login.Fields.Login"})}
-                        type="email"
-                        fullWidth
-                        disabled={loading}
-                        error={Boolean(errors.login)}
-                        helperText={errors.login?.message}
-                    />
-                    <TextField
-                        inputRef={register({
-                            required: intl.formatMessage({id: "Login.Validation.Field.Required"}),
-                        })}
-                        autoFocus
-                        defaultValue=""
-                        margin="dense"
-                        id="password"
-                        name="password"
-                        label={intl.formatMessage({id: "Login.Fields.Password"})}
-                        type="password"
-                        fullWidth
-                        disabled={loading}
-                        error={Boolean(errors.password)}
-                        helperText={errors.password?.message}
-                    />
-                    {error && <Typography className={css.FlexHorCenter} color="error" variant="h6" component="h6">
+                    <div className={css.FieldWrapper}>
+                        <TextField
+                            inputRef={register({
+                                required: intl.formatMessage({id: "Login.Validation.Field.Required"}),
+                            })}
+                            autoFocus
+                            margin="dense"
+                            defaultValue=""
+                            id="login"
+                            name="login"
+                            label={intl.formatMessage({id: "Login.Fields.Login"})}
+                            type="email"
+                            fullWidth
+                            disabled={loading}
+                            error={Boolean(errors.login)}
+                            helperText={errors.login?.message}
+                        />
+                    </div>
+                    <div className={css.FieldWrapper}>
+                        <TextField
+                            inputRef={register({
+                                required: intl.formatMessage({id: "Login.Validation.Field.Required"}),
+                            })}
+                            autoFocus
+                            defaultValue=""
+                            margin="dense"
+                            id="password"
+                            name="password"
+                            label={intl.formatMessage({id: "Login.Fields.Password"})}
+                            type="password"
+                            fullWidth
+                            disabled={loading}
+                            error={Boolean(errors.password)}
+                            helperText={errors.password?.message}
+                        />
+                    </div>
+                    {error && <Typography className={css.FlexHorCenter} color="error" variant="subtitle2" component="h6">
                         <ErrorIcon className={css.ErrorIcon} color="error" fontSize="small"/>
                             {error.message}
                     </Typography>}
