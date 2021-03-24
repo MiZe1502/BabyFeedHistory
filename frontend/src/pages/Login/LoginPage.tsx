@@ -11,6 +11,7 @@ import { FormattedMessage } from "react-intl";
 import {useLoginPage} from "./useLoginPage";
 import {ButtonWithLoading} from "../../common/components/ButtonWithLoading/ButtonWithLoading";
 import {TextFieldWrapped} from "../../common/components/TextField/TextField";
+import {ErrorMessage} from "../../common/components/ErrorMessage/ErrorMessage";
 
 export const LoginPage = () => {
     const {
@@ -54,10 +55,7 @@ export const LoginPage = () => {
                         error={Boolean(errors.password)}
                         helperText={errors.password?.message}
                     />
-                    {error && <Typography className={css.FlexHorCenter} color="error" variant="subtitle2" component="h6">
-                        <ErrorIcon className={css.ErrorIcon} color="error" fontSize="small"/>
-                            {error.message}
-                    </Typography>}
+                    <ErrorMessage showError={Boolean(error)} errorMessage={error?.message}/>
                     <DialogActions>
                         <ButtonWithLoading loading={loading} locId="Login.Buttons.SignIn" />
                         <Button onClick={() => {}} color="secondary">
