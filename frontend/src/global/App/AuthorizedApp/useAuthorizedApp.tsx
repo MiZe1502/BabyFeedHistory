@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {
     getDataFromLocalStorageByKey,
     SESSION_TOKEN
-} from "../../utils/localStorage";
+} from "../../../utils/localStorage";
 
 export const useAuthorizedApp = () => {
     const [token, setToken] = useState(getDataFromLocalStorageByKey(SESSION_TOKEN));
