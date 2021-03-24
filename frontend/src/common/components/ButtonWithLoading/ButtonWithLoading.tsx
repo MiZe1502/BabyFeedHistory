@@ -14,7 +14,7 @@ interface ButtonWithLoadingProps {
 }
 
 export const ButtonWithLoading = ({loading, className, loaderClassName,
-       buttonClassName, locId}: ButtonWithLoadingProps) => {
+       buttonClassName, locId}: ButtonWithLoadingProps): React.ReactElement => {
     let res;
 
     if (loading) {

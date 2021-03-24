@@ -6,7 +6,7 @@ import {en} from "../../../loc/en";
 import React from "react";
 import {RoutedApp} from "../RoutedApp/RoutedApp";
 
-export const ConnectedApp = () => {
+export const ConnectedApp = (): React.ReactElement => {
     return <ApolloProvider client={client}>
         <AuthorizedApp>
             <IntlProvider messages={en} locale="en" defaultLocale="en">

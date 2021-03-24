@@ -1,10 +1,10 @@
 export const SESSION_TOKEN = "SESSION_TOKEN";
 
-export const addDataToLocalStorage = (key: string, data: any): void => {
+export const addDataToLocalStorage = (key: string, data: string): void => {
     localStorage.setItem(key, data)
 }
 
-export const getDataFromLocalStorageByKey = (key: string): any => {
+export const getDataFromLocalStorageByKey = (key: string): string | null => {
     return localStorage.getItem(key)
 }
 

@@ -4,7 +4,7 @@ import {Redirect, Route, RouteProps } from "react-router-dom";
 import {routes} from "../../utils/routes";
 
 export const PrivateRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
-    let auth = useAuth();
+    const auth = useAuth();
     return (
         <Route
             {...rest}

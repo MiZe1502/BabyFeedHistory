@@ -5,7 +5,7 @@ import {routes} from "../../../utils/routes";
 import {PrivateRoute} from "../../PrivateRoute/PrivateRoute";
 import {HistoryPage} from "../../../pages/History/HistoryPage";
 
-export const RoutedApp = () => {
+export const RoutedApp = (): React.ReactElement => {
     return <BrowserRouter>
             <Switch>
                 <Route path={routes.auth}>

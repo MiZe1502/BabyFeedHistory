@@ -2,18 +2,17 @@ import {
     Button,
     Dialog, DialogActions,
     DialogContent,
-    DialogTitle, Typography
+    DialogTitle
 } from "@material-ui/core";
 import React from "react";
-import ErrorIcon from '@material-ui/icons/Error';
-import css from "./LoginPage.scss"
 import { FormattedMessage } from "react-intl";
 import {useLoginPage} from "./useLoginPage";
-import {ButtonWithLoading} from "../../common/components/ButtonWithLoading/ButtonWithLoading";
+import {ButtonWithLoading}
+    from "../../common/components/ButtonWithLoading/ButtonWithLoading";
 import {TextFieldWrapped} from "../../common/components/TextField/TextField";
 import {ErrorMessage} from "../../common/components/ErrorMessage/ErrorMessage";
 
-export const LoginPage = () => {
+export const LoginPage = (): React.ReactElement => {
     const {
         handleSubmit,
         register,
@@ -32,7 +31,8 @@ export const LoginPage = () => {
                 <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
                     <TextFieldWrapped
                         inputRef={register({
-                            required: intl.formatMessage({id: "Login.Validation.Field.Required"}),
+                            required: intl.formatMessage({
+                                id: "Login.Validation.Field.Required"}),
                         })}
                         defaultValue=""
                         id="login"
@@ -44,7 +44,8 @@ export const LoginPage = () => {
                         helperText={errors.login?.message}/>
                     <TextFieldWrapped
                         inputRef={register({
-                            required: intl.formatMessage({id: "Login.Validation.Field.Required"}),
+                            required: intl.formatMessage({
+                                id: "Login.Validation.Field.Required"}),
                         })}
                         defaultValue=""
                         id="password"
@@ -55,10 +56,13 @@ export const LoginPage = () => {
                         error={Boolean(errors.password)}
                         helperText={errors.password?.message}
                     />
-                    <ErrorMessage showError={Boolean(error)} errorMessage={error?.message}/>
+                    <ErrorMessage showError={Boolean(error)}
+                                  errorMessage={error?.message}/>
                     <DialogActions>
-                        <ButtonWithLoading loading={loading} locId="Login.Buttons.SignIn" />
-                        <Button onClick={() => {}} color="secondary">
+                        <ButtonWithLoading loading={loading}
+                                           locId="Login.Buttons.SignIn" />
+                        <Button onClick={() => console.log("SignUp")}
+                                color="secondary">
                             <FormattedMessage id="Login.Buttons.SignUp" />
                         </Button>
                     </DialogActions>

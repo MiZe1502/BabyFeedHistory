@@ -1,11 +1,5 @@
-1. auth
-    1.4. remove token from context on logout
-    1.5. remove token from context on logout
 2. login and registration
     2.1. change form on sign up click on login form
     2.2. registration form is the same as login form
     2.3. add not required field for name
     2.4. implement mutation for creation
-3. common
-    3.2. linter
-4. login page

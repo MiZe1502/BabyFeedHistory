@@ -24,14 +24,15 @@ export const useLoginPage = () => {
     } } = useForm<LoginForm>({
     });
 
-    const [authMethod, { error, data, loading }] = useMutation<LoginResp>(MUTATION_AUTH);
+    const [authMethod, { error, data, loading }] =
+        useMutation<LoginResp>(MUTATION_AUTH);
 
     const signIn = (login: string, password: string) => {
         authMethod({ variables: { login, password } })
             .then((res) => {
                 console.log(auth, res, data)
                 auth?.updateToken(res?.data?.login || "")
-                addDataToLocalStorage(SESSION_TOKEN, res?.data?.login)
+                addDataToLocalStorage(SESSION_TOKEN, res?.data?.login || "")
             })
             .then(() => history.push(routes.history))
             .catch((err) => {
