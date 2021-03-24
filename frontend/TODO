@@ -4,10 +4,13 @@
     1.4. remove token from context on logout
     1.5. remove token from context on logout
 2. registration
+    2.1. the same as login form
+    2.2. add not required field for name
+    2.3. implement mutation for creation
 3. common
+    3.1. common styles
     3.2. linter
 4. login page
     4.6. change form on sign up click
 5. components
-    5.1. common text field component
     5.2. error message for errors from backend

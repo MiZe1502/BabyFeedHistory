@@ -1,8 +1,8 @@
 import {
-    Button, CircularProgress,
+    Button,
     Dialog, DialogActions,
     DialogContent,
-    DialogTitle, TextField, Typography
+    DialogTitle, Typography
 } from "@material-ui/core";
 import React from "react";
 import ErrorIcon from '@material-ui/icons/Error';
@@ -10,6 +10,7 @@ import css from "./LoginPage.scss"
 import { FormattedMessage } from "react-intl";
 import {useLoginPage} from "./useLoginPage";
 import {ButtonWithLoading} from "../../common/components/ButtonWithLoading/ButtonWithLoading";
+import {TextFieldWrapped} from "../../common/components/TextField/TextField";
 
 export const LoginPage = () => {
     const {
@@ -28,42 +29,31 @@ export const LoginPage = () => {
             </DialogTitle>
             <DialogContent>
                 <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
-                    <div className={css.FieldWrapper}>
-                        <TextField
-                            inputRef={register({
-                                required: intl.formatMessage({id: "Login.Validation.Field.Required"}),
-                            })}
-                            autoFocus
-                            margin="dense"
-                            defaultValue=""
-                            id="login"
-                            name="login"
-                            label={intl.formatMessage({id: "Login.Fields.Login"})}
-                            type="email"
-                            fullWidth
-                            disabled={loading}
-                            error={Boolean(errors.login)}
-                            helperText={errors.login?.message}
-                        />
-                    </div>
-                    <div className={css.FieldWrapper}>
-                        <TextField
-                            inputRef={register({
-                                required: intl.formatMessage({id: "Login.Validation.Field.Required"}),
-                            })}
-                            autoFocus
-                            defaultValue=""
-                            margin="dense"
-                            id="password"
-                            name="password"
-                            label={intl.formatMessage({id: "Login.Fields.Password"})}
-                            type="password"
-                            fullWidth
-                            disabled={loading}
-                            error={Boolean(errors.password)}
-                            helperText={errors.password?.message}
-                        />
-                    </div>
+                    <TextFieldWrapped
+                        inputRef={register({
+                            required: intl.formatMessage({id: "Login.Validation.Field.Required"}),
+                        })}
+                        defaultValue=""
+                        id="login"
+                        name="login"
+                        label={intl.formatMessage({id: "Login.Fields.Login"})}
+                        type="email"
+                        disabled={loading}
+                        error={Boolean(errors.login)}
+                        helperText={errors.login?.message}/>
+                    <TextFieldWrapped
+                        inputRef={register({
+                            required: intl.formatMessage({id: "Login.Validation.Field.Required"}),
+                        })}
+                        defaultValue=""
+                        id="password"
+                        name="password"
+                        label={intl.formatMessage({id: "Login.Fields.Password"})}
+                        type="password"
+                        disabled={loading}
+                        error={Boolean(errors.password)}
+                        helperText={errors.password?.message}
+                    />
                     {error && <Typography className={css.FlexHorCenter} color="error" variant="subtitle2" component="h6">
                         <ErrorIcon className={css.ErrorIcon} color="error" fontSize="small"/>
                             {error.message}
