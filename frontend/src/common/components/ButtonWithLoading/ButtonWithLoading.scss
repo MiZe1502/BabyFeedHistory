@@ -1,6 +1,7 @@
+@import "../../styles/positioning";
+
 .Wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include FlexHorCenterVertical;
+
   min-width: 64px;
 }

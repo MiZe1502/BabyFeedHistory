@@ -1,8 +1,5 @@
-.Loading {
-  margin-right: 8px;
-}
+@import "../../common/styles/positioning";
 
-.FlexHorCenter {
-  display: flex;
-  align-items: center;
+.Loading {
+  @include MarginRight(2);
 }

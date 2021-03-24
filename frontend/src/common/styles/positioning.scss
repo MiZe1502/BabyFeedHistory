@@ -1,0 +1,28 @@
+@import "./constants";
+
+@mixin FlexHorCenter {
+  display: flex;
+  align-items: center;
+}
+
+@mixin FlexHorCenterVertical {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin MarginRight($value) {
+  margin-right: $value * $cell;
+}
+
+@mixin MarginBottom($value) {
+  margin-bottom: $value * $cell;
+}
+
+@mixin MarginTop($value) {
+  margin-top: $value * $cell;
+}
+
+@mixin MarginLeft($value) {
+  margin-left: $value * $cell;
+}

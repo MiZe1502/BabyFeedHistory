@@ -1,4 +1,7 @@
+@import "../../styles/positioning";
+
 .FieldWrapper {
+  @include MarginBottom(3);
+
   width: 400px;
-  margin-bottom: 12px;
 }

@@ -1,8 +1,5 @@
-.FlexHorCenter {
-  display: flex;
-  align-items: center;
-}
+@import "../../styles/positioning";
 
 .ErrorIcon {
-  margin-right: 4px;
+  @include MarginRight(1);
 }
