@@ -1,5 +1,3 @@
-2. login and registration
-    2.1. change form on sign up click on login form
-    2.2. registration form is the same as login form
-    2.3. add not required field for name
-    2.4. implement mutation for creation
+1. login and registration
+    1.1. confirm password validation
+    1.2. name validation probably
