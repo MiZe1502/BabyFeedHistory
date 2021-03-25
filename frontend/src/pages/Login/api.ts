@@ -6,7 +6,21 @@ export const MUTATION_AUTH = gql`
     }
 `
 
+export const MUTATION_REGISTRATION = gql`
+    mutation CreateUser($user: UserInput!) {
+        register(user: $user) {
+            token
+        }
+    }
+`
+
 export interface LoginResp {
     login: string;
+}
+
+export interface RegistrationResp {
+    register: {
+        token: string;
+    }
 }
 
