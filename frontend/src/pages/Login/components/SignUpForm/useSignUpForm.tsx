@@ -19,6 +19,8 @@ interface RegistrationForm extends LoginForm {
     name?: string;
 }
 
+export const MaxNameLength = 256;
+
 export const useSignUpForm = () => {
     const auth = useAuth();
     const intl = useIntl();

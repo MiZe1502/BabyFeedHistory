@@ -1,12 +1,12 @@
 import {TextFieldWrapped} from "../../../../common/components/TextField/TextField";
-import {MaxNameLength} from "../../useLoginPage";
 import {ErrorMessage} from "../../../../common/components/ErrorMessage/ErrorMessage";
 import {Button, DialogActions} from "@material-ui/core";
 import {ButtonWithLoading}
     from "../../../../common/components/ButtonWithLoading/ButtonWithLoading";
 import {FormattedMessage} from "react-intl";
 import React from "react";
-import { useSignUpForm } from "./useSignUpForm";
+import {MaxNameLength, useSignUpForm} from "./useSignUpForm";
+import {useLoginMode} from "../../useLoginMode";
 
 export const SignUpForm = () => {
     const {
@@ -18,6 +18,8 @@ export const SignUpForm = () => {
         loading,
         onSubmit,
     } = useSignUpForm();
+
+    const {onChangeMode} = useLoginMode();
 
     return <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
         <TextFieldWrapped
@@ -81,7 +83,7 @@ export const SignUpForm = () => {
         <DialogActions>
             <ButtonWithLoading loading={loading}
                                locId="Login.Buttons.SignUp" />
-            <Button onClick={() => console.log("SignIn")}
+            <Button onClick={onChangeMode}
                     color="secondary">
                 <FormattedMessage id="Login.Buttons.SignIn" />
             </Button>

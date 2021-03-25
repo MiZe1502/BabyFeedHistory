@@ -1,5 +1,6 @@
 export const en = {
-    "Login.Title": "Authorization",
+    "Login.Title.SignIn": "Authorization",
+    "Login.Title.SignUp": "Registration",
     "Login.Validation.Field.Required": "Should not be empty",
     "Login.Fields.Login": "Email Address",
     "Login.Fields.Password": "Password",

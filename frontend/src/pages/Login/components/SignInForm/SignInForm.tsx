@@ -6,6 +6,7 @@ import {ButtonWithLoading}
 import {FormattedMessage} from "react-intl";
 import React from "react";
 import {useSignInForm} from "./useSignInForm";
+import {useLoginMode} from "../../useLoginMode";
 
 export const SignInForm = () => {
     const {
@@ -17,6 +18,8 @@ export const SignInForm = () => {
         loading,
         onSubmit,
     } = useSignInForm();
+
+    const {onChangeMode} = useLoginMode();
 
     return <form onSubmit={handleSubmit(onSubmit)} noValidate
                  autoComplete="off">
@@ -54,7 +57,7 @@ export const SignInForm = () => {
         <DialogActions>
             <ButtonWithLoading loading={loading}
                                locId="Login.Buttons.SignIn"/>
-            <Button onClick={() => console.log("SignUp")}
+            <Button onClick={onChangeMode}
                     color="secondary">
                 <FormattedMessage id="Login.Buttons.SignUp"/>
             </Button>
