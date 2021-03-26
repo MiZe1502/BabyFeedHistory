@@ -1,12 +1,18 @@
 import {TextFieldWrapped} from "../../../../common/components/TextField/TextField";
 import {ErrorMessage} from "../../../../common/components/ErrorMessage/ErrorMessage";
-import {Button, DialogActions} from "@material-ui/core";
+import {
+    Button,
+    DialogActions,
+    IconButton,
+    InputAdornment
+} from "@material-ui/core";
 import {ButtonWithLoading}
     from "../../../../common/components/ButtonWithLoading/ButtonWithLoading";
 import {FormattedMessage} from "react-intl";
 import React from "react";
 import {MaxNameLength, useSignUpForm} from "./useSignUpForm";
 import {useLoginMode} from "../../useLoginMode";
+import {Visibility} from "@material-ui/icons";
 
 export const SignUpForm = () => {
     const {
@@ -17,6 +23,7 @@ export const SignUpForm = () => {
         error,
         loading,
         onSubmit,
+        getValues,
     } = useSignUpForm();
 
     const {onChangeMode} = useLoginMode();
@@ -67,13 +74,16 @@ export const SignUpForm = () => {
             inputRef={register({
                 required: intl.formatMessage({
                     id: "Login.Validation.Field.Required"}),
+                validate: {
+                    equal: (value) => value === getValues().password,
+                }
             })}
             defaultValue=""
             id="confirmPassword"
             name="confirmPassword"
             label={intl.formatMessage({
                 id: "Login.Fields.ConfirmPassword"})}
-            type="confirmPassword"
+            type="password"
             disabled={loading}
             error={Boolean(errors.confirmPassword)}
             helperText={errors.confirmPassword?.message}

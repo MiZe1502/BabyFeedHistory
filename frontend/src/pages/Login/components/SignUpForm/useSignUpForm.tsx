@@ -28,7 +28,7 @@ export const useSignUpForm = () => {
 
     const { register, handleSubmit, formState: {
         errors
-    } } = useForm<RegistrationForm>({
+    }, getValues } = useForm<RegistrationForm>({
     });
 
     const [regMethod, { error, data, loading }] =
@@ -62,5 +62,6 @@ export const useSignUpForm = () => {
         data,
         loading,
         onSubmit,
+        getValues,
     }
 }

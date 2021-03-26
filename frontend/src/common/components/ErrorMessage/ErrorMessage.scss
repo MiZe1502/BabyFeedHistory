@@ -1,5 +1,9 @@
 @import "../../styles/positioning";
 
+.Wrapper {
+  @include FlexHorCenter;
+}
+
 .ErrorIcon {
   @include MarginRight(1);
 }
