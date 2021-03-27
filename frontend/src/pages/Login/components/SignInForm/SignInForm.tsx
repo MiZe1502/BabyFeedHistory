@@ -7,8 +7,10 @@ import {FormattedMessage} from "react-intl";
 import React from "react";
 import {useSignInForm} from "./useSignInForm";
 import {useLoginMode} from "../../useLoginMode";
+import {PasswordTextField}
+    from "../../../../common/components/PasswordTextField/PasswordTextField";
 
-export const SignInForm = () => {
+export const SignInForm = (): React.ReactElement => {
     const {
         intl,
         register,
@@ -37,7 +39,7 @@ export const SignInForm = () => {
             disabled={loading}
             error={Boolean(errors.login)}
             helperText={errors.login?.message}/>
-        <TextFieldWrapped
+        <PasswordTextField
             inputRef={register({
                 required: intl.formatMessage({
                     id: "Login.Validation.Field.Required"
@@ -47,7 +49,6 @@ export const SignInForm = () => {
             id="password"
             name="password"
             label={intl.formatMessage({id: "Login.Fields.Password"})}
-            type="password"
             disabled={loading}
             error={Boolean(errors.password)}
             helperText={errors.password?.message}

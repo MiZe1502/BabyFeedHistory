@@ -3,8 +3,6 @@ import {ErrorMessage} from "../../../../common/components/ErrorMessage/ErrorMess
 import {
     Button,
     DialogActions,
-    IconButton,
-    InputAdornment
 } from "@material-ui/core";
 import {ButtonWithLoading}
     from "../../../../common/components/ButtonWithLoading/ButtonWithLoading";
@@ -12,9 +10,10 @@ import {FormattedMessage} from "react-intl";
 import React from "react";
 import {MaxNameLength, useSignUpForm} from "./useSignUpForm";
 import {useLoginMode} from "../../useLoginMode";
-import {Visibility} from "@material-ui/icons";
+import {PasswordTextField} from
+        "../../../../common/components/PasswordTextField/PasswordTextField";
 
-export const SignUpForm = () => {
+export const SignUpForm = (): React.ReactElement => {
     const {
         intl,
         register,
@@ -56,7 +55,7 @@ export const SignUpForm = () => {
             error={Boolean(errors.password)}
             helperText={errors.password?.message}
         />
-        <TextFieldWrapped
+        <PasswordTextField
             inputRef={register({
                 required: intl.formatMessage({
                     id: "Login.Validation.Field.Required"}),
@@ -65,12 +64,11 @@ export const SignUpForm = () => {
             id="password"
             name="password"
             label={intl.formatMessage({id: "Login.Fields.Password"})}
-            type="password"
             disabled={loading}
             error={Boolean(errors.password)}
             helperText={errors.password?.message}
         />
-        <TextFieldWrapped
+        <PasswordTextField
             inputRef={register({
                 required: intl.formatMessage({
                     id: "Login.Validation.Field.Required"}),
@@ -83,7 +81,6 @@ export const SignUpForm = () => {
             name="confirmPassword"
             label={intl.formatMessage({
                 id: "Login.Fields.ConfirmPassword"})}
-            type="password"
             disabled={loading}
             error={Boolean(errors.confirmPassword)}
             helperText={errors.confirmPassword?.message}
