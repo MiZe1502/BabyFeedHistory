@@ -8,6 +8,10 @@
   display: flex;
   align-items: center;
   width: 100%;
+
+  &:not(:first-of-type) {
+    @include MarginTop(2);
+  }
 }
 
 .Item {
@@ -15,4 +19,9 @@
   align-items: center;
   justify-content: center;
   flex: 1;
+  min-height: 100px;
+
+  &:not(:last-of-type) {
+    @include MarginRight(2);
+  }
 }

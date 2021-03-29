@@ -1,9 +1,12 @@
 import React, {useState} from "react";
 import dateFns from "date-fns";
+// @ts-ignore
+import { ru } from 'date-fns/locale'
 // //@ts-ignore
 // import Calendar from "react-material-ui-calendar";
 
 import css from "./HistoryPage.scss";
+import {Card, CardContent, Typography} from "@material-ui/core";
 
 export const HistoryPage = (): React.ReactElement => {
     const [currentMonth, setCurrentMonth] = useState(new Date())
@@ -17,12 +20,13 @@ export const HistoryPage = (): React.ReactElement => {
         const dateFormat = "dddd";
         const days = [];
 
-        const startDate = dateFns.startOfWeek(currentMonth);
+        const startDate = dateFns.startOfWeek(currentMonth, {weekStartsOn: 1});
 
         for (let i = 0; i < 7; i++) {
             days.push(
                 <div className={css.Item} key={i}>
-                    {dateFns.format(dateFns.addDays(startDate, i), dateFormat)}
+                    {dateFns.format(dateFns.addDays(startDate, i),
+                        dateFormat, {locale: ru})}
                 </div>
             );
         }
@@ -33,8 +37,8 @@ export const HistoryPage = (): React.ReactElement => {
     const renderCells = () => {
         const monthStart = dateFns.startOfMonth(currentMonth);
         const monthEnd = dateFns.endOfMonth(monthStart);
-        const startDate = dateFns.startOfWeek(monthStart);
-        const endDate = dateFns.endOfWeek(monthEnd);
+        const startDate = dateFns.startOfWeek(monthStart, {weekStartsOn: 1});
+        const endDate = dateFns.endOfWeek(monthEnd, {weekStartsOn: 1});
 
         const dateFormat = "D";
         const rows = [];
@@ -45,11 +49,23 @@ export const HistoryPage = (): React.ReactElement => {
 
         while (day <= endDate) {
             for (let i = 0; i < 7; i++) {
-                formattedDate = dateFns.format(day, dateFormat);
+                if (!dateFns.isSameMonth(day, monthStart)) {
+                    days.push(<Card className={css.Item}>
+                        <CardContent>
+                        </CardContent>
+                    </Card>)
+                } else {
+                    formattedDate = dateFns.format(day, dateFormat);
 
-                days.push(<div className={css.Item}>
-                    <span>{formattedDate}</span>
-                </div>)
+                    days.push(
+                        <Card className={css.Item}>
+                            <CardContent>
+                                <Typography color="textSecondary" gutterBottom>
+                                    {formattedDate}
+                                </Typography>
+                            </CardContent>
+                        </Card>)
+                }
 
                 day = dateFns.addDays(day, 1);
             }
