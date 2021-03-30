@@ -1,20 +1,24 @@
 import React from "react";
-import {Tab} from "@material-ui/core";
+import Tab from "@material-ui/core/Tab";
+import {Link} from "react-router-dom";
 
 interface MenuTabProps {
     to: string;
     label: string;
     id: string;
-    onClick: () => void;
+    value: number;
+    onClick: (route: string, value: number) => void;
 }
 
 export const MenuTab =
-    ({to, label, id, onClick}: MenuTabProps): React.ReactElement => {
-    return <Tab
+    ({to, label, id, onClick, value}: MenuTabProps): React.ReactElement => {
+     return <Tab
+        value={value}
         label={label}
         id={id}
-        component="a"
-        onClick={onClick}
+        onClick={() => onClick(to, value)}
         href={to}
-    />
+    >
+         <Link to={to}/>
+     </Tab>
 }
