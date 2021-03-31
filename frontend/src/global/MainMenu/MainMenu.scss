@@ -1,0 +1,9 @@
+@import "../../common/styles/positioning";
+
+.MenuInnerWrapper {
+  @include FlexHorCenter;
+  @include GlobalPadding;
+  @include PaddingRight(2);
+
+  justify-content: space-between;
+}

@@ -6,7 +6,9 @@ import { ru } from 'date-fns/locale'
 // import Calendar from "react-material-ui-calendar";
 
 import css from "./HistoryPage.scss";
-import {Card, CardContent, Typography} from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
 
 export const HistoryPage = (): React.ReactElement => {
     const [currentMonth, setCurrentMonth] = useState(new Date())

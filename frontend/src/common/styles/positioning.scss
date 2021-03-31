@@ -26,3 +26,24 @@
 @mixin MarginLeft($value) {
   margin-left: $value * $cell;
 }
+
+@mixin PaddingRight($value) {
+  padding-right: $value * $cell;
+}
+
+@mixin PaddingBottom($value) {
+  padding-bottom: $value * $cell;
+}
+
+@mixin PaddingTop($value) {
+  padding-top: $value * $cell;
+}
+
+@mixin PaddingLeft($value) {
+  padding-left: $value * $cell;
+}
+
+@mixin GlobalPadding {
+  padding-left: 100px !important;
+  padding-right: 100px !important;
+}

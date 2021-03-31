@@ -1,4 +1,5 @@
-import {Button, CircularProgress} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import {FormattedMessage} from "react-intl";
 import cn from "classnames";
 import React from "react";

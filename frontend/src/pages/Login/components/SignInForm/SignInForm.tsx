@@ -1,6 +1,7 @@
 import {TextFieldWrapped} from "../../../../common/components/TextField/TextField";
 import {ErrorMessage} from "../../../../common/components/ErrorMessage/ErrorMessage";
-import {Button, DialogActions} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import DialogActions from "@material-ui/core/DialogActions";
 import {ButtonWithLoading}
     from "../../../../common/components/ButtonWithLoading/ButtonWithLoading";
 import {FormattedMessage} from "react-intl";
