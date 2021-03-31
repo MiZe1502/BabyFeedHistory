@@ -35,9 +35,15 @@ export const AvatarBlock = () => {
     }
 
     const logout = () => {
+        setIsOpen(false);
         removeDataFromLocalStorageByKey(SESSION_TOKEN);
         auth?.removeToken();
         history.push(routes.auth);
+    }
+
+    const goToAccountPage = () => {
+        history.push(routes.account);
+        setIsOpen(false);
     }
 
     return <div className={css.Wrapper}>
@@ -61,7 +67,7 @@ export const AvatarBlock = () => {
                         <ClickAwayListener onClickAway={handleClose}>
                             <MenuList className={css.Menu}
                                       autoFocusItem={isOpen} id="menu-list-grow">
-                                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                <MenuItem onClick={goToAccountPage}>Profile</MenuItem>
                                 <MenuItem onClick={logout}>Logout</MenuItem>
                             </MenuList>
                         </ClickAwayListener>
