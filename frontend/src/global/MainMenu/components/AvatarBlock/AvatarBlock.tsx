@@ -10,10 +10,21 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
+import {
+    removeDataFromLocalStorageByKey,
+    SESSION_TOKEN
+} from "../../../../utils/localStorage";
+import { useHistory } from "react-router-dom";
+import {routes} from "../../../../utils/routes";
+import {useAuth} from "../../../../common/hooks/useAuth";
 
 export const AvatarBlock = () => {
     const anchorRef = React.useRef(null);
     const [isOpen, setIsOpen] = useState(false);
+
+    const auth = useAuth();
+
+    const history = useHistory();
 
     const handleClose = () => {
         setIsOpen(false);
@@ -21,6 +32,12 @@ export const AvatarBlock = () => {
 
     const handleToggle = () => {
         setIsOpen(!isOpen);
+    }
+
+    const logout = () => {
+        removeDataFromLocalStorageByKey(SESSION_TOKEN);
+        auth?.removeToken();
+        history.push(routes.auth);
     }
 
     return <div className={css.Wrapper}>
@@ -45,7 +62,7 @@ export const AvatarBlock = () => {
                             <MenuList className={css.Menu}
                                       autoFocusItem={isOpen} id="menu-list-grow">
                                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                                <MenuItem onClick={logout}>Logout</MenuItem>
                             </MenuList>
                         </ClickAwayListener>
                     </Paper>
