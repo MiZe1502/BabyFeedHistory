@@ -9,6 +9,7 @@ import css from "./HistoryPage.scss";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 
 export const HistoryPage = (): React.ReactElement => {
     const [currentMonth, setCurrentMonth] = useState(new Date())
@@ -26,10 +27,12 @@ export const HistoryPage = (): React.ReactElement => {
 
         for (let i = 0; i < 7; i++) {
             days.push(
-                <div className={css.Item} key={i}>
-                    {dateFns.format(dateFns.addDays(startDate, i),
-                        dateFormat, {locale: ru})}
-                </div>
+                <Typography component="h4" key={i} className={css.Item}>
+                    <Box className={css.DayTitle}>
+                            {dateFns.format(dateFns.addDays(startDate, i),
+                                dateFormat, {locale: ru})}
+                    </Box>
+                </Typography>
             );
         }
 

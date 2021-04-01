@@ -26,6 +26,10 @@
   }
 }
 
+.DayTitle {
+  font-weight: 700;
+}
+
 .Page {
   @include GlobalPadding;
 }
