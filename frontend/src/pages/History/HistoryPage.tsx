@@ -84,9 +84,9 @@ export const HistoryPage = (): React.ReactElement => {
 
 
     return (
-        <div className="calendar">
+        <section className={css.Page}>
             {renderDaysTitle()}
             {renderCells()}
-        </div>
+        </section>
     );
 }

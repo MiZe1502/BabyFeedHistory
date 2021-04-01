@@ -25,3 +25,7 @@
     @include MarginRight(2);
   }
 }
+
+.Page {
+  @include GlobalPadding;
+}
