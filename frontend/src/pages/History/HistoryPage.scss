@@ -26,6 +26,18 @@
   }
 }
 
+.ActiveItem {
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+}
+
+.Day {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
 .DayTitle {
   font-weight: 700;
 }

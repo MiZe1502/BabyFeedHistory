@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import dateFns from "date-fns";
 // @ts-ignore
 import { ru } from 'date-fns/locale'
+import cn from "classnames";
 // //@ts-ignore
 // import Calendar from "react-material-ui-calendar";
 
@@ -63,10 +64,12 @@ export const HistoryPage = (): React.ReactElement => {
                     formattedDate = dateFns.format(day, dateFormat);
 
                     days.push(
-                        <Card className={css.Item}>
+                        <Card className={cn(css.Item, css.ActiveItem)}>
                             <CardContent>
-                                <Typography color="textSecondary" gutterBottom>
-                                    {formattedDate}
+                                <Typography color="textSecondary">
+                                    <Box className={css.Day}>
+                                        {formattedDate}
+                                    </Box>
                                 </Typography>
                             </CardContent>
                         </Card>)
