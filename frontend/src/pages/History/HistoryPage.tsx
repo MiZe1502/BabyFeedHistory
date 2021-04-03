@@ -11,6 +11,9 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import {useQuery} from "@apollo/client";
+import {FeedsResp, FeedsVariables, QUERY_GET_FEEDS} from "./api";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 export const HistoryPage = (): React.ReactElement => {
     const [currentMonth, setCurrentMonth] = useState(new Date())
@@ -19,6 +22,13 @@ export const HistoryPage = (): React.ReactElement => {
     const renderHeader = () => {
         const dateFormat = "MMMM YYYY";
     }
+
+    const { loading, error, data } = useQuery<FeedsResp, FeedsVariables>(
+        QUERY_GET_FEEDS,
+        { variables: { year: 2021, month: 1 },  }
+    );
+
+    console.log(data, loading, error)
 
     const renderDaysTitle = () => {
         const dateFormat = "dddd";
@@ -91,8 +101,13 @@ export const HistoryPage = (): React.ReactElement => {
 
     return (
         <section className={css.Page}>
-            {renderDaysTitle()}
-            {renderCells()}
+            {loading ? <CircularProgress size={16} disableShrink /> :
+                <div>
+                    {renderDaysTitle()}
+                    {renderCells()}
+                </div>
+            }
+
         </section>
     );
 }
