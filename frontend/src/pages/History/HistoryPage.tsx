@@ -14,6 +14,7 @@ import Box from "@material-ui/core/Box";
 import {useQuery} from "@apollo/client";
 import {FeedsResp, FeedsVariables, QUERY_GET_FEEDS} from "./api";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import {Paper} from "@material-ui/core";
 
 export const HistoryPage = (): React.ReactElement => {
     const [currentMonth, setCurrentMonth] = useState(new Date())
@@ -23,9 +24,13 @@ export const HistoryPage = (): React.ReactElement => {
         const dateFormat = "MMMM YYYY";
     }
 
+    const curDate = new Date();
+    const year = dateFns.getYear(curDate);
+    const month = dateFns.getMonth(curDate);
+
     const { loading, error, data } = useQuery<FeedsResp, FeedsVariables>(
         QUERY_GET_FEEDS,
-        { variables: { year: 2021, month: 1 },  }
+        { variables: { year: year, month: month },  }
     );
 
     console.log(data, loading, error)
@@ -73,6 +78,14 @@ export const HistoryPage = (): React.ReactElement => {
                 } else {
                     formattedDate = dateFns.format(day, dateFormat);
 
+                    const dayWithFeeds = data?.lastMonthFeeds?.filter(
+                        (feedItem) =>
+                            dateFns.getDay(feedItem.timestamp) ===
+                            dateFns.getDay(day));
+
+                    const hasFeed = dayWithFeeds && dayWithFeeds?.length > 0;
+                    const feedsCount = dayWithFeeds?.length;
+
                     days.push(
                         <Card className={cn(css.Item, css.ActiveItem)}>
                             <CardContent>
@@ -80,6 +93,10 @@ export const HistoryPage = (): React.ReactElement => {
                                     <Box className={css.Day}>
                                         {formattedDate}
                                     </Box>
+                                    {hasFeed && <Paper className={css.Counter}
+                                           component='div' square={false}>
+                                        {feedsCount}
+                                    </Paper>}
                                 </Typography>
                             </CardContent>
                         </Card>)
