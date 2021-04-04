@@ -20,6 +20,7 @@
   justify-content: center;
   flex: 1;
   min-height: 100px;
+  position: relative;
 
   &:not(:last-of-type) {
     @include MarginRight(2);
@@ -48,6 +49,16 @@
 
 .Counter {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 8px;
+  right: 8px;
+
+  width: 20px;
+  height: 20px;
+  border-radius: 50% !important;
+  display: flex;
+  justify-content: center;
+}
+
+.CounterItem {
+  font-size: 12px;
 }

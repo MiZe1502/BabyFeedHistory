@@ -14,7 +14,7 @@ import Box from "@material-ui/core/Box";
 import {useQuery} from "@apollo/client";
 import {FeedsResp, FeedsVariables, QUERY_GET_FEEDS} from "./api";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import {Paper} from "@material-ui/core";
+import Paper from "@material-ui/core/Paper";
 
 export const HistoryPage = (): React.ReactElement => {
     const [currentMonth, setCurrentMonth] = useState(new Date())
@@ -34,6 +34,10 @@ export const HistoryPage = (): React.ReactElement => {
     );
 
     console.log(data, loading, error)
+
+    const renderHeader = () => {
+
+    }
 
     const renderDaysTitle = () => {
         const dateFormat = "dddd";
@@ -80,8 +84,8 @@ export const HistoryPage = (): React.ReactElement => {
 
                     const dayWithFeeds = data?.lastMonthFeeds?.filter(
                         (feedItem) =>
-                            dateFns.getDay(feedItem.timestamp) ===
-                            dateFns.getDay(day));
+                            dateFns.getDate(feedItem.timestamp) ===
+                            dateFns.getDate(day));
 
                     const hasFeed = dayWithFeeds && dayWithFeeds?.length > 0;
                     const feedsCount = dayWithFeeds?.length;
@@ -95,7 +99,11 @@ export const HistoryPage = (): React.ReactElement => {
                                     </Box>
                                     {hasFeed && <Paper className={css.Counter}
                                            component='div' square={false}>
-                                        {feedsCount}
+                                        <Typography>
+                                            <Box className={css.CounterItem}>
+                                                {feedsCount}
+                                            </Box>
+                                        </Typography>
                                     </Paper>}
                                 </Typography>
                             </CardContent>
@@ -120,6 +128,7 @@ export const HistoryPage = (): React.ReactElement => {
         <section className={css.Page}>
             {loading ? <CircularProgress size={16} disableShrink /> :
                 <div>
+                    {renderHeader()}
                     {renderDaysTitle()}
                     {renderCells()}
                 </div>

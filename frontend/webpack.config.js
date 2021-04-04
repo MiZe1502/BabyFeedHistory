@@ -13,9 +13,40 @@ console.log(`prod: ${prod}`)
 
 const outputDir = path.resolve(__dirname, 'dist');
 
+const commonPlugins = [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+        template: path.join(__dirname, 'src', 'index.html'),
+        filename: 'index.html',
+        minify: {
+            collapseWhitespace: true,
+            removeComments: true,
+            removeRedundantAttributes: true,
+            useShortDoctype: true,
+        },
+    }),
+    new MiniCssExtractPlugin({
+        filename: 'style-[hash].css',
+    }),
+]
+
+const prodPlugins = [
+    ...commonPlugins,
+    new TerserPlugin({
+        parallel: true,
+        terserOptions: {
+            compress: prod,
+            mangle: prod,
+            format: {
+                comments: dev,
+            },
+        },
+    })
+]
+
 module.exports = {
     mode: dev ? "development" : "production",
-    devtool: dev? 'source-map': 'hidden-source-map',
+    //devtool: dev? 'source-map': 'hidden-source-map',
     entry: {
         app: path.join(__dirname, 'src', 'index.tsx')
     },
@@ -74,32 +105,7 @@ module.exports = {
             }
         ],
     },
-    plugins: [
-        new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'src', 'index.html'),
-            filename: 'index.html',
-            minify: {
-                collapseWhitespace: true,
-                removeComments: true,
-                removeRedundantAttributes: true,
-                useShortDoctype: true,
-            },
-        }),
-        new MiniCssExtractPlugin({
-            filename: 'style-[hash].css',
-        }),
-        new TerserPlugin({
-            parallel: true,
-            terserOptions: {
-                compress: prod,
-                mangle: prod,
-                format: {
-                    comments: dev,
-                },
-            },
-        })
-    ],
+    plugins: prod ? prodPlugins : commonPlugins,
     devServer: {
         contentBase: 'dist',
         compress: true,
