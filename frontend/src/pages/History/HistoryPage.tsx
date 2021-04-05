@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import dateFns from "date-fns";
 // @ts-ignore
 import { ru } from 'date-fns/locale'
@@ -16,47 +16,67 @@ import {FeedsResp, FeedsVariables, QUERY_GET_FEEDS} from "./api";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Paper from "@material-ui/core/Paper";
 import {useAuth} from "../../common/hooks/useAuth";
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import IconButton from "@material-ui/core/IconButton";
 
 export const HistoryPage = (): React.ReactElement => {
     const auth = useAuth();
 
-    const [currentMonth, setCurrentMonth] = useState(new Date())
-    const [selectedDate, setSelectedDate] = useState(new Date())
-
-    const curDate = new Date();
-    const year = dateFns.getYear(curDate);
-    const month = dateFns.getMonth(curDate);
+    const [currentDate, setCurrentDate] = useState(new Date())
 
     const { loading, error, data } = useQuery<FeedsResp, FeedsVariables>(
         QUERY_GET_FEEDS,
-        { variables: { year: year, month: month },  }
+        { variables: { year: dateFns.getYear(currentDate),
+                month: dateFns.getMonth(currentDate) }  }
     );
+
+    console.log(loading, error, data)
 
     if (error && error.message === 'Authentication error') {
         auth?.logout();
     }
 
-    console.log(data, loading, error)
+    const handleNextMonth = () => {
+        setCurrentDate(dateFns.addMonths(currentDate, 1));
+    }
 
-    const renderHeader = () => {
+    const handlePreviousMonth = () => {
+        setCurrentDate(dateFns.subMonths(currentDate, 1));
+
+    }
+
+    const renderHeader = useCallback(() => {
         const dateFormat = "MMMM, YYYY";
 
-        const monthAndYear = dateFns.format(new Date(), dateFormat)
+        const monthAndYear = dateFns.format(currentDate, dateFormat)
 
         return <div className={css.Header}>
             <Typography component="h1">
                 <Box className={css.HeaderText}>
+                    <IconButton
+                        aria-label="previous month"
+                        onClick={handlePreviousMonth}
+                    >
+                        <NavigateBeforeIcon />
+                    </IconButton>
                     {monthAndYear}
+                    <IconButton
+                        aria-label="next month"
+                        onClick={handleNextMonth}
+                    >
+                        <NavigateNextIcon />
+                    </IconButton>
                 </Box>
             </Typography>
         </div>
-    }
+    }, [currentDate, data])
 
-    const renderDaysTitle = () => {
+    const renderDaysTitle = useCallback(() => {
         const dateFormat = "dddd";
         const days = [];
 
-        const startDate = dateFns.startOfWeek(currentMonth, {weekStartsOn: 1});
+        const startDate = dateFns.startOfWeek(currentDate, {weekStartsOn: 1});
 
         for (let i = 0; i < 7; i++) {
             days.push(
@@ -70,10 +90,10 @@ export const HistoryPage = (): React.ReactElement => {
         }
 
         return <div className={css.Row}>{days}</div>;
-    }
+    }, [currentDate, data])
 
-    const renderCells = () => {
-        const monthStart = dateFns.startOfMonth(currentMonth);
+    const renderCells = useCallback(() => {
+        const monthStart = dateFns.startOfMonth(currentDate);
         const monthEnd = dateFns.endOfMonth(monthStart);
         const startDate = dateFns.startOfWeek(monthStart, {weekStartsOn: 1});
         const endDate = dateFns.endOfWeek(monthEnd, {weekStartsOn: 1});
@@ -102,6 +122,8 @@ export const HistoryPage = (): React.ReactElement => {
 
                     const hasFeed = dayWithFeeds && dayWithFeeds?.length > 0;
                     const feedsCount = dayWithFeeds?.length;
+
+                    console.log(data, dayWithFeeds, hasFeed, feedsCount)
 
                     days.push(
                         <Card className={cn(css.Item, css.ActiveItem)}>
@@ -134,7 +156,7 @@ export const HistoryPage = (): React.ReactElement => {
         }
 
         return rows
-    }
+    }, [currentDate, data])
 
 
     return (
