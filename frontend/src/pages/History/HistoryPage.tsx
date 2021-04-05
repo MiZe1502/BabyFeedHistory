@@ -15,14 +15,13 @@ import {useQuery} from "@apollo/client";
 import {FeedsResp, FeedsVariables, QUERY_GET_FEEDS} from "./api";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Paper from "@material-ui/core/Paper";
+import {useAuth} from "../../common/hooks/useAuth";
 
 export const HistoryPage = (): React.ReactElement => {
+    const auth = useAuth();
+
     const [currentMonth, setCurrentMonth] = useState(new Date())
     const [selectedDate, setSelectedDate] = useState(new Date())
-
-    const renderHeader = () => {
-        const dateFormat = "MMMM YYYY";
-    }
 
     const curDate = new Date();
     const year = dateFns.getYear(curDate);
@@ -33,10 +32,24 @@ export const HistoryPage = (): React.ReactElement => {
         { variables: { year: year, month: month },  }
     );
 
+    if (error && error.message === 'Authentication error') {
+        auth?.logout();
+    }
+
     console.log(data, loading, error)
 
     const renderHeader = () => {
+        const dateFormat = "MMMM, YYYY";
 
+        const monthAndYear = dateFns.format(new Date(), dateFormat)
+
+        return <div className={css.Header}>
+            <Typography component="h1">
+                <Box className={css.HeaderText}>
+                    {monthAndYear}
+                </Box>
+            </Typography>
+        </div>
     }
 
     const renderDaysTitle = () => {
@@ -47,7 +60,7 @@ export const HistoryPage = (): React.ReactElement => {
 
         for (let i = 0; i < 7; i++) {
             days.push(
-                <Typography component="h4" key={i} className={css.Item}>
+                <Typography component="h4" key={i} className={css.TitleItem}>
                     <Box className={css.DayTitle}>
                             {dateFns.format(dateFns.addDays(startDate, i),
                                 dateFormat, {locale: ru})}

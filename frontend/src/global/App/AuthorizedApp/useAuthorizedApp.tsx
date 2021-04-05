@@ -1,12 +1,15 @@
 import {useEffect, useState} from "react";
 import {
-    getDataFromLocalStorageByKey,
+    getDataFromLocalStorageByKey, removeDataFromLocalStorageByKey,
     SESSION_TOKEN
 } from "../../../utils/localStorage";
 import {AuthContext} from "./AuthorizedApp";
+import {routes} from "../../../utils/routes";
+import { useHistory } from "react-router-dom";
 
 export const useAuthorizedApp = (): AuthContext => {
     const [token, setToken] = useState(getDataFromLocalStorageByKey(SESSION_TOKEN));
+    const history = useHistory();
 
     const updateToken = (token: string) => {
         setToken(token);
@@ -14,6 +17,12 @@ export const useAuthorizedApp = (): AuthContext => {
 
     const removeToken = () => {
         setToken("");
+    }
+
+    const logout = () => {
+        removeDataFromLocalStorageByKey(SESSION_TOKEN);
+        removeToken();
+        history.push(routes.auth);
     }
 
     useEffect(() => {
@@ -29,5 +38,6 @@ export const useAuthorizedApp = (): AuthContext => {
         token,
         updateToken,
         removeToken,
+        logout,
     }
 }

@@ -6,6 +6,7 @@ export interface AuthContext {
     token?: string | null;
     updateToken: (token: string) => void;
     removeToken: () => void;
+    logout: () => void;
 }
 
 export const authContext = createContext<AuthContext | undefined>(undefined);

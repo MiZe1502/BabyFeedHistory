@@ -14,12 +14,11 @@
   }
 }
 
-.Item {
+@mixin BasicItem {
   display: flex;
   align-items: center;
   justify-content: center;
   flex: 1;
-  min-height: 100px;
   position: relative;
 
   &:not(:last-of-type) {
@@ -27,10 +26,23 @@
   }
 }
 
+.Item {
+  @include BasicItem;
+
+  min-height: 100px;
+}
+
+.TitleItem {
+  @include BasicItem;
+
+  min-height: 40px;
+}
+
 .ActiveItem {
   &:hover {
     cursor: pointer;
     transform: scale(1.1);
+    z-index: 10;
   }
 }
 
@@ -61,4 +73,17 @@
 
 .CounterItem {
   font-size: 12px;
+}
+
+.Header {
+  @include FlexHorCenter;
+  @include MarginTop(4);
+
+  justify-content: center;
+  width: 100%;
+}
+
+.HeaderText {
+  font-weight: 700;
+  font-size: 2rem;
 }

@@ -36,9 +36,7 @@ export const AvatarBlock = () => {
 
     const logout = () => {
         setIsOpen(false);
-        removeDataFromLocalStorageByKey(SESSION_TOKEN);
-        auth?.removeToken();
-        history.push(routes.auth);
+        auth?.logout();
     }
 
     const goToAccountPage = () => {
