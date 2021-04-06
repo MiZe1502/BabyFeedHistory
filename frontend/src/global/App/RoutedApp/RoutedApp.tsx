@@ -7,6 +7,7 @@ import {HistoryPage} from "../../../pages/History/HistoryPage";
 import {SettingsPage} from "../../../pages/Settings/SettingsPage";
 import {MainMenu} from "../../MainMenu/MainMenu";
 import {useAuth} from "../../../common/hooks/useAuth";
+import {DayPage} from "../../../pages/Day/DayPage";
 
 export const RoutedApp = (): React.ReactElement => {
     const auth = useAuth();
@@ -17,6 +18,9 @@ export const RoutedApp = (): React.ReactElement => {
             <Route path={routes.auth}>
                 <LoginPage />
             </Route>
+            <PrivateRoute path={routes.dayInHistory}>
+                <DayPage />
+            </PrivateRoute>
             <PrivateRoute path={routes.history}>
                 <HistoryPage />
             </PrivateRoute>

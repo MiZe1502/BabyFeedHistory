@@ -19,9 +19,12 @@ import {useAuth} from "../../common/hooks/useAuth";
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import IconButton from "@material-ui/core/IconButton";
+import {routes} from "../../utils/routes";
+import { useHistory } from "react-router-dom";
 
 export const HistoryPage = (): React.ReactElement => {
     const auth = useAuth();
+    const history = useHistory();
 
     const [currentDate, setCurrentDate] = useState(new Date())
 
@@ -43,7 +46,10 @@ export const HistoryPage = (): React.ReactElement => {
 
     const handlePreviousMonth = () => {
         setCurrentDate(dateFns.subMonths(currentDate, 1));
+    }
 
+    const onDayClick = (day: string) => {
+        history.push(routes.dayInHistory.replace(':date', day))
     }
 
     const renderHeader = useCallback(() => {
@@ -99,6 +105,7 @@ export const HistoryPage = (): React.ReactElement => {
         const endDate = dateFns.endOfWeek(monthEnd, {weekStartsOn: 1});
 
         const dateFormat = "D";
+        const dateLinkFormat = 'YYYY-MM-DD'
         const rows = [];
 
         let days = [];
@@ -126,7 +133,9 @@ export const HistoryPage = (): React.ReactElement => {
                     console.log(data, dayWithFeeds, hasFeed, feedsCount)
 
                     days.push(
-                        <Card className={cn(css.Item, css.ActiveItem)}>
+                        <Card onClick={() =>
+                            onDayClick(dateFns.format(day, dateLinkFormat))}
+                              className={cn(css.Item, css.ActiveItem)}>
                             <CardContent>
                                 <Typography color="textSecondary">
                                     <Box className={css.Day}>
