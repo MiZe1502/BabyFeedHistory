@@ -1,0 +1,38 @@
+@import "../../../../common/styles/positioning";
+@import "../../HistoryPage";
+
+.Item {
+  @include BasicItem;
+
+  min-height: 100px;
+}
+
+.ActiveItem {
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    z-index: 10;
+  }
+}
+
+.Day {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.Counter {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  width: 20px;
+  height: 20px;
+  border-radius: 50% !important;
+  display: flex;
+  justify-content: center;
+}
+
+.CounterItem {
+  font-size: 12px;
+}
+

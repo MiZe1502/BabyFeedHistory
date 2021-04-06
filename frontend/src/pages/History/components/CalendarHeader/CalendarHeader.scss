@@ -1,0 +1,14 @@
+@import "../../../../common/styles/positioning";
+
+.Header {
+  @include FlexHorCenter;
+  @include MarginTop(4);
+
+  justify-content: center;
+  width: 100%;
+}
+
+.HeaderText {
+  font-weight: 700;
+  font-size: 2rem;
+}

@@ -1,19 +1,5 @@
 @import "../../common/styles/positioning";
 
-.Header {
-  @include FlexHorCenter;
-}
-
-.Row {
-  display: flex;
-  align-items: center;
-  width: 100%;
-
-  &:not(:first-of-type) {
-    @include MarginTop(2);
-  }
-}
-
 @mixin BasicItem {
   display: flex;
   align-items: center;
@@ -26,64 +12,16 @@
   }
 }
 
-.Item {
-  @include BasicItem;
-
-  min-height: 100px;
-}
-
-.TitleItem {
-  @include BasicItem;
-
-  min-height: 40px;
-}
-
-.ActiveItem {
-  &:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-    z-index: 10;
-  }
-}
-
-.Day {
-  font-weight: 700;
-  font-size: 1.5rem;
-}
-
-.DayTitle {
-  font-weight: 700;
-}
-
 .Page {
   @include GlobalPadding;
 }
 
-.Counter {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-
-  width: 20px;
-  height: 20px;
-  border-radius: 50% !important;
+.Row {
   display: flex;
-  justify-content: center;
-}
-
-.CounterItem {
-  font-size: 12px;
-}
-
-.Header {
-  @include FlexHorCenter;
-  @include MarginTop(4);
-
-  justify-content: center;
+  align-items: center;
   width: 100%;
-}
 
-.HeaderText {
-  font-weight: 700;
-  font-size: 2rem;
+  &:not(:first-of-type) {
+    @include MarginTop(2);
+  }
 }

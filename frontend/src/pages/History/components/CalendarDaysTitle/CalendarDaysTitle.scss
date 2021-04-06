@@ -1,0 +1,13 @@
+@import "../../../../common/styles/positioning";
+@import "../../HistoryPage";
+
+.TitleItem {
+  @include BasicItem;
+
+  min-height: 40px;
+}
+
+.DayTitle {
+  font-weight: 700;
+}
+
