@@ -39,6 +39,7 @@ export const HistoryPage = (): React.ReactElement => {
     }
 
     const onDayClick = (day: string) => {
+        console.log('HERE', day)
         history.push(routes.dayInHistory.replace(':date', day))
     }
 

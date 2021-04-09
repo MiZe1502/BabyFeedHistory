@@ -33,26 +33,27 @@ export const CalendarCells =
 
     while (day <= endDate) {
         for (let i = 0; i < 7; i++) {
-            const id = `day-${dateFns.getTime(day)}-${i}`
-            if (!dateFns.isSameMonth(day, monthStart)) {
+            const currentDay = day;
+            const id = `day-${dateFns.getTime(currentDay)}-${i}`
+            if (!dateFns.isSameMonth(currentDay, monthStart)) {
                 days.push(<Card id={id} className={css.Item}>
                     <CardContent>
                     </CardContent>
                 </Card>)
             } else {
-                formattedDate = dateFns.format(day, dateFormat);
+                formattedDate = dateFns.format(currentDay, dateFormat);
 
                 const dayWithFeeds = data?.lastMonthFeeds?.filter(
                     (feedItem) =>
                         dateFns.getDate(feedItem.timestamp) ===
-                        dateFns.getDate(day));
+                        dateFns.getDate(currentDay));
 
                 const hasFeed = dayWithFeeds && dayWithFeeds?.length > 0;
                 const feedsCount = dayWithFeeds?.length;
 
                 days.push(
                     <Card id={id} onClick={() =>
-                        onDayClick(dateFns.format(day, dateLinkFormat))}
+                        onDayClick(dateFns.format(currentDay, dateLinkFormat))}
                           className={cn(css.Item, css.ActiveItem)}>
                         <CardContent>
                             <Typography color="textSecondary">
@@ -72,7 +73,7 @@ export const CalendarCells =
                     </Card>)
             }
 
-            day = dateFns.addDays(day, 1);
+            day = dateFns.addDays(currentDay, 1);
         }
 
         rows.push(<div id={`row-${dateFns.getTime(day)}`} className={css.Row}>
