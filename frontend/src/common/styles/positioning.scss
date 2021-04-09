@@ -5,6 +5,17 @@
   align-items: center;
 }
 
+@mixin FlexVert {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin FlexVertCenter {
+  @include FlexVert;
+  justify-content: center;
+  align-items: center;
+}
+
 @mixin FlexHorCenterVertical {
   display: flex;
   align-items: center;

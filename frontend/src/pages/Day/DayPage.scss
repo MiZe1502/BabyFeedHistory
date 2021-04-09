@@ -1,0 +1,23 @@
+@import "../../common/styles/positioning";
+
+.DayPage {
+  @include GlobalPadding;
+  @include FlexVertCenter;
+  @include MarginTop(4);
+}
+
+.FeedItem {
+  @include MarginBottom(3);
+  width: 50%;
+  min-width: 50%;
+}
+
+.DetailsItem {
+  @include FlexHorCenter;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.DetailsValue {
+  flex: 1;
+}

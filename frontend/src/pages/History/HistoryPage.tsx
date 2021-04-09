@@ -24,8 +24,6 @@ export const HistoryPage = (): React.ReactElement => {
                 month: dateFns.getMonth(currentDate) }  }
     );
 
-    console.log(loading, error, data)
-
     if (error && error.message === 'Authentication error') {
         auth?.logout();
     }
@@ -39,7 +37,6 @@ export const HistoryPage = (): React.ReactElement => {
     }
 
     const onDayClick = (day: string) => {
-        console.log('HERE', day)
         history.push(routes.dayInHistory.replace(':date', day))
     }
 

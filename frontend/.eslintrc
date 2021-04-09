@@ -11,7 +11,7 @@
         "plugin:@typescript-eslint/recommended"
     ],
     "rules": {
-        "max-len": [2, { "code": 86 }]
+        "max-len": [2, { "code": 120 }]
     },
     "ignorePatterns": ["webpack.config.js"]
 }
