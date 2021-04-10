@@ -7,13 +7,12 @@ import css from "./DayPage.scss";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Divider from "@material-ui/core/Divider";
-import {symbols} from "../../common/utils/symbols";
+import { useIntl } from "react-intl";
+import {FeedItemComponent} from "./components/FeedItem/FeedItem";
 
 export const DayPage = () => {
     const match = useRouteMatch<{date: string}>();
+    const intl = useIntl();
 
     const [currentDate, setCurrentDate] = useState(new Date())
     const cachedData = client.readQuery<FeedsResp>({
@@ -26,38 +25,20 @@ export const DayPage = () => {
         return dateFns.isSameDay(match.params.date, item.timestamp)
     })
 
-    const format = 'HH:mm';
+    let component = null;
+    if (filteredData && filteredData.length > 0) {
+     component = filteredData?.map((item) => {
+        return <FeedItemComponent key={item.timestamp} item={item}/>
+     })
+    } else {
+        component = <Card className={css.FeedItem}>
+            <CardContent>
+                <Typography variant="h5" component="h2">
+                    {intl.formatMessage({id: "Messages.NoDataFound"})}
+                </Typography>
+            </CardContent>
+        </Card>
+    }
 
-    return <div className={css.DayPage}>{
-        filteredData?.map((item) => {
-            return <Card className={css.FeedItem}>
-                <CardContent>
-                    <Typography variant="h5" component="h2">
-                        {dateFns.format(item.timestamp, format)}
-                    </Typography>
-                    <Divider/>
-                    <List component="div">
-                        {item.details?.map((detailsItem) => {
-                            return <ListItem>
-                                <div className={css.DetailsItem}>
-                                    <Typography className={css.DetailsValue} variant="body1" component="div">
-                                        {detailsItem.name}
-                                    </Typography>
-                                    <Typography className={css.DetailsValue} variant="body1" component="div">
-                                        {`${detailsItem.amount} ${detailsItem.amountOfWhat}`}
-                                    </Typography>
-                                    <Typography className={css.DetailsValue} variant="body1" component="div">
-                                        {detailsItem.type}
-                                    </Typography>
-                                    <Typography className={css.DetailsValue} variant="body1" component="div">
-                                        {detailsItem.wasGiven || symbols.emDash}
-                                    </Typography>
-                                </div>
-                            </ListItem>
-                        })}
-                    </List>
-                </CardContent>
-            </Card>
-        })
-    }</div>
+    return <div className={css.DayPage}>{component}</div>
 }

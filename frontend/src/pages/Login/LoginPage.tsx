@@ -7,8 +7,6 @@ import {SignInForm} from "./components/SignInForm/SignInForm";
 import {SignUpForm} from "./components/SignUpForm/SignUpForm";
 import {useLoginMode} from "./useLoginMode";
 
-// signIn("abs updated login 2", "qwerty12")
-
 export const LoginPage = (): React.ReactElement => {
     const {isSignInMode} = useLoginMode();
 

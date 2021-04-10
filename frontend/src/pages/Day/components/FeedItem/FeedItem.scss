@@ -1,0 +1,7 @@
+@import "../../../../common/styles/positioning";
+
+.FeedItem {
+  @include MarginBottom(3);
+  width: 50%;
+  min-width: 50%;
+}
