@@ -11,8 +11,6 @@ const httpLink = createHttpLink({
 
 const authLink = setContext((_, { headers }) => {
     const token = getDataFromLocalStorageByKey(SESSION_TOKEN);
-
-    console.log('HRE', token)
     return {
         headers: {
             ...headers,
@@ -24,5 +22,7 @@ const authLink = setContext((_, { headers }) => {
 
 export const client = new ApolloClient({
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+        addTypename: false
+    })
 });

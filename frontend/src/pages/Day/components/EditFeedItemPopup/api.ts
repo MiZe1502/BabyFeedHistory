@@ -2,7 +2,7 @@ import {gql} from "@apollo/client";
 import {FeedItemDetails} from "../../../History/api";
 
 export const MUTATION_EDIT_FEED_ITEM = gql`
-    mutation UpdateFeed($feedItem: FeedInput) {
+    mutation UpdateFeed($feedItem: ExistedFeedInput) {
         updateFeed(feed: $feedItem){
             key,
             timestamp,

@@ -17,6 +17,8 @@ export const en = {
     "FeedItem.Card.Edit.Title": "Edit feed item",
     "FeedItem.Card.Edit.Fields.Timestamp": "Time",
     "FeedItem.Card.Edit.Fields.Timestamp.Required": "Time field should not be empty",
+    "FeedItem.Card.Edit.Buttons.Save": "Save",
+    "FeedItem.Card.Edit.Buttons.Cancel": "Cancel",
 
     "FeedItem.Card.Create.Title": "Create feed item",
 }
