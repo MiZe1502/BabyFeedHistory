@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {FeedItem} from "../../../History/api";
+import {FeedItem, FeedItemDetails} from "../../../History/api";
 import {useRouteMatch} from "react-router-dom";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -7,6 +7,8 @@ import {FormattedMessage, useIntl} from "react-intl";
 import DialogContent from "@material-ui/core/DialogContent";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from '@material-ui/icons/Close';
+import RemoveIcon from '@material-ui/icons/Remove';
+import dateFns from "date-fns";
 
 import css from "./EditFeedItemPopup.scss";
 import {useForm} from "react-hook-form";
@@ -20,9 +22,7 @@ import {TextFieldWrapped} from "../../../../common/components/TextField/TextFiel
 import {List} from "@material-ui/core";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
-import AddBox from "@material-ui/icons/AddBox";
 import DialogActions from "@material-ui/core/DialogActions";
-import {ButtonWithLoading} from "../../../../common/components/ButtonWithLoading/ButtonWithLoading";
 import Button from "@material-ui/core/Button";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
@@ -32,10 +32,20 @@ interface EditFeedItemPopupProps {
     onClose?: () => void;
 }
 
-interface EditFeedItemForm extends FeedItem {}
+interface EditFeedItemForm extends FeedItem {
+    time: string;
+}
 
 interface EditFeedItemResp {
     updateFeed: FeedItem[];
+}
+
+const parseTimestamp = (ts?: number): string => {
+    if (!ts) {
+        return '00:00';
+    }
+    const format = "HH:mm";
+    return dateFns.format(ts!, format);
 }
 
 export const EditFeedItemPopup = ({feedItem, onClose}: EditFeedItemPopupProps) => {
@@ -62,6 +72,19 @@ export const EditFeedItemPopup = ({feedItem, onClose}: EditFeedItemPopupProps) =
     } = useQuery<GetAvailableFeedDetailsResp>(QUERY_GET_AVAILABLE_FEED_DETAILS);
 
     const onSubmit = (data: EditFeedItemForm) => {
+        const time = data.time;
+        const hours = +time.split(':')[0];
+        const minutes = +time.split(':')[1];
+
+        const date = new Date();
+        date.setHours(hours);
+        date.setMinutes(minutes);
+
+        const newFeedItem = {
+            ...currentFeedItem,
+            timestamp: date.getTime(),
+        }
+
         onEditFeedItem(currentFeedItem!);
     }
 
@@ -86,6 +109,27 @@ export const EditFeedItemPopup = ({feedItem, onClose}: EditFeedItemPopupProps) =
         setIsFeedsDetailsListOpened(!isFeedsDetailsListOpened);
     }
 
+    const onAddNewFeedDetails = (item: FeedItemDetails) => {
+        const details = currentFeedItem?.details || [];
+        setCurrentFeedItem({
+            ...currentFeedItem,
+            details: [
+                ...details,
+                item
+            ]
+        } as FeedItem)
+    }
+
+    const onRemoveFeedDetailsFromItem = (index: number) => {
+        const curFeedItem = {...currentFeedItem};
+        curFeedItem.details = [...(curFeedItem.details?.slice(0, index) || []),
+            ...(curFeedItem.details?.slice(index + 1, curFeedItem.details?.length) || [])]
+
+        setCurrentFeedItem({
+            ...curFeedItem
+        } as FeedItem)
+    }
+
     return <Dialog open={true}>
         <div className={css.PopupTitleWrapper}>
             <DialogTitle id="form-dialog-title">
@@ -103,10 +147,10 @@ export const EditFeedItemPopup = ({feedItem, onClose}: EditFeedItemPopupProps) =
                         required: intl.formatMessage({
                             id: "FeedItem.Card.Edit.Fields.Timestamp.Required"}),
                     })}
-                    defaultValue={currentFeedItem?.timestamp}
+                    defaultValue={parseTimestamp(currentFeedItem?.timestamp)}
                     placeholder="hh:mm"
-                    id="timestamp"
-                    name="timestamp"
+                    id="time"
+                    name="time"
                     label={intl.formatMessage({id: "FeedItem.Card.Edit.Fields.Timestamp"})}
                     type="text"
                     disabled={loading}
@@ -114,9 +158,12 @@ export const EditFeedItemPopup = ({feedItem, onClose}: EditFeedItemPopupProps) =
                     helperText={errors.timestamp?.message}
                 />
                 {currentFeedItem?.details && <List>
-                    {currentFeedItem?.details?.map((item) => {
+                    {currentFeedItem?.details?.map((item, index) => {
                         return <ListItem key={item.name}>
-                            {item.name}
+                            <ListItemText primary={item.name} secondary={`${item.amount} ${item.amountOfWhat}`}/>
+                            <IconButton onClick={() => onRemoveFeedDetailsFromItem(index)}>
+                                <RemoveIcon />
+                            </IconButton>
                         </ListItem>
                         })}
                 </List>}
@@ -129,7 +176,7 @@ export const EditFeedItemPopup = ({feedItem, onClose}: EditFeedItemPopupProps) =
 
                 {isFeedsDetailsListOpened && feedDetailsData && <List className={css.FeedDetailsAvailableList}>
                     {feedDetailsData?.getAvailableFeedDetails?.map((item) => (
-                        <ListItem key={item.name}>
+                        <ListItem button onClick={() => onAddNewFeedDetails(item)} key={item.name}>
                             <ListItemText primary={item.name} secondary={`${item.amount} ${item.amountOfWhat}`}/>
                         </ListItem>
                     ))}
