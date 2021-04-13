@@ -76,7 +76,7 @@ export const EditFeedItemPopup = ({feedItem, onClose}: EditFeedItemPopupProps) =
         const hours = +time.split(':')[0];
         const minutes = +time.split(':')[1];
 
-        const date = new Date();
+        const date = new Date(currentFeedItem?.timestamp || 0);
         date.setHours(hours);
         date.setMinutes(minutes);
 
@@ -85,7 +85,7 @@ export const EditFeedItemPopup = ({feedItem, onClose}: EditFeedItemPopupProps) =
             timestamp: date.getTime(),
         }
 
-        onEditFeedItem(currentFeedItem!);
+        onEditFeedItem(newFeedItem as FeedItem);
     }
 
     const onEditFeedItem = (data: FeedItem) => {
