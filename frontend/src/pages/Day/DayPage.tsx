@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {client} from "../../api";
 import {FeedsResp, QUERY_GET_FEEDS} from "../History/api";
 import dateFns from "date-fns";
@@ -9,6 +9,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { useIntl } from "react-intl";
 import {FeedItemComponent} from "./components/FeedItem/FeedItem";
+import {useQuery} from "@apollo/client";
+import {SUBSCRIPTION_FEED_UPDATED} from "./components/EditFeedItemPopup/api";
 
 export const DayPage = () => {
     const match = useRouteMatch<{date: string}>();
@@ -20,6 +22,28 @@ export const DayPage = () => {
         variables: { year: dateFns.getYear(currentDate),
             month: dateFns.getMonth(currentDate)
         }})?.lastMonthFeeds;
+
+    const { subscribeToMore, ...result } = useQuery(
+        QUERY_GET_FEEDS, { variables: { year: dateFns.getYear(currentDate),
+            month: dateFns.getMonth(currentDate)
+        } }
+    );
+
+    useEffect(() => {
+        subscribeToMore({
+            document: SUBSCRIPTION_FEED_UPDATED,
+            updateQuery: (prev, { subscriptionData }) => {
+                console.log("SUBSCRIPTION", subscriptionData)
+                // if (!subscriptionData.data) return prev;
+                // const newFeedItem = subscriptionData.data.commentAdded;
+                // return Object.assign({}, prev, {
+                //     post: {
+                //         comments: [newFeedItem, ...prev.post.comments]
+                //     }
+                // });
+            }
+        })
+    }, [])
 
     const filteredData = cachedData?.filter((item) => {
         return dateFns.isSameDay(match.params.date, item.timestamp)

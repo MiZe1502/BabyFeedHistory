@@ -7,7 +7,7 @@ import dateFns from "date-fns";
 import Divider from "@material-ui/core/Divider";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
-import { FeedItem} from "../../../History/api";
+import {FeedItem} from "../../../History/api";
 import { useIntl } from "react-intl";
 import {FeedDetailsItem} from "../FeedDetailsItem/FeedDetailsItem";
 import {EditFeedItemPopup} from "../EditFeedItemPopup/EditFeedItemPopup";

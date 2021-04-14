@@ -30,6 +30,23 @@ export const QUERY_GET_AVAILABLE_FEED_DETAILS = gql`
     }
 `
 
+export const SUBSCRIPTION_FEED_UPDATED = gql`
+    subscription FeedUpdated {
+        feedUpdated {
+            key,
+            timestamp,
+            details {
+                key,
+                type,
+                name,
+                amount,
+                amountOfWhat,
+                wasGiven,
+            }
+        }
+    }
+`
+
 export interface GetAvailableFeedDetailsResp {
     getAvailableFeedDetails: FeedItemDetails[];
 }
