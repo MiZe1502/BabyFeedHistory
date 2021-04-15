@@ -9,8 +9,11 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { useIntl } from "react-intl";
 import {FeedItemComponent} from "./components/FeedItem/FeedItem";
-import {useQuery} from "@apollo/client";
-import {SUBSCRIPTION_FEED_UPDATED} from "./components/EditFeedItemPopup/api";
+import {useQuery, useSubscription} from "@apollo/client";
+import {
+    FeedUpdatedSubscrResp,
+    SUBSCRIPTION_FEED_UPDATED
+} from "./components/EditFeedItemPopup/api";
 
 export const DayPage = () => {
     const match = useRouteMatch<{date: string}>();
@@ -23,17 +26,26 @@ export const DayPage = () => {
             month: dateFns.getMonth(currentDate)
         }})?.lastMonthFeeds;
 
+    console.log('cache', cachedData)
+
     const { subscribeToMore, ...result } = useQuery(
-        QUERY_GET_FEEDS, { variables: { year: dateFns.getYear(currentDate),
-            month: dateFns.getMonth(currentDate)
-        } }
+        QUERY_GET_FEEDS,
+        // { variables: { year: dateFns.getYear(currentDate),
+        //     month: dateFns.getMonth(currentDate)
+        // } }
     );
+
+    const { data, loading, error } = useSubscription<FeedUpdatedSubscrResp>(
+        SUBSCRIPTION_FEED_UPDATED
+    );
+
+    console.log('subscr', data, error);
 
     useEffect(() => {
         subscribeToMore({
             document: SUBSCRIPTION_FEED_UPDATED,
             updateQuery: (prev, { subscriptionData }) => {
-                console.log("SUBSCRIPTION", subscriptionData)
+                console.log("SUBSCRIPTION", subscriptionData, prev)
                 // if (!subscriptionData.data) return prev;
                 // const newFeedItem = subscriptionData.data.commentAdded;
                 // return Object.assign({}, prev, {

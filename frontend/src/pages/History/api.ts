@@ -6,6 +6,7 @@ export const QUERY_GET_FEEDS = gql`
             key,
             timestamp,
             details {
+                key,
                 type,
                 name,
                 amount,

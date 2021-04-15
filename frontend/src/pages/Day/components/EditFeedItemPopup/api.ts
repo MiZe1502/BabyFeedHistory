@@ -1,5 +1,5 @@
 import {gql} from "@apollo/client";
-import {FeedItemDetails} from "../../../History/api";
+import {FeedItem, FeedItemDetails} from "../../../History/api";
 
 export const MUTATION_EDIT_FEED_ITEM = gql`
     mutation UpdateFeed($feedItem: ExistedFeedInput) {
@@ -7,6 +7,7 @@ export const MUTATION_EDIT_FEED_ITEM = gql`
             key,
             timestamp,
             details{
+                key,
                 type,
                 name,
                 amount,
@@ -46,6 +47,10 @@ export const SUBSCRIPTION_FEED_UPDATED = gql`
         }
     }
 `
+
+export interface FeedUpdatedSubscrResp {
+    feedUpdated: FeedItem;
+}
 
 export interface GetAvailableFeedDetailsResp {
     getAvailableFeedDetails: FeedItemDetails[];
