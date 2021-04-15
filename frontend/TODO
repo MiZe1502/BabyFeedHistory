@@ -14,4 +14,9 @@
     2.2. show cards with existed feed details
     2.3. edit feed details item popup
     2.4. create feed details item popup
+3. common
+    3.1. recoil state is the single source of truth
+    3.2. move data from gql cache to recoil state
+    3.3. update data in recoil state on subscription event
+
 
