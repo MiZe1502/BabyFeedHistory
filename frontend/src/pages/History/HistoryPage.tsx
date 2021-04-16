@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import dateFns from "date-fns";
 
 import css from "./HistoryPage.scss";
 import {useQuery} from "@apollo/client";
-import {FeedsResp, FeedsVariables, QUERY_GET_FEEDS} from "./api";
+import {FeedItem, FeedsResp, FeedsVariables, QUERY_GET_FEEDS} from "./api";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {useAuth} from "../../common/hooks/useAuth";
 import {routes} from "../../utils/routes";
@@ -11,10 +11,14 @@ import { useHistory } from "react-router-dom";
 import {CalendarHeader} from "./components/CalendarHeader/CalendarHeader";
 import {CalendarDaysTitle} from "./components/CalendarDaysTitle/CalendarDaysTitle";
 import {CalendarCells} from "./components/CalendarCells/CalendarCells";
+import {useRecoilState} from "recoil";
+import {historyDataState} from "./state";
 
 export const HistoryPage = (): React.ReactElement => {
     const auth = useAuth();
     const history = useHistory();
+
+    const [historyData, setHistoryData] = useRecoilState(historyDataState);
 
     const [currentDate, setCurrentDate] = useState(new Date())
 
@@ -23,6 +27,12 @@ export const HistoryPage = (): React.ReactElement => {
         { variables: { year: dateFns.getYear(currentDate),
                 month: dateFns.getMonth(currentDate) }  }
     );
+
+    useEffect(() => {
+        if (!loading && data) {
+            setHistoryData(data?.lastMonthFeeds || [])
+        }
+    }, [loading, data])
 
     if (error && error.message === 'Authentication error') {
         auth?.logout();
@@ -50,7 +60,7 @@ export const HistoryPage = (): React.ReactElement => {
                     <CalendarDaysTitle currentDate={currentDate}/>
                     <CalendarCells
                         currentDate={currentDate}
-                        data={data}
+                        data={historyData}
                         onDayClick={onDayClick}/>
                 </div>
             }

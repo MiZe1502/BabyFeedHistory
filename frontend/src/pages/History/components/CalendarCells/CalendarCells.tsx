@@ -6,13 +6,13 @@ import cn from "classnames";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
-import {FeedsResp} from "../../api";
+import {FeedItem, FeedsResp} from "../../api";
 
 import css from "./CalendarCells.scss";
 
 interface CalendarCellsProps {
     currentDate: Date;
-    data?: FeedsResp;
+    data?: FeedItem[];
     onDayClick: (day: string) => void;
 }
 
@@ -43,7 +43,7 @@ export const CalendarCells =
             } else {
                 formattedDate = dateFns.format(currentDay, dateFormat);
 
-                const dayWithFeeds = data?.lastMonthFeeds?.filter(
+                const dayWithFeeds = data?.filter(
                     (feedItem) =>
                         dateFns.getDate(feedItem.timestamp) ===
                         dateFns.getDate(currentDay));
