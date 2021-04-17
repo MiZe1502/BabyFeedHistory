@@ -25,7 +25,6 @@ export const DayPage = () => {
         updateItem,
         getItemsForDay} = useHistoryDataState();
 
-    const [currentDate, setCurrentDate] = useState(new Date())
     const [filteredData, setFilteredData] = useState<FeedItem[]>([])
 
     const { data, loading, error } = useSubscription<FeedUpdatedSubscrResp>(

@@ -1,0 +1,10 @@
+@import "../../../../../common/styles/positioning";
+
+.AddNewFeedDetailsItemBlock {
+  @include FlexHorCenter;
+  justify-content: center;
+}
+
+.FeedDetailsAvailableList {
+  max-height: 300px;
+}

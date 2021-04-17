@@ -26,6 +26,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import {Header} from "./components/Header";
+import {FeedDetailsList} from "./components/FeedDetailsList";
 
 interface EditFeedItemPopupProps {
     feedItem?: FeedItem;
@@ -52,7 +54,6 @@ export const EditFeedItemPopup = ({feedItem, onClose}: EditFeedItemPopupProps) =
     const {params: {date}} = useRouteMatch<{date: string}>();
 
     const [currentFeedItem, setCurrentFeedItem] = useState<FeedItem | undefined>(feedItem);
-    const [isFeedsDetailsListOpened, setIsFeedsDetailsListOpened] = useState(false);
 
     useEffect(() => {
         setCurrentFeedItem(feedItem)
@@ -64,12 +65,6 @@ export const EditFeedItemPopup = ({feedItem, onClose}: EditFeedItemPopupProps) =
 
     const [updateMethod, {error, data, loading}] =
         useMutation<EditFeedItemResp>(MUTATION_EDIT_FEED_ITEM)
-
-    const {
-        data: feedDetailsData,
-        error: feedDetailsError,
-        loading: feedDetailsLoading
-    } = useQuery<GetAvailableFeedDetailsResp>(QUERY_GET_AVAILABLE_FEED_DETAILS);
 
     const onSubmit = (data: EditFeedItemForm) => {
         const time = data.time;
@@ -105,10 +100,6 @@ export const EditFeedItemPopup = ({feedItem, onClose}: EditFeedItemPopupProps) =
         onClose?.();
     }
 
-    const onAddNewFeedDetailsItemClick = () => {
-        setIsFeedsDetailsListOpened(!isFeedsDetailsListOpened);
-    }
-
     const onAddNewFeedDetails = (item: FeedItemDetails) => {
         const details = currentFeedItem?.details || [];
         setCurrentFeedItem({
@@ -132,13 +123,7 @@ export const EditFeedItemPopup = ({feedItem, onClose}: EditFeedItemPopupProps) =
 
     return <Dialog open={true}>
         <div className={css.PopupTitleWrapper}>
-            <DialogTitle id="form-dialog-title">
-                <FormattedMessage id={currentFeedItem ?
-                    "FeedItem.Card.Edit.Title" : "FeedItem.Card.Create.Title"} />
-            </DialogTitle>
-            <IconButton aria-label="close" onClick={onCancel}>
-                <CloseIcon />
-            </IconButton>
+            <Header currentFeedItem={currentFeedItem} onCancel={onCancel}/>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
             <DialogContent>
@@ -168,19 +153,7 @@ export const EditFeedItemPopup = ({feedItem, onClose}: EditFeedItemPopupProps) =
                         })}
                 </List>}
 
-                <div className={css.AddNewFeedFetailsItemBlock}>
-                    <IconButton onClick={onAddNewFeedDetailsItemClick}>
-                        {isFeedsDetailsListOpened ? <ExpandLess /> : <ExpandMore />}
-                    </IconButton>
-                </div>
-
-                {isFeedsDetailsListOpened && feedDetailsData && <List className={css.FeedDetailsAvailableList}>
-                    {feedDetailsData?.getAvailableFeedDetails?.map((item) => (
-                        <ListItem button onClick={() => onAddNewFeedDetails(item)} key={item.name}>
-                            <ListItemText primary={item.name} secondary={`${item.amount} ${item.amountOfWhat}`}/>
-                        </ListItem>
-                    ))}
-                </List>}
+                <FeedDetailsList onAddNewFeedDetails={onAddNewFeedDetails}/>
             </DialogContent>
             <DialogActions>
                 <Button type="submit" color="primary">
