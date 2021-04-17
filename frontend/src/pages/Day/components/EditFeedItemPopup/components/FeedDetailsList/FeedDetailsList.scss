@@ -1,4 +1,4 @@
-@import "../../../../../common/styles/positioning";
+@import "../../../../../../common/styles/positioning";
 
 .AddNewFeedDetailsItemBlock {
   @include FlexHorCenter;
@@ -6,5 +6,6 @@
 }
 
 .FeedDetailsAvailableList {
-  max-height: 300px;
+  max-height: 250px;
+  overflow-y: auto;
 }

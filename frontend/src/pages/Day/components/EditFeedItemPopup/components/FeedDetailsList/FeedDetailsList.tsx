@@ -10,8 +10,10 @@ import {useQuery} from "@apollo/client";
 import {
     GetAvailableFeedDetailsResp,
     QUERY_GET_AVAILABLE_FEED_DETAILS
-} from "../api";
-import {FeedItemDetails} from "../../../../History/api";
+} from "../../api";
+import {FeedItemDetails} from "../../../../../History/api";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import {ErrorMessage} from "../../../../../../common/components/ErrorMessage/ErrorMessage";
 
 interface FeedDetailsListProps {
     onAddNewFeedDetails: (item: FeedItemDetails) => void;
@@ -19,15 +21,25 @@ interface FeedDetailsListProps {
 
 export const FeedDetailsList = ({onAddNewFeedDetails}: FeedDetailsListProps) => {
     const {
-        data: feedDetailsData,
-        error: feedDetailsError,
-        loading: feedDetailsLoading
+        data,
+        error,
+        loading
     } = useQuery<GetAvailableFeedDetailsResp>(QUERY_GET_AVAILABLE_FEED_DETAILS);
 
     const [isFeedsDetailsListOpened, setIsFeedsDetailsListOpened] = useState(false);
 
     const onAddNewFeedDetailsItemClick = () => {
         setIsFeedsDetailsListOpened(!isFeedsDetailsListOpened);
+    }
+
+    if (loading) {
+        return <div className={css.AddNewFeedDetailsItemBlock}>
+            <CircularProgress size={16} disableShrink />
+        </div>
+    }
+
+    if (error) {
+        return <ErrorMessage showError={Boolean(error)} errorMessage={error.message}/>
     }
 
     return <>
@@ -37,8 +49,8 @@ export const FeedDetailsList = ({onAddNewFeedDetails}: FeedDetailsListProps) => 
             </IconButton>
         </div>
 
-        {isFeedsDetailsListOpened && feedDetailsData && <List className={css.FeedDetailsAvailableList}>
-            {feedDetailsData?.getAvailableFeedDetails?.map((item) => (
+        {isFeedsDetailsListOpened && data && <List className={css.FeedDetailsAvailableList}>
+            {data?.getAvailableFeedDetails?.map((item) => (
                 <ListItem button onClick={() => onAddNewFeedDetails(item)} key={item.name}>
                     <ListItemText primary={item.name} secondary={`${item.amount} ${item.amountOfWhat}`}/>
                 </ListItem>

@@ -14,7 +14,7 @@ export const ErrorMessage =
     if (!showError) {
         return null;
     }
-    return <Typography className={css.Wrapper}
+    return <Typography className={css.ErrorWrapper}
                        color="error" variant="subtitle2" component="h6">
         <ErrorIcon className={css.ErrorIcon} color="error" fontSize="small"/>
         {errorMessage}

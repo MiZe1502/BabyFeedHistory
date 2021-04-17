@@ -3,7 +3,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import {FormattedMessage} from "react-intl";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import {FeedItem} from "../../../../History/api";
+import {FeedItem} from "../../../../../History/api";
 
 interface HeaderProps {
     currentFeedItem?: FeedItem;
