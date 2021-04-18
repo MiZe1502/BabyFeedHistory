@@ -11,6 +11,9 @@ import {FeedItem} from "../../../History/api";
 import { useIntl } from "react-intl";
 import {FeedDetailsItem} from "../FeedDetailsItem/FeedDetailsItem";
 import {EditFeedItemPopup} from "../EditFeedItemPopup/EditFeedItemPopup";
+import {RemoveFeedItemPopup} from "../RemoveFeedItemPopup/RemoveFeedItemPopup";
+import {useMutation} from "@apollo/client";
+import {FeedRemovedResp, MUTATION_REMOVE_FEED_ITEM} from "./api";
 
 interface FeedItemProps {
     item: FeedItem;
@@ -22,6 +25,7 @@ const format = 'HH:mm';
 export const FeedItemComponent = ({item, key}: FeedItemProps) => {
     const intl = useIntl();
     const [isEdit, setIsEdit] = useState(false);
+    const [isRemove, setIsRemove] = useState(false);
 
     const openEditPopup = () => {
         setIsEdit(true);
@@ -29,6 +33,29 @@ export const FeedItemComponent = ({item, key}: FeedItemProps) => {
 
     const closeEditPopup = () => {
         setIsEdit(false);
+    }
+
+    const openRemovePopup = () => {
+        setIsRemove(true);
+    }
+
+    const closeRemovePopup = () => {
+        setIsRemove(false);
+    }
+
+    const [removeMethod, {error, loading}] = useMutation<FeedRemovedResp>(MUTATION_REMOVE_FEED_ITEM)
+
+    const removeFeedItem = () => {
+        removeMethod({variables: {
+                key: item.key,
+            }})
+            .then((res) => {
+                console.log(res)
+                closeRemovePopup();
+            })
+            .catch((err) => {
+                console.log(err)
+            });
     }
 
     return <Card key={key} className={css.FeedItem}>
@@ -43,10 +70,16 @@ export const FeedItemComponent = ({item, key}: FeedItemProps) => {
             <Button onClick={openEditPopup} size="small" color="primary">
                 {intl.formatMessage({id: "FeedItem.Card.Buttons.Edit"})}
             </Button>
-            <Button size="small" color="secondary">
+            <Button onClick={openRemovePopup} size="small" color="secondary">
                 {intl.formatMessage({id: "FeedItem.Card.Buttons.Remove"})}
             </Button>
         </CardActions>
         {isEdit && <EditFeedItemPopup onClose={closeEditPopup} feedItem={item}/>}
+        {isRemove && <RemoveFeedItemPopup
+            onClose={closeRemovePopup}
+            onRemove={removeFeedItem}
+            key={item.key}
+            loading={loading}
+            error={error?.message}/>}
     </Card>
 }

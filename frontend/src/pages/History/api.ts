@@ -17,12 +17,6 @@ export const QUERY_GET_FEEDS = gql`
     }
 `
 
-export const MUTATION_REMOVE_FEED_ITEM = gql`
-    mutation RemoveFeedDetails($key: String) {
-        removeFeedDetails(key: $key)
-    }
-`
-
 export interface FeedsResp {
     lastMonthFeeds?: FeedItem[];
 }

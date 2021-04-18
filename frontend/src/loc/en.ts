@@ -20,5 +20,10 @@ export const en = {
     "FeedItem.Card.Edit.Buttons.Save": "Save",
     "FeedItem.Card.Edit.Buttons.Cancel": "Cancel",
 
+    "FeedItem.Card.Remove.Title": "Removing feed item",
+    "FeedItem.Card.Remove.Message": "Do you really want to remove selected feed item?",
+    "FeedItem.Card.Remove.Buttons.Yes": "Yes",
+    "FeedItem.Card.Remove.Buttons.No": "No",
+
     "FeedItem.Card.Create.Title": "Create feed item",
 }
