@@ -28,7 +28,8 @@ const lastMonthFeeds =
 const feedsForDay =
     async (_: unknown, data: {from: number, to: number }, {token}: Context):
         Promise<FeedData[] | null> => {
-        const {from, to} = data;
+        const from = data.from * 1000;
+        const to = data.to * 1000;
 
         const curUser = checkAuthorization(token)
 

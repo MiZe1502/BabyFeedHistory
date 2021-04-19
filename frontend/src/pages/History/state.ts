@@ -1,6 +1,8 @@
 import {atom, useRecoilState} from "recoil";
 import {FeedItem} from "./api";
 import dateFns from "date-fns";
+import {useEffect} from "react";
+import {useQuery} from "@apollo/client";
 
 export const historyDataState = atom<FeedItem[]>({
     key: 'historyData',
@@ -17,6 +19,11 @@ export const useHistoryDataState = () => {
 
     const addItem = (item: FeedItem) => {
         const updatedData = [...historyData, item];
+        setHistoryData(updatedData);
+    }
+
+    const addItems = (items: FeedItem[]) => {
+        const updatedData = [...historyData, ...items];
         setHistoryData(updatedData);
     }
 
@@ -38,6 +45,7 @@ export const useHistoryDataState = () => {
         historyData,
         removeItemByKey,
         addItem,
+        addItems,
         updateItem,
         getItemsForDay,
     }
