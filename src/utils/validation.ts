@@ -107,6 +107,16 @@ export const validateQueryFeedsData = (year: number, month: number): Errors => {
     return errors;
 }
 
+export const validateQueryDayFeedsData = (from: number, to: number): Errors => {
+    const errors: Errors = {};
+
+    if (from <= 0 || to <= 0 || to < from) {
+        errors.general = 'Incorrect query data';
+    }
+
+    return errors;
+}
+
 export const validateFeedDetails =
     (feedDetails: FeedDetailsData, errors: DetailsErrors = {}): DetailsErrors => {
     if (!feedDetails.type) {

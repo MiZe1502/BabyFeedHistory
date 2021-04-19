@@ -1,8 +1,12 @@
 import {FeedData} from "../../../db/schemas/feeds";
 import {checkAuthorization} from "../../../utils/token";
 import {UserInputError} from "apollo-server-express";
-import {getFeedsForLastMonth} from "../../../db/repos/feeds";
-import {isValid, validateQueryFeedsData} from "../../../utils/validation";
+import {getFeedsForDay, getFeedsForLastMonth} from "../../../db/repos/feeds";
+import {
+    isValid,
+    validateQueryDayFeedsData,
+    validateQueryFeedsData
+} from "../../../utils/validation";
 import {Context} from "../../../utils/types";
 
 const lastMonthFeeds =
@@ -21,6 +25,24 @@ const lastMonthFeeds =
     return getFeedsForLastMonth(curUser.login, year, month);
 }
 
+const feedsForDay =
+    async (_: unknown, data: {from: number, to: number }, {token}: Context):
+        Promise<FeedData[] | null> => {
+        const {from, to} = data;
+
+        const curUser = checkAuthorization(token)
+
+        const errors = validateQueryDayFeedsData(from ,to)
+
+        if (!isValid(errors)) {
+            throw new UserInputError('Incorrect query data for day time interval', {errors})
+        }
+
+        return getFeedsForDay(curUser.login, from ,to);
+
+    }
+
 export const queries = {
     lastMonthFeeds,
+    feedsForDay,
 }

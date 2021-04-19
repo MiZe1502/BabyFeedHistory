@@ -21,6 +21,18 @@ export const getFeedsForLastMonth =
     })
 }
 
+export const getFeedsForDay =
+    async (userLogin: string, from: number, to: number):
+    Promise<FeedData[] | null> => {
+        return feedModel.find({
+            $and: [
+                { timestamp: { $gte : from } },
+                { timestamp: { $lte : to } },
+                {createdBy: userLogin}
+            ]
+        })
+    }
+
 export const createNewFeed =
         async (userLogin: string, timestamp: number, details: FeedDetailsData[]):
             Promise<FeedData | null> => {
