@@ -21,6 +21,7 @@ import {useEditFeedItemPopup} from "./useEditFeedItemPopup";
 export interface EditFeedItemPopupProps {
     feedItem?: FeedItem;
     onClose?: () => void;
+    currentDay?: string;
 }
 
 
@@ -35,7 +36,10 @@ const parseTimestamp = (ts?: number): string => {
 export const EditFeedItemPopup = (props: EditFeedItemPopupProps) => {
     const {
         currentFeedItem,
-        loading,
+        updateLoading,
+        updateError,
+        createLoading,
+        createError,
         errors,
         intl,
         register,
@@ -63,7 +67,7 @@ export const EditFeedItemPopup = (props: EditFeedItemPopupProps) => {
                     name="time"
                     label={intl.formatMessage({id: "FeedItem.Card.Edit.Fields.Timestamp"})}
                     type="text"
-                    disabled={loading}
+                    disabled={updateLoading || createLoading}
                     error={Boolean(errors.timestamp)}
                     helperText={errors.timestamp?.message}
                 />

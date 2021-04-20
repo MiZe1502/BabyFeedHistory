@@ -9,13 +9,15 @@ import { useIntl } from "react-intl";
 import {FeedItemComponent} from "./components/FeedItem/FeedItem";
 import {useLazyQuery, useQuery, useSubscription} from "@apollo/client";
 import {
+    FeedCreatedSubscrResp,
     FeedRemovedSubscrResp,
-    FeedUpdatedSubscrResp, SUBSCRIPTION_FEED_REMOVED,
+    FeedUpdatedSubscrResp, SUBSCRIPTION_FEED_CREATED, SUBSCRIPTION_FEED_REMOVED,
     SUBSCRIPTION_FEED_UPDATED
 } from "./components/EditFeedItemPopup/api";
 import {useHistoryDataState} from "../History/state";
 import {FeedsResp, FeedsVariables, QUERY_GET_FEEDS_FOR_DAY} from "./api";
 import dateFns from "date-fns";
+import {AddNewFeedItem} from "./components/AddNewFeedItem/AddNewFeedItem";
 
 export const DayPage = () => {
     const match = useRouteMatch<{date: string}>();
@@ -23,6 +25,7 @@ export const DayPage = () => {
 
     const {historyData,
         addItems,
+        addItem,
         updateItem,
         removeItemByKey,
         getItemsForDay} = useHistoryDataState();
@@ -66,6 +69,12 @@ export const DayPage = () => {
         SUBSCRIPTION_FEED_REMOVED
     );
 
+    const { data: created,
+        loading: createdLoading
+    } = useSubscription<FeedCreatedSubscrResp>(
+        SUBSCRIPTION_FEED_CREATED
+    );
+
     useEffect(() => {
         if (!updatedLoading && updated) {
             updateItem(updated?.feedUpdated || {})
@@ -77,6 +86,13 @@ export const DayPage = () => {
             removeItemByKey(removed?.feedRemoved?.key)
         }
     }, [removed, removedLoading])
+
+    useEffect(() => {
+        if (!createdLoading && created) {
+            console.log(created?.feedCreated)
+            addItem(created?.feedCreated)
+        }
+    }, [created, createdLoading])
 
     useEffect(() => {
         setFilteredData(getItemsForDay(match.params.date))
@@ -97,5 +113,8 @@ export const DayPage = () => {
         </Card>
     }
 
-    return <div className={css.DayPage}>{component}</div>
+    return <div className={css.DayPage}>
+        {component}
+        <AddNewFeedItem />
+    </div>
 }

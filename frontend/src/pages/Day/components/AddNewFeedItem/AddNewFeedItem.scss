@@ -1,0 +1,6 @@
+@import "../../../../common/styles/positioning";
+
+.AddNewWrapper {
+  @include FlexHorCenterVertical;
+  width: 100%;
+}
