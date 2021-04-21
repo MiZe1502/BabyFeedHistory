@@ -1,0 +1,9 @@
+@import "../../../common/styles/positioning";
+
+.PopupTitleWrapper {
+  @include FlexHorCenter;
+
+  justify-content: space-between;
+  min-width: 500px;
+  max-height: 80%;
+}

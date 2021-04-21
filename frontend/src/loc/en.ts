@@ -26,4 +26,9 @@ export const en = {
     "FeedItem.Card.Remove.Buttons.No": "No",
 
     "FeedItem.Card.Create.Title": "Create feed item",
+
+    "FeedDetails.Card.Edit.Buttons.Save": "Save",
+    "FeedDetails.Card.Edit.Buttons.Cancel": "Cancel",
+    "FeedDetails.Card.Edit.Fields.Name": "Name",
+    "FeedDetails.Card.Edit.Fields.Name.Required": "Name field should not be empty",
 }
