@@ -14,6 +14,8 @@ import {
 import {FeedItemDetails} from "../../../../../History/api";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {ErrorMessage} from "../../../../../../common/components/ErrorMessage/ErrorMessage";
+import AddIcon from '@material-ui/icons/Add';
+import {EditFeedDetailsPopup} from "../../../../../FeedDetails/EditFeedDetailsPopup/EditFeedDetailsPopup";
 
 interface FeedDetailsListProps {
     onAddNewFeedDetails: (item: FeedItemDetails) => void;
@@ -27,6 +29,15 @@ export const FeedDetailsList = ({onAddNewFeedDetails}: FeedDetailsListProps) => 
     } = useQuery<GetAvailableFeedDetailsResp>(QUERY_GET_AVAILABLE_FEED_DETAILS);
 
     const [isFeedsDetailsListOpened, setIsFeedsDetailsListOpened] = useState(false);
+    const [isPopupOpened, setIsPopupOpened] = useState(false);
+
+    const onClose = () => {
+        setIsPopupOpened(false);
+    }
+
+    const onCreateNewFeedDetails = () => {
+        setIsPopupOpened(true);
+    }
 
     const onAddNewFeedDetailsItemClick = () => {
         setIsFeedsDetailsListOpened(!isFeedsDetailsListOpened);
@@ -47,6 +58,9 @@ export const FeedDetailsList = ({onAddNewFeedDetails}: FeedDetailsListProps) => 
             <IconButton onClick={onAddNewFeedDetailsItemClick}>
                 {isFeedsDetailsListOpened ? <ExpandLess /> : <ExpandMore />}
             </IconButton>
+            <IconButton onClick={onCreateNewFeedDetails}>
+                <AddIcon />
+            </IconButton>
         </div>
 
         {isFeedsDetailsListOpened && data && <List className={css.FeedDetailsAvailableList}>
@@ -56,5 +70,7 @@ export const FeedDetailsList = ({onAddNewFeedDetails}: FeedDetailsListProps) => 
                 </ListItem>
             ))}
         </List>}
+
+        {isPopupOpened && <EditFeedDetailsPopup onClose={onClose}/>}
     </>
 }

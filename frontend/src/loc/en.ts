@@ -30,5 +30,12 @@ export const en = {
     "FeedDetails.Card.Edit.Buttons.Save": "Save",
     "FeedDetails.Card.Edit.Buttons.Cancel": "Cancel",
     "FeedDetails.Card.Edit.Fields.Name": "Name",
+    "FeedDetails.Card.Edit.Fields.Amount": "Amount",
+    "FeedDetails.Card.Edit.Fields.AmountOfWhat": "Units",
+    "FeedDetails.Card.Edit.Fields.Type": "Type",
+    "FeedDetails.Card.Edit.Fields.Type.ValueWithAmount": "Value with amount",
+    "FeedDetails.Card.Edit.Fields.Type.CheckedValue": "Checked value",
     "FeedDetails.Card.Edit.Fields.Name.Required": "Name field should not be empty",
+    "FeedDetails.Card.Edit.Fields.Amount.Required": "Amount field should not be empty",
+    "FeedDetails.Card.Edit.Fields.AmountOfWhat.Required": "Units field should not be empty",
 }
