@@ -16,8 +16,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import {ErrorMessage} from "../../../../../../common/components/ErrorMessage/ErrorMessage";
 import AddIcon from '@material-ui/icons/Add';
 import {
-    FeedDetailsCreatedSubscrResp,
-    SUBSCRIPTION_FEED_DETAILS_CREATED
+    FeedDetailsCreatedSubscrResp, FeedDetailsUpdatedSubscrResp,
+    SUBSCRIPTION_FEED_DETAILS_CREATED, SUBSCRIPTION_FEED_DETAILS_UPDATED
 } from "../../../../../FeedDetails/api";
 
 interface FeedDetailsListProps {
@@ -40,11 +40,37 @@ export const FeedDetailsList = ({onAddNewFeedDetails, onCreateNewFeedDetailsPopu
         SUBSCRIPTION_FEED_DETAILS_CREATED
     );
 
+    const { data: updated,
+        loading: updatedLoading
+    } = useSubscription<FeedDetailsUpdatedSubscrResp>(
+        SUBSCRIPTION_FEED_DETAILS_UPDATED
+    );
+
     useEffect(() => {
         if (!loading && data && data?.getAvailableFeedDetails.length > 0) {
             setFeedDetails(data?.getAvailableFeedDetails || []);
         }
     }, [data, loading])
+
+    useEffect(() => {
+        if (!updatedLoading && updated) {
+            const items = [...feedDetails];
+            const updatedItem = updated.feedDetailsUpdated;
+
+            items.forEach((item) => {
+                if (item.key === updatedItem.key) {
+                    item = {
+                        ...item,
+                        ...updatedItem,
+                    }
+                }
+            })
+
+            setFeedDetails([
+                ...items
+            ])
+        }
+    }, [updated, updatedLoading])
 
     useEffect(() => {
         if (!createdLoading && created) {
