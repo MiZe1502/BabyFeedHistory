@@ -4,8 +4,12 @@ import {EditFeedDetailsPopupProps} from "./EditFeedDetailsPopup";
 import {useIntl} from "react-intl";
 import {useForm} from "react-hook-form";
 import {useMutation} from "@apollo/client";
-import {MUTATION_EDIT_FEED_ITEM} from "../../Day/components/EditFeedItemPopup/api";
-import {EditFeedDetailsResp, MUTATION_EDIT_FEED_DETAILS} from "../api";
+import {
+    CreateFeedDetailsResp,
+    EditFeedDetailsResp,
+    MUTATION_CREATE_FEED_DETAILS,
+    MUTATION_EDIT_FEED_DETAILS
+} from "../api";
 
 interface FeedItemDetailsForm extends FeedItemDetails {}
 
@@ -30,13 +34,56 @@ export const useEditFeedDetailsPopup = ({feedDetails, onClose}: EditFeedDetailsP
     const [updateMethod, {error: updateError, loading: updateLoading}] =
         useMutation<EditFeedDetailsResp>(MUTATION_EDIT_FEED_DETAILS)
 
+    const [createMethod, {error: createError, loading: createLoading}] =
+        useMutation<CreateFeedDetailsResp>(MUTATION_CREATE_FEED_DETAILS)
+
     const onCancel = () => {
         onClose?.();
     }
 
-    const onSubmit = (event: React.FormEvent<HTMLInputElement>) => {
-        event.preventDefault();
-        console.log(getValues(), currentFeedDetails)
+    const onSubmit = () => {
+        const formData = getValues();
+        const data: FeedItemDetails = {
+            ...currentFeedDetails,
+            wasGiven: formData.wasGiven,
+            amountOfWhat: formData.amountOfWhat,
+            type: formData.type,
+            name: formData.name,
+            amount: Number(formData.amount),
+        };
+        console.log(data)
+
+        if (currentFeedDetails?.key) {
+            onEditFeedDetails(data);
+        } else {
+            onCreateFeedDetails(data);
+        }
+    }
+
+    const onCreateFeedDetails = (data: FeedItemDetails) => {
+        createMethod({variables: {
+                feedDetails: data,
+            }})
+            .then((res) => {
+                console.log(res)
+                onCancel();
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    }
+
+    const onEditFeedDetails = (data: FeedItemDetails) => {
+        updateMethod({variables: {
+                feedDetails: data,
+            }})
+            .then((res) => {
+                console.log(res)
+                onCancel();
+            })
+            .catch((err) => {
+                console.log(err)
+            });
     }
 
     useEffect(() => {
@@ -52,6 +99,9 @@ export const useEditFeedDetailsPopup = ({feedDetails, onClose}: EditFeedDetailsP
         intl,
         updateLoading,
         control,
+        updateError,
+        createError,
+        createLoading,
         onSubmit,
         onCancel,
     }

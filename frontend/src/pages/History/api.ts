@@ -33,6 +33,7 @@ export interface FeedItem {
 }
 
 export interface FeedItemDetails {
+    key?: string;
     type: string;
     name: string;
     amount?: number;
