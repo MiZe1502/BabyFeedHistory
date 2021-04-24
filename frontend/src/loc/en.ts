@@ -38,5 +38,6 @@ export const en = {
     "FeedDetails.Card.Edit.Fields.Type.CheckedValue": "Checked value",
     "FeedDetails.Card.Edit.Fields.Name.Required": "Name field should not be empty",
     "FeedDetails.Card.Edit.Fields.Amount.Required": "Amount field should not be empty",
+    "FeedDetails.Card.Edit.Fields.Amount.MoreThanZero": "Amount field should be more than 0",
     "FeedDetails.Card.Edit.Fields.AmountOfWhat.Required": "Units field should not be empty",
 }

@@ -101,7 +101,12 @@ export const EditFeedDetailsPopup = (props: EditFeedDetailsPopupProps) => {
                         <>
                             <TextFieldWrapped
                                 inputRef={register({
-                                    min: 1,
+                                    min: {
+                                        value: 1,
+                                        message: intl.formatMessage(
+                                            {id: "FeedDetails.Card.Edit.Fields.Amount.MoreThanZero"
+                                            }),
+                                    },
                                     required: intl.formatMessage({
                                         id: "FeedDetails.Card.Edit.Fields.Amount.Required"
                                     }),

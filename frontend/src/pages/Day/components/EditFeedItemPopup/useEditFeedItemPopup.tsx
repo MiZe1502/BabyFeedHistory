@@ -17,6 +17,7 @@ interface EditFeedItemResp {
 
 export const useEditFeedItemPopup = ({feedItem, onClose, currentDay}: EditFeedItemPopupProps) => {
     const [currentFeedItem, setCurrentFeedItem] = useState<FeedItem | undefined>(feedItem);
+    const [isPopupOpened, setIsPopupOpened] = useState(false);
 
     useEffect(() => {
         setCurrentFeedItem(feedItem)
@@ -109,6 +110,14 @@ export const useEditFeedItemPopup = ({feedItem, onClose, currentDay}: EditFeedIt
         } as FeedItem)
     }
 
+    const onCreateNewFeedDetailsPopupClose = () => {
+        setIsPopupOpened(false);
+    }
+
+    const onCreateNewFeedDetailsPopupOpen = () => {
+        setIsPopupOpened(true);
+    }
+
     return {
         currentFeedItem,
         updateLoading,
@@ -119,9 +128,12 @@ export const useEditFeedItemPopup = ({feedItem, onClose, currentDay}: EditFeedIt
         updateError,
         createError,
         createLoading,
+        isPopupOpened,
         onSubmit,
         onAddNewFeedDetails,
         onRemoveFeedDetailsFromItem,
         onCancel,
+        onCreateNewFeedDetailsPopupClose,
+        onCreateNewFeedDetailsPopupOpen,
     }
 }

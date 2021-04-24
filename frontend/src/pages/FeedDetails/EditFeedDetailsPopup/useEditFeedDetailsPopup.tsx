@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {FeedItemDetails} from "../../History/api";
 import {EditFeedDetailsPopupProps} from "./EditFeedDetailsPopup";
 import {useIntl} from "react-intl";
@@ -23,7 +23,7 @@ export const useEditFeedDetailsPopup = ({feedDetails, onClose}: EditFeedDetailsP
         }
     }, [feedDetails])
 
-    const {register, handleSubmit, formState: {errors}, control} = useForm<FeedItemDetailsForm>({});
+    const {register, handleSubmit, formState: {errors}, control, getValues} = useForm<FeedItemDetailsForm>({});
 
     const intl = useIntl();
 
@@ -34,8 +34,9 @@ export const useEditFeedDetailsPopup = ({feedDetails, onClose}: EditFeedDetailsP
         onClose?.();
     }
 
-    const onSubmit = () => {
-
+    const onSubmit = (event: React.FormEvent<HTMLInputElement>) => {
+        event.preventDefault();
+        console.log(getValues(), currentFeedDetails)
     }
 
     useEffect(() => {

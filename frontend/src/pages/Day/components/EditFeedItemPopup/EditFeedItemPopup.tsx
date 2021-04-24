@@ -17,6 +17,7 @@ import Button from "@material-ui/core/Button";
 import {Header} from "./components/Header/Header";
 import {FeedDetailsList} from "./components/FeedDetailsList/FeedDetailsList";
 import {useEditFeedItemPopup} from "./useEditFeedItemPopup";
+import {EditFeedDetailsPopup} from "../../../FeedDetails/EditFeedDetailsPopup/EditFeedDetailsPopup";
 
 export interface EditFeedItemPopupProps {
     feedItem?: FeedItem;
@@ -44,10 +45,13 @@ export const EditFeedItemPopup = (props: EditFeedItemPopupProps) => {
         intl,
         register,
         handleSubmit,
+        isPopupOpened,
         onSubmit,
         onAddNewFeedDetails,
         onRemoveFeedDetailsFromItem,
         onCancel,
+        onCreateNewFeedDetailsPopupClose,
+        onCreateNewFeedDetailsPopupOpen
     } = useEditFeedItemPopup(props)
 
     return <Dialog open={true}>
@@ -82,7 +86,9 @@ export const EditFeedItemPopup = (props: EditFeedItemPopupProps) => {
                         })}
                 </List>}
 
-                <FeedDetailsList onAddNewFeedDetails={onAddNewFeedDetails}/>
+                <FeedDetailsList
+                    onCreateNewFeedDetailsPopupOpen={onCreateNewFeedDetailsPopupOpen}
+                    onAddNewFeedDetails={onAddNewFeedDetails}/>
             </DialogContent>
             <DialogActions>
                 <Button type="submit" color="primary">
@@ -93,5 +99,7 @@ export const EditFeedItemPopup = (props: EditFeedItemPopupProps) => {
                 </Button>
             </DialogActions>
         </form>
+        {isPopupOpened &&
+            <EditFeedDetailsPopup onClose={onCreateNewFeedDetailsPopupClose}/>}
     </Dialog>
 }

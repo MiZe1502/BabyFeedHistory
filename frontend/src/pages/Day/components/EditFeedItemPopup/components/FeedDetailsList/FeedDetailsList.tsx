@@ -19,9 +19,10 @@ import {EditFeedDetailsPopup} from "../../../../../FeedDetails/EditFeedDetailsPo
 
 interface FeedDetailsListProps {
     onAddNewFeedDetails: (item: FeedItemDetails) => void;
+    onCreateNewFeedDetailsPopupOpen: () => void;
 }
 
-export const FeedDetailsList = ({onAddNewFeedDetails}: FeedDetailsListProps) => {
+export const FeedDetailsList = ({onAddNewFeedDetails, onCreateNewFeedDetailsPopupOpen}: FeedDetailsListProps) => {
     const {
         data,
         error,
@@ -29,15 +30,6 @@ export const FeedDetailsList = ({onAddNewFeedDetails}: FeedDetailsListProps) => 
     } = useQuery<GetAvailableFeedDetailsResp>(QUERY_GET_AVAILABLE_FEED_DETAILS);
 
     const [isFeedsDetailsListOpened, setIsFeedsDetailsListOpened] = useState(false);
-    const [isPopupOpened, setIsPopupOpened] = useState(false);
-
-    const onClose = () => {
-        setIsPopupOpened(false);
-    }
-
-    const onCreateNewFeedDetails = () => {
-        setIsPopupOpened(true);
-    }
 
     const onAddNewFeedDetailsItemClick = () => {
         setIsFeedsDetailsListOpened(!isFeedsDetailsListOpened);
@@ -58,7 +50,7 @@ export const FeedDetailsList = ({onAddNewFeedDetails}: FeedDetailsListProps) => 
             <IconButton onClick={onAddNewFeedDetailsItemClick}>
                 {isFeedsDetailsListOpened ? <ExpandLess /> : <ExpandMore />}
             </IconButton>
-            <IconButton onClick={onCreateNewFeedDetails}>
+            <IconButton onClick={onCreateNewFeedDetailsPopupOpen}>
                 <AddIcon />
             </IconButton>
         </div>
@@ -70,7 +62,5 @@ export const FeedDetailsList = ({onAddNewFeedDetails}: FeedDetailsListProps) => 
                 </ListItem>
             ))}
         </List>}
-
-        {isPopupOpened && <EditFeedDetailsPopup onClose={onClose}/>}
     </>
 }
