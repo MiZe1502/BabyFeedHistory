@@ -51,10 +51,6 @@ export const DayPage = () => {
         }
     }, [data])
 
-
-
-
-
     const [filteredData, setFilteredData] = useState<FeedItem[]>([])
 
     const { data: updated,

@@ -2,10 +2,18 @@ import {useEffect, useState} from "react";
 import {FeedItem, FeedItemDetails} from "../../../History/api";
 import {useIntl} from "react-intl";
 import {useForm} from "react-hook-form";
-import {useMutation} from "@apollo/client";
-import {MUTATION_CREATE_FEED_ITEM, MUTATION_EDIT_FEED_ITEM} from "./api";
+import {useMutation, useSubscription} from "@apollo/client";
+import {
+    FeedUpdatedSubscrResp,
+    MUTATION_CREATE_FEED_ITEM,
+    MUTATION_EDIT_FEED_ITEM, SUBSCRIPTION_FEED_UPDATED
+} from "./api";
 import {EditFeedItemPopupProps} from "./EditFeedItemPopup";
 import dateFns from "date-fns";
+import {
+    FeedDetailsCreatedSubscrResp,
+    SUBSCRIPTION_FEED_DETAILS_CREATED
+} from "../../../FeedDetails/api";
 
 interface EditFeedItemForm extends FeedItem {
     time: string;
@@ -28,7 +36,7 @@ export const useEditFeedItemPopup = ({feedItem, onClose, currentDay}: EditFeedIt
     const {register, handleSubmit, formState: {errors}} = useForm<EditFeedItemForm>({});
 
     const [updateMethod, {error: updateError, loading: updateLoading}] =
-        useMutation<EditFeedItemResp>( MUTATION_EDIT_FEED_ITEM)
+        useMutation<EditFeedItemResp>(MUTATION_EDIT_FEED_ITEM)
 
     const [createMethod, {error: createError, loading: createLoading}] =
         useMutation<EditFeedItemResp>(MUTATION_CREATE_FEED_ITEM)
