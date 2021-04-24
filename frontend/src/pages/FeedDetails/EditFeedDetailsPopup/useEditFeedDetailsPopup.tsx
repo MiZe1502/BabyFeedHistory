@@ -38,6 +38,10 @@ export const useEditFeedDetailsPopup = ({feedDetails, onClose}: EditFeedDetailsP
 
     }
 
+    useEffect(() => {
+        console.log(errors)
+    }, [errors])
+
     return {
         currentFeedDetails,
         setCurrentFeedDetails,

@@ -7,3 +7,7 @@
   min-width: 500px;
   max-height: 80%;
 }
+
+.InnerWrapper {
+  @include FlexVert;
+}

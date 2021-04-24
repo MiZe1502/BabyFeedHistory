@@ -33,6 +33,7 @@ export const en = {
     "FeedDetails.Card.Edit.Fields.Amount": "Amount",
     "FeedDetails.Card.Edit.Fields.AmountOfWhat": "Units",
     "FeedDetails.Card.Edit.Fields.Type": "Type",
+    "FeedDetails.Card.Edit.Fields.WasGiven": "Was given to child",
     "FeedDetails.Card.Edit.Fields.Type.ValueWithAmount": "Value with amount",
     "FeedDetails.Card.Edit.Fields.Type.CheckedValue": "Checked value",
     "FeedDetails.Card.Edit.Fields.Name.Required": "Name field should not be empty",

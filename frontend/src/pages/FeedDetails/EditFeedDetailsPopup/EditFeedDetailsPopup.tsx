@@ -18,6 +18,7 @@ import {
     RadioGroup
 } from "@material-ui/core";
 import {Controller} from "react-hook-form";
+import Checkbox from "@material-ui/core/Checkbox";
 
 export interface EditFeedDetailsPopupProps {
     feedDetails?: FeedItemDetails;
@@ -41,92 +42,106 @@ export const EditFeedDetailsPopup = (props: EditFeedDetailsPopupProps) => {
         <div className={css.PopupTitleWrapper}>
             <Header currentFeedDetails={currentFeedDetails} onCancel={onCancel}/>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate
+              autoComplete="off">
             <DialogContent>
-                <TextFieldWrapped
-                    inputRef={register({
-                        required: intl.formatMessage({
-                            id: "FeedDetails.Card.Edit.Fields.Name.Required"}),
-                    })}
-                    defaultValue={currentFeedDetails?.name || ""}
-                    placeholder="Name"
-                    id="name"
-                    name="name"
-                    label={intl.formatMessage({id: "FeedDetails.Card.Edit.Fields.Name"})}
-                    type="text"
-                    disabled={updateLoading}
-                    error={Boolean(errors.name)}
-                    helperText={errors.name?.message}
-                />
-                <FormControl component="fieldset">
-                    <FormLabel component="legend">
-                        <FormattedMessage id="FeedDetails.Card.Edit.Fields.Type"/>
-                    </FormLabel>
-                    <Controller
-                        rules={{ required: true }}
-                        control={control}
-                        defaultValue="valueWithAmount"
-                        name="type"
-                        render={({ name, onBlur, onChange, value }) => (
-                            <RadioGroup
-                                value={currentFeedDetails?.type}
-                                onChange={(e) => {
-                                    setCurrentFeedDetails({
-                                        ...currentFeedDetails,
-                                        type: e.target.value,
-                                    })
-                                }}>
-                                <FormControlLabel
-                                    value="valueWithAmount"
-                                    control={<Radio />}
-                                    label={intl.formatMessage(
-                                        {id: "FeedDetails.Card.Edit.Fields.Type.ValueWithAmount"
-                                        })}
-                                />
-                                <FormControlLabel
-                                    value="checkedValue"
-                                    control={<Radio />}
-                                    label={intl.formatMessage(
-                                        {id: "FeedDetails.Card.Edit.Fields.Type.CheckedValue"
-                                        })}
-                                />
-                            </RadioGroup>
-                        )}
+                <div className={css.InnerWrapper}>
+                    <TextFieldWrapped
+                        inputRef={register({
+                            required: intl.formatMessage({
+                                id: "FeedDetails.Card.Edit.Fields.Name.Required"}),
+                        })}
+                        defaultValue={currentFeedDetails?.name || ""}
+                        placeholder="Name"
+                        id="name"
+                        name="name"
+                        label={intl.formatMessage({id: "FeedDetails.Card.Edit.Fields.Name"})}
+                        type="text"
+                        disabled={updateLoading}
+                        error={Boolean(errors.name)}
+                        helperText={errors.name?.message}
                     />
-                </FormControl>
-                {currentFeedDetails?.type === 'valueWithAmount' ?
-                    <>
-                        <TextFieldWrapped
-                            inputRef={register({
-                                required: intl.formatMessage({
-                                    id: "FeedDetails.Card.Edit.Fields.Amount.Required"}),
-                            })}
-                            defaultValue={currentFeedDetails?.amount}
-                            placeholder="Amount"
-                            id="amount"
-                            name="amount"
-                            label={intl.formatMessage({id: "FeedDetails.Card.Edit.Fields.Amount"})}
-                            type="number"
-                            disabled={updateLoading}
-                            error={Boolean(errors.name)}
-                            helperText={errors.name?.message}
+                    <FormControl component="fieldset">
+                        <FormLabel component="legend">
+                            <FormattedMessage id="FeedDetails.Card.Edit.Fields.Type"/>
+                        </FormLabel>
+                        <Controller
+                            rules={{ required: true }}
+                            control={control}
+                            defaultValue="valueWithAmount"
+                            name="type"
+                            render={({ name, onBlur, onChange, value }) => (
+                                <RadioGroup
+                                    value={currentFeedDetails?.type}
+                                    onChange={(e) => {
+                                        setCurrentFeedDetails({
+                                            ...currentFeedDetails,
+                                            type: e.target.value,
+                                        })
+                                    }}>
+                                    <FormControlLabel
+                                        value="valueWithAmount"
+                                        control={<Radio />}
+                                        label={intl.formatMessage(
+                                            {id: "FeedDetails.Card.Edit.Fields.Type.ValueWithAmount"
+                                            })}
+                                    />
+                                    <FormControlLabel
+                                        value="checkedValue"
+                                        control={<Radio />}
+                                        label={intl.formatMessage(
+                                            {id: "FeedDetails.Card.Edit.Fields.Type.CheckedValue"
+                                            })}
+                                    />
+                                </RadioGroup>
+                            )}
                         />
-                        <TextFieldWrapped
-                            inputRef={register({
-                                required: intl.formatMessage({
-                                    id: "FeedDetails.Card.Edit.Fields.AmountOfWhat.Required"}),
-                            })}
-                            defaultValue={currentFeedDetails?.amountOfWhat}
-                            placeholder="Units"
-                            id="amountOfWhat"
-                            name="amountOfWhat"
-                            label={intl.formatMessage({id: "FeedDetails.Card.Edit.Fields.AmountOfWhat"})}
-                            type="text"
-                            disabled={updateLoading}
-                            error={Boolean(errors.name)}
-                            helperText={errors.name?.message}
-                        />
-                    </> : null}
+                    </FormControl>
+                    {currentFeedDetails?.type === 'valueWithAmount' ?
+                        <>
+                            <TextFieldWrapped
+                                inputRef={register({
+                                    min: 1,
+                                    required: intl.formatMessage({
+                                        id: "FeedDetails.Card.Edit.Fields.Amount.Required"
+                                    }),
+                                })}
+                                defaultValue={currentFeedDetails?.amount}
+                                placeholder="Amount"
+                                id="amount"
+                                name="amount"
+                                label={intl.formatMessage({id: "FeedDetails.Card.Edit.Fields.Amount"})}
+                                type="number"
+                                disabled={updateLoading}
+                                error={Boolean(errors.amount)}
+                                helperText={errors.amount?.message}
+                            />
+                            <TextFieldWrapped
+                                inputRef={register({
+                                    required: intl.formatMessage({
+                                        id: "FeedDetails.Card.Edit.Fields.AmountOfWhat.Required"
+                                    }),
+                                })}
+                                defaultValue={currentFeedDetails?.amountOfWhat}
+                                placeholder="Units"
+                                id="amountOfWhat"
+                                name="amountOfWhat"
+                                label={intl.formatMessage({id: "FeedDetails.Card.Edit.Fields.AmountOfWhat"})}
+                                type="text"
+                                disabled={updateLoading}
+                                error={Boolean(errors.amountOfWhat)}
+                                helperText={errors.amountOfWhat?.message}
+                            />
+                        </> :
+                        <><FormControlLabel
+                            value={currentFeedDetails?.wasGiven}
+                            control={<Checkbox color="primary"/>}
+                            label={intl.formatMessage({id: "FeedDetails.Card.Edit.Fields.WasGiven"})}
+                            name='wasGiven'
+                            inputRef={register}
+                        /></>
+                    }
+                </div>
             </DialogContent>
             <DialogActions>
                 <ButtonWithLoading
