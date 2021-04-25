@@ -1,9 +1,13 @@
-1. day page
-    1.2. feed item hover
-        1.2.1. cursor
-        1.2.2. animation
-2. settings
-    2.1. get data from be
-    2.2. show cards with existed feed details
+1. refactoring
+    1.1. move all state to recoil (feed items, available feed details)
+    1.2. common popup dialog with children body
+2. feed details page
+    2.1. list
+        2.1.1. getting data + loading + errors
+        2.1.2. show cards with existed feed details
+3. logout on token expired
+4. account page
+    4.1. getting data
+    4.2. edit account data form
 
 
