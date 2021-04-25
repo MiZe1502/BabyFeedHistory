@@ -1,59 +1,42 @@
-import React, {useEffect, useState} from "react";
-import {FeedItem} from "../History/api";
-import { useRouteMatch } from "react-router-dom";
+import React from "react";
 import css from "./DayPage.scss";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import { useIntl } from "react-intl";
 import {FeedItemComponent} from "./components/FeedItem/FeedItem";
-import {useLazyQuery} from "@apollo/client";
-import {useHistoryDataState} from "../History/state";
-import {FeedsResp, FeedsVariables, QUERY_GET_FEEDS_FOR_DAY} from "./api";
-import dateFns from "date-fns";
 import {AddNewFeedItem} from "./components/AddNewFeedItem/AddNewFeedItem";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import {ErrorMessage} from "../../common/components/ErrorMessage/ErrorMessage";
+import {useDayPage} from "./useDayPage";
 
-export const DayPage = () => {
-    const match = useRouteMatch<{date: string}>();
-    const intl = useIntl();
+export const DayPage = (): React.ReactElement => {
+    const {
+        loading,
+        error,
+        filteredData,
+        intl,
+        ready
+    } = useDayPage();
 
-    const {historyData,
-        addItems,
-        getItemsForDay} = useHistoryDataState();
-
-    const [getFeeds, { loading, data, error }] = useLazyQuery<FeedsResp, FeedsVariables>(QUERY_GET_FEEDS_FOR_DAY);
-
-    useEffect(() => {
-        if (!historyData || historyData.length === 0) {
-            const startOfDay = dateFns.setMilliseconds(dateFns.startOfDay(match.params.date), 0).getTime()
-            const endOfDay = dateFns.setMilliseconds(dateFns.endOfDay(match.params.date), 0).getTime()
-            getFeeds({
-                variables: {
-                    from: startOfDay / 1000,
-                    to: endOfDay / 1000,
-                }
-            })
-        }
-    }, [])
-
-    useEffect(() => {
-        if (data) {
-            addItems(data.feedsForDay || []);
-        }
-    }, [data])
-
-    const [filteredData, setFilteredData] = useState<FeedItem[]>([])
-
-    useEffect(() => {
-        setFilteredData(getItemsForDay(match.params.date))
-    }, [historyData])
+    if (loading) {
+        return <div className={css.DayPage}>
+            <CircularProgress size={54} disableShrink />
+        </div>
+    }
 
     let component = null;
-    if (filteredData && filteredData.length > 0) {
+
+    if (error) {
+        component = <Card className={css.FeedItem}>
+            <CardContent>
+                <ErrorMessage showError={true} errorMessage={error?.message}/>
+            </CardContent>
+        </Card>
+    } else if (ready) {
      component = filteredData?.map((item) => {
         return <FeedItemComponent key={item.timestamp} item={item}/>
      })
-    } else {
+    } else if (!filteredData) {
         component = <Card className={css.FeedItem}>
             <CardContent>
                 <Typography variant="h5" component="h2">
@@ -65,6 +48,6 @@ export const DayPage = () => {
 
     return <div className={css.DayPage}>
         {component}
-        <AddNewFeedItem />
+        {!error && <AddNewFeedItem />}
     </div>
 }
