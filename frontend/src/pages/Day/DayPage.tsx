@@ -7,13 +7,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { useIntl } from "react-intl";
 import {FeedItemComponent} from "./components/FeedItem/FeedItem";
-import {useLazyQuery, useQuery, useSubscription} from "@apollo/client";
-import {
-    FeedCreatedSubscrResp,
-    FeedRemovedSubscrResp,
-    FeedUpdatedSubscrResp, SUBSCRIPTION_FEED_CREATED, SUBSCRIPTION_FEED_REMOVED,
-    SUBSCRIPTION_FEED_UPDATED
-} from "./components/EditFeedItemPopup/api";
+import {useLazyQuery} from "@apollo/client";
 import {useHistoryDataState} from "../History/state";
 import {FeedsResp, FeedsVariables, QUERY_GET_FEEDS_FOR_DAY} from "./api";
 import dateFns from "date-fns";
@@ -25,9 +19,6 @@ export const DayPage = () => {
 
     const {historyData,
         addItems,
-        addItem,
-        updateItem,
-        removeItemByKey,
         getItemsForDay} = useHistoryDataState();
 
     const [getFeeds, { loading, data, error }] = useLazyQuery<FeedsResp, FeedsVariables>(QUERY_GET_FEEDS_FOR_DAY);
@@ -52,43 +43,6 @@ export const DayPage = () => {
     }, [data])
 
     const [filteredData, setFilteredData] = useState<FeedItem[]>([])
-
-    const { data: updated,
-        loading: updatedLoading
-    } = useSubscription<FeedUpdatedSubscrResp>(
-        SUBSCRIPTION_FEED_UPDATED
-    );
-
-    const { data: removed,
-        loading: removedLoading
-    } = useSubscription<FeedRemovedSubscrResp>(
-        SUBSCRIPTION_FEED_REMOVED
-    );
-
-    const { data: created,
-        loading: createdLoading
-    } = useSubscription<FeedCreatedSubscrResp>(
-        SUBSCRIPTION_FEED_CREATED
-    );
-
-    useEffect(() => {
-        if (!updatedLoading && updated) {
-            updateItem(updated?.feedUpdated || {})
-        }
-    }, [updated, updatedLoading])
-
-    useEffect(() => {
-        if (!removedLoading && removed) {
-            removeItemByKey(removed?.feedRemoved?.key)
-        }
-    }, [removed, removedLoading])
-
-    useEffect(() => {
-        if (!createdLoading && created) {
-            console.log(created?.feedCreated)
-            addItem(created?.feedCreated)
-        }
-    }, [created, createdLoading])
 
     useEffect(() => {
         setFilteredData(getItemsForDay(match.params.date))
