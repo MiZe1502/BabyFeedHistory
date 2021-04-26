@@ -3,7 +3,7 @@ import {useLazyQuery} from "@apollo/client";
 import {
     GetAvailableFeedDetailsResp,
     QUERY_GET_AVAILABLE_FEED_DETAILS
-} from "../../api";
+} from "../../../../../../api/feedDetails/queries";
 import {useEffect, useState} from "react";
 
 export const useFeedDetailsList = () => {

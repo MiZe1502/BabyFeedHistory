@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {FeedItemDetails} from "../../History/api";
 import {EditFeedDetailsPopupProps} from "./EditFeedDetailsPopup";
 import {useIntl} from "react-intl";
 import {useForm} from "react-hook-form";
@@ -9,7 +8,8 @@ import {
     EditFeedDetailsResp,
     MUTATION_CREATE_FEED_DETAILS,
     MUTATION_EDIT_FEED_DETAILS
-} from "../api";
+} from "../../../api/feedDetails/mutations";
+import { FeedItemDetails } from "../../../api/feedDetails/queries";
 
 interface FeedItemDetailsForm extends FeedItemDetails {}
 

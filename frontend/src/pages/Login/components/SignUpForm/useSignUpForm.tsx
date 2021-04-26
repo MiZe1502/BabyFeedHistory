@@ -6,7 +6,7 @@ import {useMutation} from "@apollo/client";
 import {
     MUTATION_REGISTRATION,
     RegistrationResp
-} from "../../api";
+} from "../../../../api/user/mutations";
 import {
     addDataToLocalStorage,
     SESSION_TOKEN

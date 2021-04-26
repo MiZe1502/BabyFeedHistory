@@ -3,7 +3,7 @@ import {useHistory} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {useAuth} from "../../../../common/hooks/useAuth";
 import {useMutation} from "@apollo/client";
-import {LoginResp, MUTATION_AUTH} from "../../api";
+import {LoginResp, MUTATION_AUTH} from "../../../../api/user/mutations";
 import {
     addDataToLocalStorage,
     SESSION_TOKEN

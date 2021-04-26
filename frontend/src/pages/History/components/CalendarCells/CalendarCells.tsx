@@ -6,7 +6,7 @@ import cn from "classnames";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
-import {FeedItem, FeedsResp} from "../../api";
+import {FeedItem} from "../../../../api/feedItems/queries";
 
 import css from "./CalendarCells.scss";
 

@@ -1,5 +1,4 @@
 import React from "react";
-import {FeedItem} from "../../../History/api";
 import Dialog from "@material-ui/core/Dialog";
 import {FormattedMessage} from "react-intl";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -18,6 +17,7 @@ import {Header} from "./components/Header/Header";
 import {FeedDetailsList} from "./components/FeedDetailsList/FeedDetailsList";
 import {useEditFeedItemPopup} from "./useEditFeedItemPopup";
 import {EditFeedDetailsPopup} from "../../../FeedDetails/EditFeedDetailsPopup/EditFeedDetailsPopup";
+import {FeedItem} from "../../../../api/feedItems/queries";
 
 export interface EditFeedItemPopupProps {
     feedItem?: FeedItem;

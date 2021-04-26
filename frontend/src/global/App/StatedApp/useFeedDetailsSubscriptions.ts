@@ -6,7 +6,7 @@ import {
     FeedDetailsUpdatedSubscrResp,
     SUBSCRIPTION_FEED_DETAILS_CREATED, SUBSCRIPTION_FEED_DETAILS_REMOVED,
     SUBSCRIPTION_FEED_DETAILS_UPDATED
-} from "../../../pages/FeedDetails/api";
+} from "../../../api/feedDetails/subscriptions";
 import {useEffect} from "react";
 
 export const useFeedDetailsSubscriptions = () => {

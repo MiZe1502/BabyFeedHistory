@@ -5,11 +5,11 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import {FeedItemDetails} from "../../../../../History/api";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {ErrorMessage} from "../../../../../../common/components/ErrorMessage/ErrorMessage";
 import AddIcon from '@material-ui/icons/Add';
 import {useFeedDetailsList} from "./useFeedDetailsList";
+import {FeedItemDetails} from "../../../../../../api/feedDetails/queries";
 
 import css from "./FeedDetailsList.scss";
 

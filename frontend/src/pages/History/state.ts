@@ -1,6 +1,6 @@
 import {atom, useRecoilState} from "recoil";
-import {FeedItem} from "./api";
 import dateFns from "date-fns";
+import {FeedItem} from "../../api/feedItems/queries";
 
 export const historyDataState = atom<FeedItem[]>({
     key: 'historyData',

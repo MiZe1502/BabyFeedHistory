@@ -3,7 +3,6 @@ import dateFns from "date-fns";
 
 import css from "./HistoryPage.scss";
 import {useQuery} from "@apollo/client";
-import {FeedItem, FeedsResp, FeedsVariables, QUERY_GET_FEEDS} from "./api";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {useAuth} from "../../common/hooks/useAuth";
 import {routes} from "../../utils/routes";
@@ -13,6 +12,11 @@ import {CalendarDaysTitle} from "./components/CalendarDaysTitle/CalendarDaysTitl
 import {CalendarCells} from "./components/CalendarCells/CalendarCells";
 import {useRecoilState} from "recoil";
 import {historyDataState} from "./state";
+import {
+    FeedsResp,
+    FeedsVariables,
+    QUERY_GET_FEEDS
+} from "../../api/feedItems/queries";
 
 export const HistoryPage = (): React.ReactElement => {
     const auth = useAuth();

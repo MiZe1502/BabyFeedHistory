@@ -1,19 +1,16 @@
 import {useEffect, useState} from "react";
-import {FeedItem, FeedItemDetails} from "../../../History/api";
 import {useIntl} from "react-intl";
 import {useForm} from "react-hook-form";
-import {useMutation, useSubscription} from "@apollo/client";
-import {
-    FeedUpdatedSubscrResp,
-    MUTATION_CREATE_FEED_ITEM,
-    MUTATION_EDIT_FEED_ITEM, SUBSCRIPTION_FEED_UPDATED
-} from "./api";
+import {useMutation} from "@apollo/client";
+
 import {EditFeedItemPopupProps} from "./EditFeedItemPopup";
 import dateFns from "date-fns";
 import {
-    FeedDetailsCreatedSubscrResp,
-    SUBSCRIPTION_FEED_DETAILS_CREATED
-} from "../../../FeedDetails/api";
+    MUTATION_CREATE_FEED_ITEM,
+    MUTATION_EDIT_FEED_ITEM
+} from "../../../../api/feedItems/mutations";
+import {FeedItem} from "../../../../api/feedItems/queries";
+import {FeedItemDetails} from "../../../../api/feedDetails/queries";
 
 interface EditFeedItemForm extends FeedItem {
     time: string;

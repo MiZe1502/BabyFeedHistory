@@ -1,10 +1,10 @@
 import React from "react";
-import {FeedItemDetails} from "../../../History/api";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import css from "./FeedDetailsItem.scss";
 import Typography from "@material-ui/core/Typography";
 import {symbols} from "../../../../common/utils/symbols";
+import {FeedItemDetails} from "../../../../api/feedDetails/queries";
 
 interface FeedDetailsItemProps {
     feedDetails?: FeedItemDetails[]

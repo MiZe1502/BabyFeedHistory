@@ -7,13 +7,16 @@ import dateFns from "date-fns";
 import Divider from "@material-ui/core/Divider";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
-import {FeedItem} from "../../../History/api";
 import { useIntl } from "react-intl";
 import {FeedDetailsItem} from "../FeedDetailsItem/FeedDetailsItem";
 import {EditFeedItemPopup} from "../EditFeedItemPopup/EditFeedItemPopup";
 import {RemoveFeedItemPopup} from "../RemoveFeedItemPopup/RemoveFeedItemPopup";
 import {useMutation} from "@apollo/client";
-import {FeedRemovedResp, MUTATION_REMOVE_FEED_ITEM} from "./api";
+import {
+    FeedRemovedResp,
+    MUTATION_REMOVE_FEED_ITEM
+} from "../../../../api/feedItems/mutations";
+import {FeedItem} from "../../../../api/feedItems/queries";
 
 interface FeedItemProps {
     item: FeedItem;

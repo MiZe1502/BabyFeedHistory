@@ -2,10 +2,12 @@ import {useRouteMatch} from "react-router-dom";
 import {useIntl} from "react-intl";
 import {useHistoryDataState} from "../History/state";
 import {useLazyQuery} from "@apollo/client";
-import {FeedsResp, FeedsVariables, QUERY_GET_FEEDS_FOR_DAY} from "./api";
 import {useEffect, useState} from "react";
 import dateFns from "date-fns";
-import {FeedItem} from "../History/api";
+import {
+    FeedItem,
+    FeedsForDayResp, FeedsForDayVariables, QUERY_GET_FEEDS_FOR_DAY
+} from "../../api/feedItems/queries";
 
 export const useDayPage = () => {
     const match = useRouteMatch<{date: string}>();
@@ -17,7 +19,8 @@ export const useDayPage = () => {
         addItems,
         getItemsForDay} = useHistoryDataState();
 
-    const [getFeeds, { loading, data, error }] = useLazyQuery<FeedsResp, FeedsVariables>(QUERY_GET_FEEDS_FOR_DAY);
+    const [getFeeds, {
+        loading, data, error }] = useLazyQuery<FeedsForDayResp, FeedsForDayVariables>(QUERY_GET_FEEDS_FOR_DAY);
 
     useEffect(() => {
         if (!historyData || historyData.length === 0) {

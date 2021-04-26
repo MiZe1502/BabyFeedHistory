@@ -5,7 +5,7 @@ import {
     FeedRemovedSubscrResp,
     FeedUpdatedSubscrResp, SUBSCRIPTION_FEED_CREATED, SUBSCRIPTION_FEED_REMOVED,
     SUBSCRIPTION_FEED_UPDATED
-} from "../../../pages/Day/components/EditFeedItemPopup/api";
+} from "../../../api/feedItems/subscriptions";
 import {useEffect} from "react";
 
 export const useFeedItemSubscriptions = () => {
