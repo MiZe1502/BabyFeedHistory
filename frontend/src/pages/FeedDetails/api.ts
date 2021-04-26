@@ -53,6 +53,19 @@ export const SUBSCRIPTION_FEED_DETAILS_UPDATED = gql`
     }
 `
 
+export const SUBSCRIPTION_FEED_DETAILS_REMOVED = gql`
+    subscription FeedDetailsRemoved {
+        feedDetailsRemoved {
+            key,
+            type,
+            name,
+            amount,
+            amountOfWhat,
+            wasGiven
+        }
+    }
+`
+
 export interface EditFeedDetailsResp {
     updateFeedDetails: FeedItemDetails;
 }
@@ -67,4 +80,8 @@ export interface FeedDetailsCreatedSubscrResp {
 
 export interface FeedDetailsUpdatedSubscrResp {
     feedDetailsUpdated: FeedItemDetails;
+}
+
+export interface FeedDetailsRemovedSubscrResp {
+    feedDetailsRemoved: FeedItemDetails;
 }

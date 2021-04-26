@@ -19,6 +19,7 @@ import {
     FeedDetailsCreatedSubscrResp, FeedDetailsUpdatedSubscrResp,
     SUBSCRIPTION_FEED_DETAILS_CREATED, SUBSCRIPTION_FEED_DETAILS_UPDATED
 } from "../../../../../FeedDetails/api";
+import {useAvailableFeedDetailsState} from "../../../../../FeedDetails/state";
 
 interface FeedDetailsListProps {
     onAddNewFeedDetails: (item: FeedItemDetails) => void;
@@ -28,58 +29,63 @@ interface FeedDetailsListProps {
 export const FeedDetailsList = ({onAddNewFeedDetails, onCreateNewFeedDetailsPopupOpen}: FeedDetailsListProps) => {
     const [feedDetails, setFeedDetails] = useState<FeedItemDetails[]>([])
 
+    const {availableFeedDetails, addItems} = useAvailableFeedDetailsState();
+
     const {
         data,
         error,
         loading
     } = useQuery<GetAvailableFeedDetailsResp>(QUERY_GET_AVAILABLE_FEED_DETAILS);
 
-    const { data: created,
-        loading: createdLoading
-    } = useSubscription<FeedDetailsCreatedSubscrResp>(
-        SUBSCRIPTION_FEED_DETAILS_CREATED
-    );
 
-    const { data: updated,
-        loading: updatedLoading
-    } = useSubscription<FeedDetailsUpdatedSubscrResp>(
-        SUBSCRIPTION_FEED_DETAILS_UPDATED
-    );
+
+    //
+    // const { data: created,
+    //     loading: createdLoading
+    // } = useSubscription<FeedDetailsCreatedSubscrResp>(
+    //     SUBSCRIPTION_FEED_DETAILS_CREATED
+    // );
+    //
+    // const { data: updated,
+    //     loading: updatedLoading
+    // } = useSubscription<FeedDetailsUpdatedSubscrResp>(
+    //     SUBSCRIPTION_FEED_DETAILS_UPDATED
+    // );
 
     useEffect(() => {
         if (!loading && data && data?.getAvailableFeedDetails.length > 0) {
             setFeedDetails(data?.getAvailableFeedDetails || []);
         }
     }, [data, loading])
-
-    useEffect(() => {
-        if (!updatedLoading && updated) {
-            const items = [...feedDetails];
-            const updatedItem = updated.feedDetailsUpdated;
-
-            items.forEach((item) => {
-                if (item.key === updatedItem.key) {
-                    item = {
-                        ...item,
-                        ...updatedItem,
-                    }
-                }
-            })
-
-            setFeedDetails([
-                ...items
-            ])
-        }
-    }, [updated, updatedLoading])
-
-    useEffect(() => {
-        if (!createdLoading && created) {
-            setFeedDetails([
-                ...feedDetails,
-                created.feedDetailsCreated
-            ])
-        }
-    }, [created, createdLoading])
+    //
+    // useEffect(() => {
+    //     if (!updatedLoading && updated) {
+    //         const items = [...feedDetails];
+    //         const updatedItem = updated.feedDetailsUpdated;
+    //
+    //         items.forEach((item) => {
+    //             if (item.key === updatedItem.key) {
+    //                 item = {
+    //                     ...item,
+    //                     ...updatedItem,
+    //                 }
+    //             }
+    //         })
+    //
+    //         setFeedDetails([
+    //             ...items
+    //         ])
+    //     }
+    // }, [updated, updatedLoading])
+    //
+    // useEffect(() => {
+    //     if (!createdLoading && created) {
+    //         setFeedDetails([
+    //             ...feedDetails,
+    //             created.feedDetailsCreated
+    //         ])
+    //     }
+    // }, [created, createdLoading])
 
     const [isFeedsDetailsListOpened, setIsFeedsDetailsListOpened] = useState(false);
 
