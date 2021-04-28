@@ -1,10 +1,11 @@
 import React from "react";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import css from "./FeedDetailsItem.scss";
 import Typography from "@material-ui/core/Typography";
 import {symbols} from "../../../../common/utils/symbols";
 import {FeedItemDetails} from "../../../../api/feedDetails/queries";
+
+import css from "./FeedDetailsItem.scss";
 
 interface FeedDetailsItemProps {
     feedDetails?: FeedItemDetails[]

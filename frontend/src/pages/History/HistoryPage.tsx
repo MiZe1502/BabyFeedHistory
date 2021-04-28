@@ -1,58 +1,21 @@
-import React, {useEffect, useState} from "react";
-import dateFns from "date-fns";
-
-import css from "./HistoryPage.scss";
-import {useQuery} from "@apollo/client";
+import React from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import {useAuth} from "../../common/hooks/useAuth";
-import {routes} from "../../utils/routes";
-import { useHistory } from "react-router-dom";
 import {CalendarHeader} from "./components/CalendarHeader/CalendarHeader";
 import {CalendarDaysTitle} from "./components/CalendarDaysTitle/CalendarDaysTitle";
 import {CalendarCells} from "./components/CalendarCells/CalendarCells";
-import {useRecoilState} from "recoil";
-import {historyDataState} from "../../state/useHistoryDataState";
-import {
-    FeedsResp,
-    FeedsVariables,
-    QUERY_GET_FEEDS
-} from "../../api/feedItems/queries";
+import {useHistoryPage} from "./useHistoryPage";
+
+import css from "./HistoryPage.scss";
 
 export const HistoryPage = (): React.ReactElement => {
-    const auth = useAuth();
-    const history = useHistory();
-
-    const [historyData, setHistoryData] = useRecoilState(historyDataState);
-
-    const [currentDate, setCurrentDate] = useState(new Date())
-
-    const { loading, error, data } = useQuery<FeedsResp, FeedsVariables>(
-        QUERY_GET_FEEDS,
-        { variables: { year: dateFns.getYear(currentDate),
-                month: dateFns.getMonth(currentDate) }  }
-    );
-
-    useEffect(() => {
-        if (!loading && data) {
-            setHistoryData(data?.lastMonthFeeds || [])
-        }
-    }, [loading, data])
-
-    if (error && error.message === 'Authentication error') {
-        auth?.logout();
-    }
-
-    const handleNextMonth = () => {
-        setCurrentDate(dateFns.addMonths(currentDate, 1));
-    }
-
-    const handlePreviousMonth = () => {
-        setCurrentDate(dateFns.subMonths(currentDate, 1));
-    }
-
-    const onDayClick = (day: string) => {
-        history.push(routes.dayInHistory.replace(':date', day))
-    }
+    const {
+        loading,
+        currentDate,
+        historyData,
+        handleNextMonth,
+        handlePreviousMonth,
+        onDayClick,
+    } = useHistoryPage();
 
     return (
         <section className={css.Page}>

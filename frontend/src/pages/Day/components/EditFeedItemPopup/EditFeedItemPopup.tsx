@@ -4,9 +4,6 @@ import {FormattedMessage} from "react-intl";
 import DialogContent from "@material-ui/core/DialogContent";
 import IconButton from "@material-ui/core/IconButton";
 import RemoveIcon from '@material-ui/icons/Remove';
-import dateFns from "date-fns";
-
-import css from "./EditFeedItemPopup.scss";
 import {TextFieldWrapped} from "../../../../common/components/TextField/TextField";
 import {List} from "@material-ui/core";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -15,23 +12,17 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import {Header} from "./components/Header/Header";
 import {FeedDetailsList} from "./components/FeedDetailsList/FeedDetailsList";
-import {useEditFeedItemPopup} from "./useEditFeedItemPopup";
+import {parseTimestamp, useEditFeedItemPopup} from "./useEditFeedItemPopup";
 import {EditFeedDetailsPopup} from "../../../FeedDetails/EditFeedDetailsPopup/EditFeedDetailsPopup";
 import {FeedItem} from "../../../../api/feedItems/queries";
+import {ErrorMessage} from "../../../../common/components/ErrorMessage/ErrorMessage";
+
+import css from "./EditFeedItemPopup.scss";
 
 export interface EditFeedItemPopupProps {
     feedItem?: FeedItem;
     onClose?: () => void;
     currentDay?: string;
-}
-
-
-const parseTimestamp = (ts?: number): string => {
-    if (!ts) {
-        return '00:00';
-    }
-    const format = "HH:mm";
-    return dateFns.format(ts!, format);
 }
 
 export const EditFeedItemPopup = (props: EditFeedItemPopupProps) => {
@@ -89,6 +80,10 @@ export const EditFeedItemPopup = (props: EditFeedItemPopupProps) => {
                 <FeedDetailsList
                     onCreateNewFeedDetailsPopupOpen={onCreateNewFeedDetailsPopupOpen}
                     onAddNewFeedDetails={onAddNewFeedDetails}/>
+
+                <ErrorMessage
+                    showError={Boolean(updateError) || Boolean(createError)}
+                    errorMessage={updateError?.message || createError?.message}/>
             </DialogContent>
             <DialogActions>
                 <Button type="submit" color="primary">

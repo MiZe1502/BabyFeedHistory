@@ -12,6 +12,14 @@ import {
 import {FeedItem} from "../../../../api/feedItems/queries";
 import {FeedItemDetails} from "../../../../api/feedDetails/queries";
 
+export const parseTimestamp = (ts?: number): string => {
+    if (!ts) {
+        return '00:00';
+    }
+    const format = "HH:mm";
+    return dateFns.format(ts!, format);
+}
+
 interface EditFeedItemForm extends FeedItem {
     time: string;
 }

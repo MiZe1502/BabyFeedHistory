@@ -4,13 +4,14 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import {FormattedMessage} from "react-intl";
-import css from "../EditFeedItemPopup/EditFeedItemPopup.scss";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import {ButtonWithLoading} from "../../../../common/components/ButtonWithLoading/ButtonWithLoading";
 import {ErrorMessage} from "../../../../common/components/ErrorMessage/ErrorMessage";
+
+import css from "../EditFeedItemPopup/EditFeedItemPopup.scss";
 
 interface RemoveFeedItemPopupProps {
     onClose?: () => void;

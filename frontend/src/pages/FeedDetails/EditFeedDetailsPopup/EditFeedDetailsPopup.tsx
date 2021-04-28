@@ -1,7 +1,6 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import {Header} from "./components/Header/Header";
-import css from "./EditFeedDetailsPopup.scss";
 import {useEditFeedDetailsPopup} from "./useEditFeedDetailsPopup";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -20,6 +19,8 @@ import {Controller} from "react-hook-form";
 import Checkbox from "@material-ui/core/Checkbox";
 import {ErrorMessage} from "../../../common/components/ErrorMessage/ErrorMessage";
 import {FeedItemDetails} from "../../../api/feedDetails/queries";
+
+import css from "./EditFeedDetailsPopup.scss";
 
 export interface EditFeedDetailsPopupProps {
     feedDetails?: FeedItemDetails;
