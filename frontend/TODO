@@ -1,7 +1,5 @@
 1. refactoring
-    1.1. all state to single place
-    1.2. all logic to custom hooks
-    1.3. custom hooks to access recoil state
+    1.1. logout on auth error on every page
     1.4. common popup dialog with children body
 2. feed details page
     2.1. list
