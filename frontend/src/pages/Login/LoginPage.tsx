@@ -5,7 +5,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import {SignInForm} from "./components/SignInForm/SignInForm";
 import {SignUpForm} from "./components/SignUpForm/SignUpForm";
-import {useLoginMode} from "./useLoginMode";
+import {useLoginMode} from "../../state/useLoginMode";
 
 export const LoginPage = (): React.ReactElement => {
     const {isSignInMode} = useLoginMode();

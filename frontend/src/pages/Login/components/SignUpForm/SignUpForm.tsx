@@ -7,7 +7,7 @@ import {ButtonWithLoading}
 import {FormattedMessage} from "react-intl";
 import React from "react";
 import {MaxNameLength, useSignUpForm} from "./useSignUpForm";
-import {useLoginMode} from "../../useLoginMode";
+import {useLoginMode} from "../../../../state/useLoginMode";
 import {PasswordTextField} from
         "../../../../common/components/PasswordTextField/PasswordTextField";
 

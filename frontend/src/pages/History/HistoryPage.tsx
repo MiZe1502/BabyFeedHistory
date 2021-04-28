@@ -11,7 +11,7 @@ import {CalendarHeader} from "./components/CalendarHeader/CalendarHeader";
 import {CalendarDaysTitle} from "./components/CalendarDaysTitle/CalendarDaysTitle";
 import {CalendarCells} from "./components/CalendarCells/CalendarCells";
 import {useRecoilState} from "recoil";
-import {historyDataState} from "./state";
+import {historyDataState} from "../../state/useHistoryDataState";
 import {
     FeedsResp,
     FeedsVariables,

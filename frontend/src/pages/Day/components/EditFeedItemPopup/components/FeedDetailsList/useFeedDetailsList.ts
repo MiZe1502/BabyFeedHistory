@@ -1,4 +1,4 @@
-import {useAvailableFeedDetailsState} from "../../../../../FeedDetails/state";
+import {useAvailableFeedDetailsState} from "../../../../../../state/useAvailableFeedDetailsState";
 import {useLazyQuery} from "@apollo/client";
 import {
     GetAvailableFeedDetailsResp,

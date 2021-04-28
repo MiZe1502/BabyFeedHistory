@@ -1,5 +1,13 @@
 import {useRecoilState} from "recoil";
-import {AuthMode, authModeState} from "./loginState";
+
+import {atom} from "recoil";
+
+export type AuthMode = "SignIn" | "SignUp";
+
+export const authModeState = atom<AuthMode>({
+    key: "authMode",
+    default: "SignIn",
+});
 
 interface UseLoginModeHook {
     authMode: AuthMode;

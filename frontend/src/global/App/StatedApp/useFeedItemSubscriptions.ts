@@ -1,4 +1,4 @@
-import {useHistoryDataState} from "../../../pages/History/state";
+import {useHistoryDataState} from "../../../state/useHistoryDataState";
 import {useSubscription} from "@apollo/client";
 import {
     FeedCreatedSubscrResp,

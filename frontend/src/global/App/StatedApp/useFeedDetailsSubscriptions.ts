@@ -1,4 +1,4 @@
-import {useAvailableFeedDetailsState} from "../../../pages/FeedDetails/state";
+import {useAvailableFeedDetailsState} from "../../../state/useAvailableFeedDetailsState";
 import {useSubscription} from "@apollo/client";
 import {
     FeedDetailsCreatedSubscrResp,

@@ -7,7 +7,7 @@ import {ButtonWithLoading}
 import {FormattedMessage} from "react-intl";
 import React from "react";
 import {useSignInForm} from "./useSignInForm";
-import {useLoginMode} from "../../useLoginMode";
+import {useLoginMode} from "../../../../state/useLoginMode";
 import {PasswordTextField}
     from "../../../../common/components/PasswordTextField/PasswordTextField";
 

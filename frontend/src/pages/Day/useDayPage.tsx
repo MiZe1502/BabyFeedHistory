@@ -1,6 +1,6 @@
 import {useRouteMatch} from "react-router-dom";
 import {useIntl} from "react-intl";
-import {useHistoryDataState} from "../History/state";
+import {useHistoryDataState} from "../../state/useHistoryDataState";
 import {useLazyQuery} from "@apollo/client";
 import {useEffect, useState} from "react";
 import dateFns from "date-fns";

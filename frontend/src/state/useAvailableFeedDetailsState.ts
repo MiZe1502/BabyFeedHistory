@@ -1,5 +1,5 @@
 import {atom, useRecoilState} from "recoil";
-import {FeedItemDetails} from "../../api/feedDetails/queries";
+import {FeedItemDetails} from "../api/feedDetails/queries";
 
 export const availableFeedDetailsState = atom<FeedItemDetails[]>({
     key: 'availableFeedDetails',
