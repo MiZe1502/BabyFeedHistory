@@ -1,5 +1,4 @@
 import React from "react";
-import Dialog from "@material-ui/core/Dialog";
 import {FormattedMessage} from "react-intl";
 import DialogContent from "@material-ui/core/DialogContent";
 import IconButton from "@material-ui/core/IconButton";
@@ -10,12 +9,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
-import {Header} from "./components/Header/Header";
 import {FeedDetailsList} from "./components/FeedDetailsList/FeedDetailsList";
 import {parseTimestamp, useEditFeedItemPopup} from "./useEditFeedItemPopup";
 import {EditFeedDetailsPopup} from "../../../FeedDetails/EditFeedDetailsPopup/EditFeedDetailsPopup";
 import {FeedItem} from "../../../../api/feedItems/queries";
 import {ErrorMessage} from "../../../../common/components/ErrorMessage/ErrorMessage";
+import {Popup} from "../../../../common/components/Popup/Popup";
 
 import css from "./EditFeedItemPopup.scss";
 
@@ -45,10 +44,8 @@ export const EditFeedItemPopup = (props: EditFeedItemPopupProps) => {
         onCreateNewFeedDetailsPopupOpen
     } = useEditFeedItemPopup(props)
 
-    return <Dialog open={true}>
-        <div className={css.PopupTitleWrapper}>
-            <Header currentFeedItem={currentFeedItem} onCancel={onCancel}/>
-        </div>
+    return <><Popup onClose={onCancel} titleId={currentFeedItem ?
+            "FeedItem.Card.Edit.Title" : "FeedItem.Card.Create.Title"}>
         <form onSubmit={handleSubmit(onSubmit)}>
             <DialogContent>
                 <TextFieldWrapped
@@ -74,7 +71,7 @@ export const EditFeedItemPopup = (props: EditFeedItemPopupProps) => {
                                 <RemoveIcon />
                             </IconButton>
                         </ListItem>
-                        })}
+                    })}
                 </List>}
 
                 <FeedDetailsList
@@ -94,7 +91,7 @@ export const EditFeedItemPopup = (props: EditFeedItemPopupProps) => {
                 </Button>
             </DialogActions>
         </form>
-        {isPopupOpened &&
-            <EditFeedDetailsPopup onClose={onCreateNewFeedDetailsPopupClose}/>}
-    </Dialog>
+    </Popup>
+    {isPopupOpened && <EditFeedDetailsPopup onClose={onCreateNewFeedDetailsPopupClose}/>}
+    </>
 }

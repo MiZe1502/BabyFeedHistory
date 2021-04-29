@@ -1,6 +1,4 @@
 import React from "react";
-import Dialog from "@material-ui/core/Dialog";
-import {Header} from "./components/Header/Header";
 import {useEditFeedDetailsPopup} from "./useEditFeedDetailsPopup";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -19,6 +17,7 @@ import {Controller} from "react-hook-form";
 import Checkbox from "@material-ui/core/Checkbox";
 import {ErrorMessage} from "../../../common/components/ErrorMessage/ErrorMessage";
 import {FeedItemDetails} from "../../../api/feedDetails/queries";
+import {Popup} from "../../../common/components/Popup/Popup";
 
 import css from "./EditFeedDetailsPopup.scss";
 
@@ -43,10 +42,8 @@ export const EditFeedDetailsPopup = (props: EditFeedDetailsPopupProps) => {
         onSubmit,
         onCancel} = useEditFeedDetailsPopup(props)
 
-    return <Dialog open={true}>
-        <div className={css.PopupTitleWrapper}>
-            <Header currentFeedDetails={currentFeedDetails} onCancel={onCancel}/>
-        </div>
+    return <Popup onClose={onCancel} titleId={currentFeedDetails ?
+        "FeedDetails.Card.Edit.Title" : "FeedDetails.Card.Create.Title"}>
         <form onSubmit={handleSubmit(onSubmit)} noValidate
               autoComplete="off">
             <DialogContent>
@@ -168,5 +165,6 @@ export const EditFeedDetailsPopup = (props: EditFeedDetailsPopupProps) => {
                 </Button>
             </DialogActions>
         </form>
-    </Dialog>
+    </Popup>
+
 }

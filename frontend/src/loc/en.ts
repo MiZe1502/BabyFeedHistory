@@ -27,6 +27,8 @@ export const en = {
 
     "FeedItem.Card.Create.Title": "Create feed item",
 
+    "FeedDetails.Card.Edit.Title": "Edit feed details item",
+    "FeedDetails.Card.Create.Title": "Create feed details item",
     "FeedDetails.Card.Edit.Buttons.Save": "Save",
     "FeedDetails.Card.Edit.Buttons.Cancel": "Cancel",
     "FeedDetails.Card.Edit.Fields.Name": "Name",

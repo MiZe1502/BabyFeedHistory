@@ -3,20 +3,18 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import {FormattedMessage} from "react-intl";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import {FeedItem} from "../../../../../../api/feedItems/queries";
 
 interface HeaderProps {
-    currentFeedItem?: FeedItem;
-    onCancel?: () => void;
+    titleId?: string;
+    onClose?: () => void;
 }
 
-export const Header = ({currentFeedItem, onCancel}: HeaderProps) => {
+export const Header = ({titleId, onClose}: HeaderProps): React.ReactElement => {
     return <>
         <DialogTitle id="form-dialog-title">
-            <FormattedMessage id={currentFeedItem ?
-                "FeedItem.Card.Edit.Title" : "FeedItem.Card.Create.Title"} />
+            {titleId && <FormattedMessage id={titleId} />}
         </DialogTitle>
-        <IconButton aria-label="close" onClick={onCancel}>
+        <IconButton aria-label="close" onClick={onClose}>
             <CloseIcon />
         </IconButton>
     </>
