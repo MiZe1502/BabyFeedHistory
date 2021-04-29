@@ -32,9 +32,7 @@ export const useHistoryPage = () => {
         }
     }, [loading, data])
 
-    if (error && error.message === 'Authentication error') {
-        auth?.logout();
-    }
+    auth?.logoutIfAuthError(error);
 
     const handleNextMonth = () => {
         setCurrentDate(dateFns.addMonths(currentDate, 1));

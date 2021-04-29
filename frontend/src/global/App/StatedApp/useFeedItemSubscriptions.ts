@@ -7,29 +7,39 @@ import {
     SUBSCRIPTION_FEED_UPDATED
 } from "../../../api/feedItems/subscriptions";
 import {useEffect} from "react";
+import {useAuth} from "../../../common/hooks/useAuth";
 
 export const useFeedItemSubscriptions = () => {
+    const auth = useAuth();
+
     const {addItem,
         updateItem,
         removeItemByKey} = useHistoryDataState();
 
     const { data: updatedFeed,
-        loading: updatedFeedLoading
+        loading: updatedFeedLoading,
+        error: updatedFeedError,
     } = useSubscription<FeedUpdatedSubscrResp>(
         SUBSCRIPTION_FEED_UPDATED
     );
 
     const { data: removedFeed,
-        loading: removedFeedLoading
+        loading: removedFeedLoading,
+        error: removedFeedError,
     } = useSubscription<FeedRemovedSubscrResp>(
         SUBSCRIPTION_FEED_REMOVED
     );
 
     const { data: createdFeed,
-        loading: createdFeedLoading
+        loading: createdFeedLoading,
+        error: createdFeedError,
     } = useSubscription<FeedCreatedSubscrResp>(
         SUBSCRIPTION_FEED_CREATED
     );
+
+    auth?.logoutIfAuthError(createdFeedError);
+    auth?.logoutIfAuthError(updatedFeedError);
+    auth?.logoutIfAuthError(removedFeedError);
 
     useEffect(() => {
         if (!updatedFeedLoading && updatedFeed) {

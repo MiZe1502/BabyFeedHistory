@@ -17,7 +17,6 @@ interface RemoveFeedItemPopupProps {
 }
 
 export const RemoveFeedItemPopup = ({error, onClose, onRemove, loading}: RemoveFeedItemPopupProps) => {
-
     return <Popup titleId="FeedItem.Card.Remove.Title" onClose={onClose}>
         <>
             <DialogContent>

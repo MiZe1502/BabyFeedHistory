@@ -6,11 +6,14 @@ import {
     MUTATION_REMOVE_FEED_ITEM
 } from "../../../../api/feedItems/mutations";
 import {FeedItemProps} from "./FeedItem";
+import {useAuth} from "../../../../common/hooks/useAuth";
 
 export const feedItemTimeFormat = 'HH:mm';
 
 export const useFeedItem = ({item}: FeedItemProps) => {
     const intl = useIntl();
+    const auth = useAuth();
+
     const [isEdit, setIsEdit] = useState(false);
     const [isRemove, setIsRemove] = useState(false);
 
@@ -31,6 +34,8 @@ export const useFeedItem = ({item}: FeedItemProps) => {
     }
 
     const [removeMethod, {error, loading}] = useMutation<FeedRemovedResp>(MUTATION_REMOVE_FEED_ITEM)
+
+    auth?.logoutIfAuthError(error);
 
     const removeFeedItem = () => {
         removeMethod({variables: {

@@ -8,8 +8,10 @@ import {
     FeedItem,
     FeedsForDayResp, FeedsForDayVariables, QUERY_GET_FEEDS_FOR_DAY
 } from "../../api/feedItems/queries";
+import {useAuth} from "../../common/hooks/useAuth";
 
 export const useDayPage = () => {
+    const auth = useAuth();
     const match = useRouteMatch<{date: string}>();
     const intl = useIntl();
 
@@ -21,6 +23,8 @@ export const useDayPage = () => {
 
     const [getFeeds, {
         loading, data, error }] = useLazyQuery<FeedsForDayResp, FeedsForDayVariables>(QUERY_GET_FEEDS_FOR_DAY);
+
+    auth?.logoutIfAuthError(error);
 
     useEffect(() => {
         if (!historyData || historyData.length === 0) {

@@ -5,14 +5,19 @@ import {
     QUERY_GET_AVAILABLE_FEED_DETAILS
 } from "../../../../../../api/feedDetails/queries";
 import {useEffect, useState} from "react";
+import {useAuth} from "../../../../../../common/hooks/useAuth";
 
 export const useFeedDetailsList = () => {
+    const auth = useAuth();
+
     const {availableFeedDetails, addItems} = useAvailableFeedDetailsState();
 
     const [getFeedDetails, { loading,
         data,
         error }] =
         useLazyQuery<GetAvailableFeedDetailsResp>(QUERY_GET_AVAILABLE_FEED_DETAILS)
+
+    auth?.logoutIfAuthError(error);
 
     useEffect(() => {
         getFeedDetails();

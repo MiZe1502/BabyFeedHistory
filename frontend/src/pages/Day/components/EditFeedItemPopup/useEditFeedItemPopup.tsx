@@ -11,6 +11,7 @@ import {
 } from "../../../../api/feedItems/mutations";
 import {FeedItem} from "../../../../api/feedItems/queries";
 import {FeedItemDetails} from "../../../../api/feedDetails/queries";
+import {useAuth} from "../../../../common/hooks/useAuth";
 
 export const parseTimestamp = (ts?: number): string => {
     if (!ts) {
@@ -37,6 +38,7 @@ export const useEditFeedItemPopup = ({feedItem, onClose, currentDay}: EditFeedIt
     }, [feedItem])
 
     const intl = useIntl();
+    const auth = useAuth();
 
     const {register, handleSubmit, formState: {errors}} = useForm<EditFeedItemForm>({});
 
@@ -45,6 +47,9 @@ export const useEditFeedItemPopup = ({feedItem, onClose, currentDay}: EditFeedIt
 
     const [createMethod, {error: createError, loading: createLoading}] =
         useMutation<EditFeedItemResp>(MUTATION_CREATE_FEED_ITEM)
+
+    auth?.logoutIfAuthError(updateError);
+    auth?.logoutIfAuthError(createError);
 
     const onSubmit = (data: EditFeedItemForm) => {
         const time = data.time;

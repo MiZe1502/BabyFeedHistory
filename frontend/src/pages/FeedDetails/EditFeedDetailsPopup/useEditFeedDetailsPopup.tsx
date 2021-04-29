@@ -10,10 +10,13 @@ import {
     MUTATION_EDIT_FEED_DETAILS
 } from "../../../api/feedDetails/mutations";
 import { FeedItemDetails } from "../../../api/feedDetails/queries";
+import {useAuth} from "../../../common/hooks/useAuth";
 
 interface FeedItemDetailsForm extends FeedItemDetails {}
 
 export const useEditFeedDetailsPopup = ({feedDetails, onClose}: EditFeedDetailsPopupProps) => {
+    const auth = useAuth();
+
     const [currentFeedDetails, setCurrentFeedDetails] =
         useState<FeedItemDetails>(
             feedDetails ||  {
@@ -37,6 +40,9 @@ export const useEditFeedDetailsPopup = ({feedDetails, onClose}: EditFeedDetailsP
     const [createMethod, {error: createError, loading: createLoading}] =
         useMutation<CreateFeedDetailsResp>(MUTATION_CREATE_FEED_DETAILS)
 
+    auth?.logoutIfAuthError(updateError);
+    auth?.logoutIfAuthError(createError);
+
     const onCancel = () => {
         onClose?.();
     }
@@ -51,7 +57,6 @@ export const useEditFeedDetailsPopup = ({feedDetails, onClose}: EditFeedDetailsP
             name: formData.name,
             amount: Number(formData.amount),
         };
-        console.log(data)
 
         if (currentFeedDetails?.key) {
             onEditFeedDetails(data);
@@ -65,7 +70,6 @@ export const useEditFeedDetailsPopup = ({feedDetails, onClose}: EditFeedDetailsP
                 feedDetails: data,
             }})
             .then((res) => {
-                console.log(res)
                 onCancel();
             })
             .catch((err) => {
@@ -78,17 +82,12 @@ export const useEditFeedDetailsPopup = ({feedDetails, onClose}: EditFeedDetailsP
                 feedDetails: data,
             }})
             .then((res) => {
-                console.log(res)
                 onCancel();
             })
             .catch((err) => {
                 console.log(err)
             });
     }
-
-    useEffect(() => {
-        console.log(errors)
-    }, [errors])
 
     return {
         currentFeedDetails,

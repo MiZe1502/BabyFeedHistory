@@ -8,45 +8,55 @@ import {
     SUBSCRIPTION_FEED_DETAILS_UPDATED
 } from "../../../api/feedDetails/subscriptions";
 import {useEffect} from "react";
+import {useAuth} from "../../../common/hooks/useAuth";
 
 export const useFeedDetailsSubscriptions = () => {
+    const auth = useAuth();
+
     const {addItem,
         updateItem,
         removeItemByKey} = useAvailableFeedDetailsState();
 
-    const { data: created,
-        loading: createdLoading
+    const { data: createdFeedDetails,
+        loading: createdFeedDetailsLoading,
+        error: createdFeedDetailsError,
     } = useSubscription<FeedDetailsCreatedSubscrResp>(
         SUBSCRIPTION_FEED_DETAILS_CREATED
     );
 
-    const { data: updated,
-        loading: updatedLoading
+    const { data: updatedFeedDetails,
+        loading: updatedFeedDetailsLoading,
+        error: updatedFeedDetailsError,
     } = useSubscription<FeedDetailsUpdatedSubscrResp>(
         SUBSCRIPTION_FEED_DETAILS_UPDATED
     );
 
-    const { data: removed,
-        loading: removedLoading
+    const { data: removedFeedDetails,
+        loading: removedFeedDetailsLoading,
+        error: removedFeedDetailsError,
     } = useSubscription<FeedDetailsRemovedSubscrResp>(
         SUBSCRIPTION_FEED_DETAILS_REMOVED
     );
 
-    useEffect(() => {
-        if (!updatedLoading && updated) {
-            updateItem(updated?.feedDetailsUpdated || {});
-        }
-    }, [updated, updatedLoading])
+    auth?.logoutIfAuthError(createdFeedDetailsError);
+    auth?.logoutIfAuthError(updatedFeedDetailsError);
+    auth?.logoutIfAuthError(removedFeedDetailsError);
 
     useEffect(() => {
-        if (!createdLoading && created) {
-            addItem(created?.feedDetailsCreated)
+        if (!updatedFeedDetailsLoading && updatedFeedDetails) {
+            updateItem(updatedFeedDetails?.feedDetailsUpdated || {});
         }
-    }, [created, createdLoading])
+    }, [updatedFeedDetails, updatedFeedDetailsLoading])
 
     useEffect(() => {
-        if (!removedLoading && removed) {
-            removeItemByKey(removed?.feedDetailsRemoved?.key as string)
+        if (!createdFeedDetailsLoading && createdFeedDetails) {
+            addItem(createdFeedDetails?.feedDetailsCreated)
         }
-    }, [created, createdLoading])
+    }, [createdFeedDetails, createdFeedDetailsLoading])
+
+    useEffect(() => {
+        if (!removedFeedDetailsLoading && removedFeedDetails) {
+            removeItemByKey(removedFeedDetails?.feedDetailsRemoved?.key as string)
+        }
+    }, [createdFeedDetails, createdFeedDetailsLoading])
 }

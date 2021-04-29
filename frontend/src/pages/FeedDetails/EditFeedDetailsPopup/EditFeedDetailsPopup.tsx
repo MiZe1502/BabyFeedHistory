@@ -27,7 +27,6 @@ export interface EditFeedDetailsPopupProps {
 }
 
 export const EditFeedDetailsPopup = (props: EditFeedDetailsPopupProps) => {
-
     const {currentFeedDetails,
         setCurrentFeedDetails,
         register,

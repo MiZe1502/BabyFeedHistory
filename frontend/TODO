@@ -1,5 +1,5 @@
 1. refactoring
-    1.1. logout on auth error on every page
+    1.2. check intl
 2. feed details page
     2.1. list
         2.1.1. getting data + loading + errors

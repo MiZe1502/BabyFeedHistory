@@ -1,12 +1,14 @@
 import React from 'react';
 import {createContext} from "react";
 import {useAuthorizedApp} from "./useAuthorizedApp";
+import {ApolloError} from "@apollo/client";
 
 export interface AuthContext {
     token?: string | null;
     updateToken: (token: string) => void;
     removeToken: () => void;
     logout: () => void;
+    logoutIfAuthError: (error?: ApolloError) => void;
 }
 
 export const authContext = createContext<AuthContext | undefined>(undefined);

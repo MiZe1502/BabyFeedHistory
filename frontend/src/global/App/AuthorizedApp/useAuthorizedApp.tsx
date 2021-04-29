@@ -6,6 +6,7 @@ import {
 import {AuthContext} from "./AuthorizedApp";
 import {routes} from "../../../utils/routes";
 import { useHistory } from "react-router-dom";
+import {ApolloError} from "@apollo/client";
 
 export const useAuthorizedApp = (): AuthContext => {
     const [token, setToken] = useState(getDataFromLocalStorageByKey(SESSION_TOKEN));
@@ -34,10 +35,17 @@ export const useAuthorizedApp = (): AuthContext => {
         }
     }, [])
 
+    const logoutIfAuthError = (error?: ApolloError) => {
+        if (error && error.message === 'Authentication error') {
+            logout();
+        }
+    }
+
     return {
         token,
         updateToken,
         removeToken,
         logout,
+        logoutIfAuthError,
     }
 }
