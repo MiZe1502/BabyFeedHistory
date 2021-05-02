@@ -36,7 +36,7 @@ export const MainMenu = (): React.ReactElement => {
                          id={'nav-tab-0'} />
                 <MenuTab onClick={onClick} value={1}
                          label={intl.formatMessage({id: "Menu.Tabs.FeedDetails"})}
-                         to={routes.settings}
+                         to={routes.feedDetails}
                          id={'nav-tab-1'}/>
             </Tabs>
             <AvatarBlock />

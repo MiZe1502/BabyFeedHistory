@@ -1,7 +1,7 @@
 export const routes = {
     auth: '/auth',
     history: '/history',
-    settings: '/settings',
+    feedDetails: '/details',
     account: '/account',
     dayInHistory: '/history/:date'
 }

@@ -1,0 +1,7 @@
+@import "../../common/styles/positioning";
+
+.FeedDetailsPage {
+  @include GlobalPadding;
+  @include FlexVertCenter;
+  @include MarginTop(4);
+}

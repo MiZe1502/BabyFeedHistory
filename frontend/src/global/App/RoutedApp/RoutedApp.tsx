@@ -4,7 +4,7 @@ import {Route, Switch, BrowserRouter} from 'react-router-dom';
 import {routes} from "../../../utils/routes";
 import {PrivateRoute} from "../../PrivateRoute/PrivateRoute";
 import {HistoryPage} from "../../../pages/History/HistoryPage";
-import {SettingsPage} from "../../../pages/Settings/SettingsPage";
+import {FeedDetailsPage} from "../../../pages/FeedDetails/FeedDetailsPage";
 import {MainMenu} from "../../MainMenu/MainMenu";
 import {useAuth} from "../../../common/hooks/useAuth";
 import {DayPage} from "../../../pages/Day/DayPage";
@@ -24,8 +24,8 @@ export const RoutedApp = (): React.ReactElement => {
             <PrivateRoute path={routes.history}>
                 <HistoryPage />
             </PrivateRoute>
-            <PrivateRoute path={routes.settings}>
-                <SettingsPage />
+            <PrivateRoute path={routes.feedDetails}>
+                <FeedDetailsPage />
             </PrivateRoute>
         </Switch>
     </BrowserRouter>
