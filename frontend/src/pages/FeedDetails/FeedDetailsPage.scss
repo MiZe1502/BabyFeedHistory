@@ -5,3 +5,15 @@
   @include FlexVertCenter;
   @include MarginTop(4);
 }
+
+.FeedDetailsList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.FeedDetails {
+  flex: 0 32%;
+  height: 100px;
+  margin-bottom: 2%;
+}
