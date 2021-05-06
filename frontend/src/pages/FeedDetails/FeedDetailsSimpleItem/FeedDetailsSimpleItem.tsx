@@ -3,13 +3,13 @@ import {symbols} from "../../../common/utils/symbols";
 import React from "react";
 import {FeedItemDetails} from "../../../api/feedDetails/queries";
 
-import css from "./FeedDetailsBasicItem.scss";
+import css from "./FeedDetailsSimpleItem.scss";
 
-interface FeedDetailsBasicItemProps {
+interface FeedDetailsSimpleItemProps {
     detailsItem: FeedItemDetails;
 }
 
-export const FeedDetailsBasicItem = ({detailsItem}: FeedDetailsBasicItemProps) => {
+export const FeedDetailsSimpleItem = ({detailsItem}: FeedDetailsSimpleItemProps) => {
     return <div className={css.DetailsItem}>
         <Typography className={css.DetailsValue} variant="body1" component="div">
             {detailsItem.name}

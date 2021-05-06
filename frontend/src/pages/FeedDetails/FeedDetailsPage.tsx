@@ -14,7 +14,7 @@ import {ErrorMessage} from "../../common/components/ErrorMessage/ErrorMessage";
 import {useIntl} from "react-intl";
 import {useAuth} from "../../common/hooks/useAuth";
 import Typography from "@material-ui/core/Typography";
-import {FeedDetailsBasicItem} from "./FeedDetailsBasicItem/FeedDetailsBasicItem";
+import {FeedDetailsItem} from "./FeedDetailsItem/FeedDetailsItem";
 
 export const FeedDetailsPage = () => {
     const auth = useAuth();
@@ -58,7 +58,7 @@ export const FeedDetailsPage = () => {
             {availableFeedDetails?.map((item) => {
                 return <Card key={item.key} className={css.FeedDetails}>
                     <CardContent>
-                        <FeedDetailsBasicItem detailsItem={item} />
+                        <FeedDetailsItem detailsItem={item} />
                     </CardContent>
                 </Card>
             })}
