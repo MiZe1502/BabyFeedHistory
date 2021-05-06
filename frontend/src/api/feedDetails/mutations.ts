@@ -27,6 +27,10 @@ export const MUTATION_CREATE_FEED_DETAILS = gql`
     }
 `
 
+export const MUTATION_REMOVE_FEED_DETAILS = gql`
+    mutation RemoveFeedDetails($feedDetails: ExistedFeedDetailsInput!)
+`
+
 export interface EditFeedDetailsResp {
     updateFeedDetails: FeedItemDetails;
 }

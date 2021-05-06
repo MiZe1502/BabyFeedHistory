@@ -14,6 +14,9 @@ import {ErrorMessage} from "../../common/components/ErrorMessage/ErrorMessage";
 import {useIntl} from "react-intl";
 import {useAuth} from "../../common/hooks/useAuth";
 import Typography from "@material-ui/core/Typography";
+import CardActions from "@material-ui/core/CardActions";
+import Button from "@material-ui/core/Button";
+import {FeedDetailsItemData} from "./FeedDetailsItemData/FeedDetailsItemData";
 import {FeedDetailsItem} from "./FeedDetailsItem/FeedDetailsItem";
 
 export const FeedDetailsPage = () => {
@@ -56,11 +59,7 @@ export const FeedDetailsPage = () => {
     } else if (data) {
         component = <div className={css.FeedDetailsList}>
             {availableFeedDetails?.map((item) => {
-                return <Card key={item.key} className={css.FeedDetails}>
-                    <CardContent>
-                        <FeedDetailsItem detailsItem={item} />
-                    </CardContent>
-                </Card>
+                return <FeedDetailsItem detailsItem={item} />
             })}
         </div>;
     } else if (!data) {

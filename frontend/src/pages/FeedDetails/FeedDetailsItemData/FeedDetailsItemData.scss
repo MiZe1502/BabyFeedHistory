@@ -1,0 +1,20 @@
+@import "../../../common/styles/positioning";
+
+.FeedDetailsWrapper {
+  @include FlexVert;
+}
+
+.FeedDetailsItemData {
+  @include FlexVert;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.DetailsValue {
+  flex: 1;
+}
+
+.Divider {
+  @include MarginTop(3);
+  @include MarginBottom(3);
+}
