@@ -58,5 +58,5 @@ export const useFeedDetailsSubscriptions = () => {
         if (!removedFeedDetailsLoading && removedFeedDetails) {
             removeItemByKey(removedFeedDetails?.feedDetailsRemoved?.key as string)
         }
-    }, [createdFeedDetails, createdFeedDetailsLoading])
+    }, [removedFeedDetails, removedFeedDetailsLoading])
 }

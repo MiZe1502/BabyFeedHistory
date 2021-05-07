@@ -11,3 +11,8 @@
   flex-wrap: wrap;
   justify-content: space-between;
 }
+
+.FeedDetailsList::after {
+  content: "";
+  flex: 0 32%;
+}
