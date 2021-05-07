@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import css from "./FeedDetailsPage.scss";
 import {useLazyQuery} from "@apollo/client";
 import {
-    FeedItemDetails, GetAvailableFeedDetailsResp,
+    GetAvailableFeedDetailsResp,
     QUERY_GET_AVAILABLE_FEED_DETAILS
 } from "../../api/feedDetails/queries";
 import {useAvailableFeedDetailsState} from "../../state/useAvailableFeedDetailsState";
@@ -14,9 +14,6 @@ import {ErrorMessage} from "../../common/components/ErrorMessage/ErrorMessage";
 import {useIntl} from "react-intl";
 import {useAuth} from "../../common/hooks/useAuth";
 import Typography from "@material-ui/core/Typography";
-import CardActions from "@material-ui/core/CardActions";
-import Button from "@material-ui/core/Button";
-import {FeedDetailsItemData} from "./FeedDetailsItemData/FeedDetailsItemData";
 import {FeedDetailsItem} from "./FeedDetailsItem/FeedDetailsItem";
 
 export const FeedDetailsPage = () => {

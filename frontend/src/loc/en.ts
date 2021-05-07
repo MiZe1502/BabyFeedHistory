@@ -33,6 +33,12 @@ export const en = {
     "FeedDetails.Card.Create.Title": "Create feed details item",
     "FeedDetails.Card.Buttons.Edit": "Edit",
     "FeedDetails.Card.Buttons.Remove": "Remove",
+
+    "FeedDetails.Card.Remove.Title": "Removing feed details item",
+    "FeedDetails.Card.Remove.Message": "Do you really want to remove selected feed details item?",
+    "FeedDetails.Card.Remove.Buttons.Yes": "Yes",
+    "FeedDetails.Card.Remove.Buttons.No": "No",
+
     "FeedDetails.Card.Edit.Buttons.Save": "Save",
     "FeedDetails.Card.Edit.Buttons.Cancel": "Cancel",
     "FeedDetails.Card.Edit.Fields.Name": "Name",

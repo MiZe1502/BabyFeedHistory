@@ -84,7 +84,7 @@ export const typeDefs = gql`
         removeFeed(key: String!): Feed
         createFeedDetails(feedDetails: FeedDetailsInput!): FeedDetails
         updateFeedDetails(feedDetails: ExistedFeedDetailsInput!): FeedDetails
-        removeFeedDetails(key: String!): Boolean
+        removeFeedDetails(key: String!): FeedDetails
     }
 
     type Subscription {

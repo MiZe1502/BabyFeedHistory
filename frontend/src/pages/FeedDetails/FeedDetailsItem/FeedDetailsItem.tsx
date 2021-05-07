@@ -10,10 +10,10 @@ import { useIntl } from "react-intl";
 import {useAuth} from "../../../common/hooks/useAuth";
 import {useMutation} from "@apollo/client";
 import {
-    FeedRemovedResp,
-    MUTATION_REMOVE_FEED_ITEM
-} from "../../../api/feedItems/mutations";
-import {MUTATION_REMOVE_FEED_DETAILS} from "../../../api/feedDetails/mutations";
+    MUTATION_REMOVE_FEED_DETAILS,
+    RemoveFeedDetailsResp
+} from "../../../api/feedDetails/mutations";
+import { RemoveFeedDetailsItemPopup } from "../RemoveFeedDetailsItemPopup/RemoveFeedDetailsItemPopup";
 
 interface FeedDetailsItemProps {
     detailsItem: FeedItemDetails;
@@ -43,7 +43,7 @@ export const FeedDetailsItem = ({detailsItem}: FeedDetailsItemProps) => {
         setIsRemove(false);
     }
 
-    const [removeMethod, {error, loading}] = useMutation<FeedRemovedResp>(MUTATION_REMOVE_FEED_DETAILS)
+    const [removeMethod, {error, loading}] = useMutation<RemoveFeedDetailsResp>(MUTATION_REMOVE_FEED_DETAILS)
 
     auth?.logoutIfAuthError(error);
 
@@ -72,5 +72,11 @@ export const FeedDetailsItem = ({detailsItem}: FeedDetailsItemProps) => {
                 {intl.formatMessage({id: "FeedDetails.Card.Buttons.Remove"})}
             </Button>
         </CardActions>
+        {isRemove && <RemoveFeedDetailsItemPopup
+            onClose={closeRemovePopup}
+            onRemove={removeFeedItem}
+            key={detailsItem.key}
+            loading={loading}
+            error={error?.message}/>}
     </Card>
 }

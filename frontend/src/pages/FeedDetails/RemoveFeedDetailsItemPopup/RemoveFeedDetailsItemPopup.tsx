@@ -1,0 +1,38 @@
+import React from "react";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
+import {FormattedMessage} from "react-intl";
+import Typography from "@material-ui/core/Typography";
+import {ButtonWithLoading} from "../../../common/components/ButtonWithLoading/ButtonWithLoading";
+import {ErrorMessage} from "../../../common/components/ErrorMessage/ErrorMessage";
+import {Popup} from "../../../common/components/Popup/Popup";
+
+interface RemoveFeedDetailsItemPopupProps {
+    onClose?: () => void;
+    onRemove?: () => void;
+    key: string;
+    loading: boolean;
+    error?: string;
+}
+
+export const RemoveFeedDetailsItemPopup = ({error, onClose, onRemove, loading}: RemoveFeedDetailsItemPopupProps) => {
+    return <Popup titleId="FeedDetails.Card.Remove.Title" onClose={onClose}>
+        <>
+            <DialogContent>
+                <Typography variant="h5" component="h2">
+                    <FormattedMessage id="FeedDetails.Card.Remove.Message" />
+                </Typography>
+                <ErrorMessage showError={Boolean(error)} errorMessage={error}/>
+            </DialogContent>
+            <DialogActions>
+                <ButtonWithLoading locId="FeedDetails.Card.Remove.Buttons.Yes"
+                                   onClick={onRemove}
+                                   loading={loading} />
+                <Button onClick={onClose} color="secondary">
+                    <FormattedMessage id="FeedDetails.Card.Remove.Buttons.No" />
+                </Button>
+            </DialogActions>
+        </>
+    </Popup>
+}

@@ -20,6 +20,7 @@ export const useEditFeedDetailsPopup = ({feedDetails, onClose}: EditFeedDetailsP
     const [currentFeedDetails, setCurrentFeedDetails] =
         useState<FeedItemDetails>(
             feedDetails ||  {
+        key: "",
         name: "",
         type: "valueWithAmount"
     });

@@ -18,7 +18,7 @@ export interface GetAvailableFeedDetailsResp {
 }
 
 export interface FeedItemDetails {
-    key?: string;
+    key: string;
     type: string;
     name: string;
     amount?: number;
