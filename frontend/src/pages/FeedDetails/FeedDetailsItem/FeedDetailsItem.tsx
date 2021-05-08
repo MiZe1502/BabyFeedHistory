@@ -1,64 +1,33 @@
 import {FeedItemDetails} from "../../../api/feedDetails/queries";
-import React, {useState} from "react";
+import React from "react";
 import Card from "@material-ui/core/Card";
-import css from "./FeedDetailsItem.scss";
 import CardContent from "@material-ui/core/CardContent";
 import {FeedDetailsItemData} from "../FeedDetailsItemData/FeedDetailsItemData";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
-import { useIntl } from "react-intl";
-import {useAuth} from "../../../common/hooks/useAuth";
-import {useMutation} from "@apollo/client";
-import {
-    MUTATION_REMOVE_FEED_DETAILS,
-    RemoveFeedDetailsResp
-} from "../../../api/feedDetails/mutations";
 import { RemoveFeedDetailsItemPopup } from "../RemoveFeedDetailsItemPopup/RemoveFeedDetailsItemPopup";
+import {EditFeedDetailsPopup} from "../EditFeedDetailsPopup/EditFeedDetailsPopup";
+import {useFeedDetailsItem} from "./useFeedDetailsItem";
 
-interface FeedDetailsItemProps {
+import css from "./FeedDetailsItem.scss";
+
+export interface FeedDetailsItemProps {
     detailsItem: FeedItemDetails;
 }
 
 export const FeedDetailsItem = ({detailsItem}: FeedDetailsItemProps) => {
-    const intl = useIntl();
-    const auth = useAuth();
-
-    const [isEdit, setIsEdit] = useState(false);
-    const [isRemove, setIsRemove] = useState(false);
-
-
-    const openEditPopup = () => {
-        setIsEdit(true);
-    }
-
-    const closeEditPopup = () => {
-        setIsEdit(false);
-    }
-
-    const openRemovePopup = () => {
-        setIsRemove(true);
-    }
-
-    const closeRemovePopup = () => {
-        setIsRemove(false);
-    }
-
-    const [removeMethod, {error, loading}] = useMutation<RemoveFeedDetailsResp>(MUTATION_REMOVE_FEED_DETAILS)
-
-    auth?.logoutIfAuthError(error);
-
-    const removeFeedItem = () => {
-        removeMethod({variables: {
-                key: detailsItem.key,
-            }})
-            .then((res) => {
-                console.log(res)
-                closeRemovePopup();
-            })
-            .catch((err) => {
-                console.log(err)
-            });
-    }
+    const {
+        intl,
+        isEdit,
+        isRemove,
+        loading,
+        error,
+        openEditPopup,
+        openRemovePopup,
+        closeEditPopup,
+        closeRemovePopup,
+        removeFeedItem,
+    } = useFeedDetailsItem({detailsItem});
 
     return <Card key={detailsItem.key} className={css.FeedDetails}>
         <CardContent>
@@ -78,5 +47,8 @@ export const FeedDetailsItem = ({detailsItem}: FeedDetailsItemProps) => {
             key={detailsItem.key}
             loading={loading}
             error={error?.message}/>}
+        {isEdit && <EditFeedDetailsPopup
+            onClose={closeEditPopup}
+            feedDetails={detailsItem}/>}
     </Card>
 }
