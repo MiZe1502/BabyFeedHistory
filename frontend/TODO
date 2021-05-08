@@ -1,8 +1,3 @@
-2. feed details page
-    2.1. list
-        2.1.1. getting data + loading + errors
-        2.1.2. show cards with existed feed details
-    2.2. edit feed details popup - divide into smaller components
 3. logout on token expired
 4. account page
     4.1. getting data
