@@ -1,43 +1,24 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 
-import css from "./FeedDetailsPage.scss";
-import {useLazyQuery} from "@apollo/client";
-import {
-    GetAvailableFeedDetailsResp,
-    QUERY_GET_AVAILABLE_FEED_DETAILS
-} from "../../api/feedDetails/queries";
-import {useAvailableFeedDetailsState} from "../../state/useAvailableFeedDetailsState";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import {ErrorMessage} from "../../common/components/ErrorMessage/ErrorMessage";
-import {useIntl} from "react-intl";
-import {useAuth} from "../../common/hooks/useAuth";
 import Typography from "@material-ui/core/Typography";
 import {FeedDetailsItem} from "./FeedDetailsItem/FeedDetailsItem";
+import { AddNewFeedDetailsItem } from "./AddNewFeedDetailsItem/AddNewFeedDetailsItem";
+import {useFeedDetailsPage} from "./useFeedDetailsPage";
+
+import css from "./FeedDetailsPage.scss";
 
 export const FeedDetailsPage = () => {
-    const auth = useAuth();
-    const intl = useIntl();
-
-    const {addItem,
-        updateItem,
-        removeItemByKey,
-        availableFeedDetails, addItems} = useAvailableFeedDetailsState();
-
-    const [getFeedDetails, {loading, data, error}] = useLazyQuery<GetAvailableFeedDetailsResp>(QUERY_GET_AVAILABLE_FEED_DETAILS)
-
-    auth?.logoutIfAuthError(error);
-
-    useEffect(() => {
-        getFeedDetails();
-    }, [])
-
-    useEffect(() => {
-        if (data) {
-            addItems(data?.getAvailableFeedDetails || []);
-        }
-    }, [data])
+    const {
+        intl,
+        loading,
+        data,
+        availableFeedDetails,
+        error
+    } = useFeedDetailsPage();
 
     if (loading) {
         return <div className={css.FeedDetailsPage}>
@@ -70,6 +51,7 @@ export const FeedDetailsPage = () => {
     }
 
     return <div className={css.FeedDetailsPage}>
+        {!error && <AddNewFeedDetailsItem />}
         {component}
     </div>
 }

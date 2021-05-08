@@ -1,0 +1,7 @@
+@import "../../../common/styles/positioning";
+
+.AddNewWrapper {
+  @include MarginBottom(2);
+  @include FlexHorCenterVertical;
+  width: 100%;
+}
