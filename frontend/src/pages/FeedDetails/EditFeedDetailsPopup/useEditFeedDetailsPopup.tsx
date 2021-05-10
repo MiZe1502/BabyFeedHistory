@@ -54,9 +54,8 @@ export const useEditFeedDetailsPopup = ({feedDetails, onClose}: EditFeedDetailsP
             ...currentFeedDetails,
             wasGiven: formData.wasGiven,
             amountOfWhat: formData.amountOfWhat,
-            type: formData.type,
             name: formData.name,
-            amount: Number(formData.amount),
+            amount: Number(formData.amount) || undefined,
         };
 
         if (currentFeedDetails?.key) {

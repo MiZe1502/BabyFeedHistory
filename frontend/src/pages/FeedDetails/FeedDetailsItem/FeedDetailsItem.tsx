@@ -10,6 +10,8 @@ import {EditFeedDetailsPopup} from "../EditFeedDetailsPopup/EditFeedDetailsPopup
 import {useFeedDetailsItem} from "./useFeedDetailsItem";
 
 import css from "./FeedDetailsItem.scss";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 
 export interface FeedDetailsItemProps {
     detailsItem: FeedItemDetails;
