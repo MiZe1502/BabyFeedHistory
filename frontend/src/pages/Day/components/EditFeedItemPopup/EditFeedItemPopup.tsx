@@ -17,6 +17,7 @@ import {ErrorMessage} from "../../../../common/components/ErrorMessage/ErrorMess
 import {Popup} from "../../../../common/components/Popup/Popup";
 
 import css from "./EditFeedItemPopup.scss";
+import {CheckedIndicator} from "../../../FeedDetails/CheckedIndicator/CheckedIndicator";
 
 export interface EditFeedItemPopupProps {
     feedItem?: FeedItem;
@@ -66,7 +67,15 @@ export const EditFeedItemPopup = (props: EditFeedItemPopupProps) => {
                 {currentFeedItem?.details && <List className={css.FeedItemsList}>
                     {currentFeedItem?.details?.map((item, index) => {
                         return <ListItem key={item.name}>
-                            <ListItemText primary={item.name} secondary={`${item.amount} ${item.amountOfWhat}`}/>
+                            {item.type !== "checkedValue" ?
+                                <ListItemText primary={item.name}
+                                              secondary={`${item.amount} ${item.amountOfWhat}`}
+                                /> :
+                                <>
+                                    <ListItemText primary={item.name} />
+                                    <CheckedIndicator type={item.type} wasGiven={item.wasGiven}/>
+                                </>
+                            }
                             <IconButton onClick={() => onRemoveFeedDetailsFromItem(index)}>
                                 <RemoveIcon />
                             </IconButton>
