@@ -15,9 +15,9 @@ import {EditFeedDetailsPopup} from "../../../FeedDetails/EditFeedDetailsPopup/Ed
 import {FeedItem} from "../../../../api/feedItems/queries";
 import {ErrorMessage} from "../../../../common/components/ErrorMessage/ErrorMessage";
 import {Popup} from "../../../../common/components/Popup/Popup";
+import {CheckedIndicator} from "../../../FeedDetails/CheckedIndicator/CheckedIndicator";
 
 import css from "./EditFeedItemPopup.scss";
-import {CheckedIndicator} from "../../../FeedDetails/CheckedIndicator/CheckedIndicator";
 
 export interface EditFeedItemPopupProps {
     feedItem?: FeedItem;

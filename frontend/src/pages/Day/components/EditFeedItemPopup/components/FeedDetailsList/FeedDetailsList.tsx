@@ -10,9 +10,9 @@ import {ErrorMessage} from "../../../../../../common/components/ErrorMessage/Err
 import AddIcon from '@material-ui/icons/Add';
 import {useFeedDetailsList} from "./useFeedDetailsList";
 import {FeedItemDetails} from "../../../../../../api/feedDetails/queries";
+import {CheckedIndicator} from "../../../../../FeedDetails/CheckedIndicator/CheckedIndicator";
 
 import css from "./FeedDetailsList.scss";
-import {CheckedIndicator} from "../../../../../FeedDetails/CheckedIndicator/CheckedIndicator";
 
 interface FeedDetailsListProps {
     onAddNewFeedDetails: (item: FeedItemDetails) => void;

@@ -36,9 +36,7 @@ export const typeDefs = gql`
     
     type User {
         login: String!
-        password: String
         name: String
-        token: String
     }
 
     input UserInput {

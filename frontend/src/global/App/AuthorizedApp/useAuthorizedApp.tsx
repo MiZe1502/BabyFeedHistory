@@ -23,7 +23,7 @@ export const useAuthorizedApp = (): AuthContext => {
     const logout = () => {
         removeDataFromLocalStorageByKey(SESSION_TOKEN);
         removeToken();
-        history.push(routes.auth);
+        history?.push(routes.auth);
     }
 
     useEffect(() => {
