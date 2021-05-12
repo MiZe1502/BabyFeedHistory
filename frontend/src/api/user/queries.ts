@@ -9,7 +9,7 @@ export const QUERY_GET_CURRENT_ACCOUNT_DATA = gql`
     }
 `
 
-export interface UserAccountResp {
+export interface GetUserAccountDataResp {
     userByLogin: UserAccount;
 }
 
@@ -18,6 +18,6 @@ export interface UserAccount {
     name?: string;
 }
 
-export interface UserAccountVariables {
+export interface GetUserAccountDataVariables {
     login: string;
 }

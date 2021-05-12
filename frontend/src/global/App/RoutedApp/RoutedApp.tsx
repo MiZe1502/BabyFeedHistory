@@ -8,6 +8,7 @@ import {FeedDetailsPage} from "../../../pages/FeedDetails/FeedDetailsPage";
 import {MainMenu} from "../../MainMenu/MainMenu";
 import {useAuth} from "../../../common/hooks/useAuth";
 import {DayPage} from "../../../pages/Day/DayPage";
+import {AccountPage} from "../../../pages/Account/AccountPage";
 
 export const RoutedApp = (): React.ReactElement => {
     const auth = useAuth();
@@ -26,6 +27,9 @@ export const RoutedApp = (): React.ReactElement => {
             </PrivateRoute>
             <PrivateRoute path={routes.feedDetails}>
                 <FeedDetailsPage />
+            </PrivateRoute>
+            <PrivateRoute path={routes.account}>
+                <AccountPage />
             </PrivateRoute>
         </Switch>
     </BrowserRouter>
