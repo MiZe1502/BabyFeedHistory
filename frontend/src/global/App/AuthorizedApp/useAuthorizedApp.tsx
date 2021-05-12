@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {
+    CURRENT_LOGIN,
     getDataFromLocalStorageByKey, removeDataFromLocalStorageByKey,
     SESSION_TOKEN
 } from "../../../utils/localStorage";
@@ -10,26 +11,40 @@ import {ApolloError} from "@apollo/client";
 
 export const useAuthorizedApp = (): AuthContext => {
     const [token, setToken] = useState(getDataFromLocalStorageByKey(SESSION_TOKEN));
+    const [login, setLogin] = useState(getDataFromLocalStorageByKey(CURRENT_LOGIN));
     const history = useHistory();
 
     const updateToken = (token: string) => {
         setToken(token);
     }
 
+    const updateLogin = (login: string) => {
+        setLogin(login);
+    }
+
     const removeToken = () => {
+        setToken("");
+    }
+
+    const removeLogin = () => {
         setToken("");
     }
 
     const logout = () => {
         removeDataFromLocalStorageByKey(SESSION_TOKEN);
-        removeToken();
+        clearData();
         history?.push(routes.auth);
+    }
+
+    const clearData = () => {
+        removeToken();
+        removeLogin();
     }
 
     useEffect(() => {
         const tokenFromStorage = getDataFromLocalStorageByKey(SESSION_TOKEN)
         if (!tokenFromStorage) {
-            removeToken()
+            clearData();
         } else {
             updateToken(tokenFromStorage)
         }
@@ -43,8 +58,11 @@ export const useAuthorizedApp = (): AuthContext => {
 
     return {
         token,
+        login,
         updateToken,
         removeToken,
+        updateLogin,
+        removeLogin,
         logout,
         logoutIfAuthError,
     }

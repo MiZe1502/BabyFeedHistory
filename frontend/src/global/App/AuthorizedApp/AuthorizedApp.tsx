@@ -5,8 +5,11 @@ import {ApolloError} from "@apollo/client";
 
 export interface AuthContext {
     token?: string | null;
+    login?: string | null;
     updateToken: (token: string) => void;
     removeToken: () => void;
+    updateLogin: (login: string) => void;
+    removeLogin: () => void;
     logout: () => void;
     logoutIfAuthError: (error?: ApolloError) => void;
 }

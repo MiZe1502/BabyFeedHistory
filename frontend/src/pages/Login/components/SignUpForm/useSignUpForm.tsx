@@ -8,7 +8,7 @@ import {
     RegistrationResp
 } from "../../../../api/user/mutations";
 import {
-    addDataToLocalStorage,
+    addDataToLocalStorage, CURRENT_LOGIN,
     SESSION_TOKEN
 } from "../../../../utils/localStorage";
 import {routes} from "../../../../utils/routes";
@@ -39,8 +39,10 @@ export const useSignUpForm = () => {
             .then((res) => {
                 console.log(auth, res, data)
                 auth?.updateToken(res?.data?.register?.token || "")
+                auth?.updateLogin(user.login)
                 addDataToLocalStorage(SESSION_TOKEN,
                     res?.data?.register?.token || "")
+                addDataToLocalStorage(CURRENT_LOGIN, user.login)
             })
             .then(() => history.push(routes.history))
             .catch((err) => {

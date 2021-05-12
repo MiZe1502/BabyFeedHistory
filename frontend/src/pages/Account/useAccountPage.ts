@@ -29,7 +29,7 @@ export const useAccountPage = () => {
     useEffect(() => {
         getAccountData({
             variables: {
-                login: auth?.token || ""
+                login: auth?.login || ""
             }
         });
     }, []);
@@ -44,5 +44,6 @@ export const useAccountPage = () => {
         intl,
         loading,
         currentAccount,
+        error
     }
 }

@@ -5,7 +5,7 @@ import {useAuth} from "../../../../common/hooks/useAuth";
 import {useMutation} from "@apollo/client";
 import {LoginResp, MUTATION_AUTH} from "../../../../api/user/mutations";
 import {
-    addDataToLocalStorage,
+    addDataToLocalStorage, CURRENT_LOGIN,
     SESSION_TOKEN
 } from "../../../../utils/localStorage";
 import {routes} from "../../../../utils/routes";
@@ -32,7 +32,9 @@ export const useSignInForm = () => {
         authMethod({ variables: { login, password } })
             .then((res) => {
                 auth?.updateToken(res?.data?.login || "")
+                auth?.updateLogin(login)
                 addDataToLocalStorage(SESSION_TOKEN, res?.data?.login || "")
+                addDataToLocalStorage(CURRENT_LOGIN, login)
             })
             .then(() => history.push(routes.history))
             .catch((err) => {
