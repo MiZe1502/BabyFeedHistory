@@ -7,9 +7,12 @@ export const en = {
     "Login.Fields.Login": "Email Address",
     "Login.Fields.Password": "Password",
     "Login.Fields.ConfirmPassword": "Confirm password",
+    "Login.Fields.OldPassword": "Current password",
     "Login.Fields.Name": "Name",
     "Login.Buttons.SignIn": "Sign In",
     "Login.Buttons.SignUp": "Sign Up",
+
+    "Account.Buttons.Save": "Save",
 
     "Messages.NoDataFound": "No data found",
 

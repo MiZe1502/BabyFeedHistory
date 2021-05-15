@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { useIntl } from "react-intl";
 import {UserAccount} from "../../../../api/user/queries";
 import {useForm} from "react-hook-form";
@@ -10,6 +10,10 @@ import {
     addDataToLocalStorage,
     CURRENT_LOGIN
 } from "../../../../utils/localStorage";
+import {PasswordTextField} from "../../../../common/components/PasswordTextField/PasswordTextField";
+import {ErrorMessage} from "../../../../common/components/ErrorMessage/ErrorMessage";
+import DialogActions from "@material-ui/core/DialogActions";
+import {ButtonWithLoading} from "../../../../common/components/ButtonWithLoading/ButtonWithLoading";
 
 interface AccountDataProps {
     accountData: UserAccount;
@@ -19,6 +23,7 @@ interface AccountForm extends UserAccount {
     password?: string;
     oldLogin?: string;
     oldPassword?: string;
+    confirmPassword?: string;
 }
 
 export const AccountData = ({accountData}: AccountDataProps) => {
@@ -44,6 +49,8 @@ export const AccountData = ({accountData}: AccountDataProps) => {
             console.log(err)
         });
     }
+
+    const [isGoingToChangePassword, setIsGoingToChangePassword] = useState(false);
 
     return <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
         <TextFieldWrapped
@@ -73,5 +80,58 @@ export const AccountData = ({accountData}: AccountDataProps) => {
             error={Boolean(errors.password)}
             helperText={errors.password?.message}
         />
+
+        <PasswordTextField
+            inputRef={register({
+                required: {
+                    value: isGoingToChangePassword,
+                    message: intl.formatMessage({
+                        id: "Login.Validation.Field.Required"})
+                }
+            })}
+            defaultValue=""
+            id="oldPassword"
+            name="oldPassword"
+            label={intl.formatMessage({id: "Login.Fields.OldPassword"})}
+            disabled={loading}
+            error={Boolean(errors.oldPassword)}
+            helperText={errors.oldPassword?.message}
+        />
+        <PasswordTextField
+            inputRef={register()}
+            defaultValue=""
+            id="password"
+            name="password"
+            label={intl.formatMessage({id: "Login.Fields.Password"})}
+            disabled={loading}
+            error={Boolean(errors.password)}
+            helperText={errors.password?.message}
+        />
+        <PasswordTextField
+            inputRef={register({
+                required: {
+                    value: isGoingToChangePassword,
+                    message: intl.formatMessage({
+                        id: "Login.Validation.Field.Required"})
+                },
+                validate: {
+                    equal: (value) => value === getValues().password,
+                }
+            })}
+            defaultValue=""
+            id="confirmPassword"
+            name="confirmPassword"
+            label={intl.formatMessage({
+                id: "Login.Fields.ConfirmPassword"})}
+            disabled={loading}
+            error={Boolean(errors.confirmPassword)}
+            helperText={errors.confirmPassword?.message}
+        />
+        <ErrorMessage showError={Boolean(error)}
+                      errorMessage={error?.message}/>
+        <DialogActions>
+            <ButtonWithLoading loading={loading}
+                               locId="Account.Buttons.Save" />
+        </DialogActions>
     </form>
 }
