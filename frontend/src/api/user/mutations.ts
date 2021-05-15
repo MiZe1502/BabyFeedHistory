@@ -14,20 +14,20 @@ export const MUTATION_REGISTRATION = gql`
     }
 `
 
-export const MUTATION_UPDATE_USER_DATA = gql`
-    mutation UpdateUser() {
-        updateUser(user: {
-            oldLogin: "abs updated login 2",
-            login: "abs updated login 2",
-            name: "updated name 3"
-        }) {
-            login,
-            name,
-            password,
-            token
-        }
-    }
-`
+// export const MUTATION_UPDATE_USER_DATA = gql`
+//     mutation UpdateUser() {
+//         updateUser(user: {
+//             oldLogin: "abs updated login 2",
+//             login: "abs updated login 2",
+//             name: "updated name 3"
+//         }) {
+//             login,
+//             name,
+//             password,
+//             token
+//         }
+//     }
+// `
 
 export interface LoginResp {
     login: string;

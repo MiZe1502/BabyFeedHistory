@@ -38,6 +38,12 @@ export const typeDefs = gql`
         login: String!
         name: String
     }
+    
+    type RegisteredUser {
+        login: String!
+        name: String
+        token: String!
+    }
 
     input UserInput {
         login: String!
@@ -49,6 +55,7 @@ export const typeDefs = gql`
     input UpdateUserInput {
         login: String
         oldLogin: String
+        oldPassword: String
         password: String
         confirmPassword: String
         name: String
@@ -75,7 +82,7 @@ export const typeDefs = gql`
     
     type Mutation {
         login(login: String!, password: String!): String
-        register(user: UserInput!): User
+        register(user: UserInput!): RegisteredUser
         updateUser(user: UpdateUserInput): User
         createFeed(feed: FeedInput): Feed
         updateFeed(feed: ExistedFeedInput): Feed
