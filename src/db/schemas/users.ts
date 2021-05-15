@@ -15,6 +15,7 @@ export interface UserRegistrationData extends UserData {
 
 export interface UserUpdateData extends UserRegistrationData {
     oldLogin?: string;
+    oldPassword: string;
 }
 
 export interface RegisteredUser extends Omit<UserData, 'password'> {
