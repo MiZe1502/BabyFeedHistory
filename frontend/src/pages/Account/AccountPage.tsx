@@ -6,6 +6,7 @@ import {Card} from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 import {ErrorMessage} from "../../common/components/ErrorMessage/ErrorMessage";
 import Typography from "@material-ui/core/Typography";
+import {AccountData} from "./components/AccountData/AccountData";
 
 export const AccountPage = () => {
     const {
@@ -30,7 +31,7 @@ export const AccountPage = () => {
             </CardContent>
         </Card>
     } else if (currentAccount) {
-        component = null;
+        component = <AccountData accountData={currentAccount}/>;
     } else if (!currentAccount) {
         component = <Card className={css.FeedDetails}>
             <CardContent>

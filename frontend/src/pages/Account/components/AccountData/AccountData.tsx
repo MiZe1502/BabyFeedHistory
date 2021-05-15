@@ -5,27 +5,44 @@ import {useForm} from "react-hook-form";
 import {TextFieldWrapped} from "../../../../common/components/TextField/TextField";
 import {MaxNameLength} from "../../../Login/components/SignUpForm/useSignUpForm";
 import {useMutation} from "@apollo/client";
+import {MUTATION_UPDATE_USER_DATA} from "../../../../api/user/mutations";
+import {
+    addDataToLocalStorage,
+    CURRENT_LOGIN
+} from "../../../../utils/localStorage";
 
 interface AccountDataProps {
-    data: UserAccount;
+    accountData: UserAccount;
 }
 
 interface AccountForm extends UserAccount {
-    password: string;
-    oldPassword: string;
+    password?: string;
+    oldLogin?: string;
+    oldPassword?: string;
 }
 
-export const AccountData = ({data}: AccountDataProps) => {
+export const AccountData = ({accountData}: AccountDataProps) => {
     const intl = useIntl();
 
     const { register, handleSubmit, formState: {
         errors
     }, getValues} = useForm<AccountForm>({})
 
-    const [updateUser, { error, data, loading }] = useMutation();
+    const [updateUser, { error, data, loading }] = useMutation<AccountForm>(MUTATION_UPDATE_USER_DATA);
 
-    const onSubmit = () => {
-
+    const onSubmit = (user: AccountForm) => {
+        updateUser({
+            variables: { user }
+        })
+        .then((res) => {
+            if (!res?.data) {
+                throw 'Unexpected error'
+            }
+            addDataToLocalStorage(CURRENT_LOGIN, res.data.login)
+        })
+        .catch((err) => {
+            console.log(err)
+        });
     }
 
     return <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
@@ -34,7 +51,7 @@ export const AccountData = ({data}: AccountDataProps) => {
                 required: intl.formatMessage({
                     id: "Login.Validation.Field.Required"}),
             })}
-            defaultValue={data.login}
+            defaultValue={accountData.login}
             id="login"
             name="login"
             label={intl.formatMessage({id: "Login.Fields.Login"})}
@@ -47,7 +64,7 @@ export const AccountData = ({data}: AccountDataProps) => {
             inputRef={register({
                 maxLength: MaxNameLength
             })}
-            defaultValue={data.name}
+            defaultValue={accountData.name}
             id="name"
             name="name"
             label={intl.formatMessage({id: "Login.Fields.Name"})}
