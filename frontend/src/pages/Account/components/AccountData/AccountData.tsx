@@ -30,7 +30,7 @@ export const AccountData = ({accountData}: AccountDataProps) => {
     const intl = useIntl();
 
     const { register, handleSubmit, formState: {
-        errors
+        errors,
     }, getValues} = useForm<AccountForm>({})
 
     const [updateUser, { error, data, loading }] = useMutation<AccountForm>(MUTATION_UPDATE_USER_DATA);
@@ -48,6 +48,14 @@ export const AccountData = ({accountData}: AccountDataProps) => {
         .catch((err) => {
             console.log(err)
         });
+    }
+
+    const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.value?.length > 0 && !isGoingToChangePassword) {
+            setIsGoingToChangePassword(true);
+        } else if (!event.target.value && isGoingToChangePassword) {
+            setIsGoingToChangePassword(false);
+        }
     }
 
     const [isGoingToChangePassword, setIsGoingToChangePassword] = useState(false);
@@ -98,6 +106,7 @@ export const AccountData = ({accountData}: AccountDataProps) => {
             helperText={errors.oldPassword?.message}
         />
         <PasswordTextField
+            onChange={onPasswordChange}
             inputRef={register()}
             defaultValue=""
             id="password"
