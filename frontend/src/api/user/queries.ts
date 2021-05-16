@@ -4,7 +4,7 @@ export const QUERY_GET_CURRENT_ACCOUNT_DATA = gql`
     query GetCurrentUserData($login: String!){
         userByLogin(login: $login){
             login,
-            name
+            name,
         }
     }
 `

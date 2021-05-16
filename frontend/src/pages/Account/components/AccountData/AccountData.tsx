@@ -5,15 +5,19 @@ import {useForm} from "react-hook-form";
 import {TextFieldWrapped} from "../../../../common/components/TextField/TextField";
 import {MaxNameLength} from "../../../Login/components/SignUpForm/useSignUpForm";
 import {useMutation} from "@apollo/client";
-import {MUTATION_UPDATE_USER_DATA} from "../../../../api/user/mutations";
+import {
+    MUTATION_UPDATE_USER_DATA,
+    UpdateUserResp
+} from "../../../../api/user/mutations";
 import {
     addDataToLocalStorage,
-    CURRENT_LOGIN
+    CURRENT_LOGIN, SESSION_TOKEN
 } from "../../../../utils/localStorage";
 import {PasswordTextField} from "../../../../common/components/PasswordTextField/PasswordTextField";
 import {ErrorMessage} from "../../../../common/components/ErrorMessage/ErrorMessage";
 import DialogActions from "@material-ui/core/DialogActions";
 import {ButtonWithLoading} from "../../../../common/components/ButtonWithLoading/ButtonWithLoading";
+import {useAuth} from "../../../../common/hooks/useAuth";
 
 interface AccountDataProps {
     accountData: UserAccount;
@@ -28,22 +32,33 @@ interface AccountForm extends UserAccount {
 
 export const AccountData = ({accountData}: AccountDataProps) => {
     const intl = useIntl();
+    const auth = useAuth();
 
     const { register, handleSubmit, formState: {
         errors,
     }, getValues} = useForm<AccountForm>({})
 
-    const [updateUser, { error, data, loading }] = useMutation<AccountForm>(MUTATION_UPDATE_USER_DATA);
+    const [updateUser, { error, loading }] = useMutation<UpdateUserResp>(MUTATION_UPDATE_USER_DATA);
 
     const onSubmit = (user: AccountForm) => {
         updateUser({
-            variables: { user }
+            variables: { user: {
+                    ...user,
+                    oldLogin: auth?.login
+                } }
         })
         .then((res) => {
-            if (!res?.data) {
+            if (!res?.data?.updateUser) {
                 throw 'Unexpected error'
             }
-            addDataToLocalStorage(CURRENT_LOGIN, res.data.login)
+
+            console.log(res?.data?.updateUser)
+
+            auth?.updateToken(res.data.updateUser.token || "")
+            auth?.updateLogin(res.data.updateUser.login)
+            addDataToLocalStorage(SESSION_TOKEN,
+                res.data.updateUser.token || "")
+            addDataToLocalStorage(CURRENT_LOGIN, res.data.updateUser.login)
         })
         .catch((err) => {
             console.log(err)

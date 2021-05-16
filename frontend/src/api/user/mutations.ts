@@ -25,7 +25,11 @@ export const MUTATION_UPDATE_USER_DATA = gql`
 `
 
 export interface UpdateUserResp {
-    updateUser: UserAccount;
+    updateUser: UserAccountUpdated;
+}
+
+export interface UserAccountUpdated extends UserAccount {
+    token: string;
 }
 
 export interface LoginResp {

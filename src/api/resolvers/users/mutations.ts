@@ -113,6 +113,8 @@ const updateUser = async (_: unknown, {user}: {user: UserUpdateData},
         updatedUser.login = user.login;
         updatedUser.name = user.name;
 
+        //TODO: Update all corresponding feeds and feed details if login changed
+
         let hashPassword = ''
         if (user.password) {
             const hashedOldPassword = await createPasswordHash(user.oldPassword);
