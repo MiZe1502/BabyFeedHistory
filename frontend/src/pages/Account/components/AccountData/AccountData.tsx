@@ -52,8 +52,6 @@ export const AccountData = ({accountData}: AccountDataProps) => {
                 throw 'Unexpected error'
             }
 
-            console.log(res?.data?.updateUser)
-
             auth?.updateToken(res.data.updateUser.token || "")
             auth?.updateLogin(res.data.updateUser.login)
             addDataToLocalStorage(SESSION_TOKEN,

@@ -122,8 +122,8 @@ const updateUser = async (_: unknown, {user}: {user: UserUpdateData},
 
         let hashPassword = ''
         if (user.password) {
-            const hashedOldPassword = await createPasswordHash(user.oldPassword);
-            if (hashedOldPassword !== updatedUser.password) {
+            const isPassCorrect = await isPasswordValid(user.oldPassword, updatedUser.password)
+            if (!isPassCorrect) {
                 throw new UserInputError('Incorrect current user password', {errors})
             }
 
