@@ -1,5 +1,4 @@
 import React from "react";
-import css from "./AccountPage.scss";
 import {useAccountPage} from "./useAccountPage";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {Card} from "@material-ui/core";
@@ -7,6 +6,8 @@ import CardContent from "@material-ui/core/CardContent";
 import {ErrorMessage} from "../../common/components/ErrorMessage/ErrorMessage";
 import Typography from "@material-ui/core/Typography";
 import {AccountData} from "./components/AccountData/AccountData";
+
+import css from "./AccountPage.scss";
 
 export const AccountPage = () => {
     const {
