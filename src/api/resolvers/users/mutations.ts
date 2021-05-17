@@ -24,6 +24,8 @@ import {
 } from "../../../utils/password";
 import {checkAuthorization, createToken} from "../../../utils/token";
 import {Context} from "../../../utils/types";
+import {changeFeedItemsOwner} from "../../../db/repos/feeds";
+import {changeFeedDetailsItemsOwner} from "../../../db/repos/feedDetails";
 
 const login = async (_: unknown, {login, password}: UserData):
     Promise<string | void> => {
@@ -113,7 +115,10 @@ const updateUser = async (_: unknown, {user}: {user: UserUpdateData},
         updatedUser.login = user.login;
         updatedUser.name = user.name;
 
-        //TODO: Update all corresponding feeds and feed details if login changed
+        if (user.login !== user.oldLogin) {
+            await changeFeedItemsOwner(user.oldLogin, user.login)
+            await changeFeedDetailsItemsOwner(user.oldLogin, user.login)
+        }
 
         let hashPassword = ''
         if (user.password) {

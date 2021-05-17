@@ -57,6 +57,15 @@ export const updateFeedItem =
         }, newFeedData, {new: true});
 }
 
+export const changeFeedItemsOwner =
+    async (oldLogin: string, userLogin: string): Promise<FeedData[] | null> => {
+        return feedModel.updateMany({
+            createdBy: oldLogin
+        }, {
+            createdBy: userLogin,
+        }, { multi: true, upsert: true })
+    }
+
 export const removeFeedByKey =
     async (userLogin: string, key: string): Promise<FeedData | null> => {
     return feedModel.findOneAndRemove({

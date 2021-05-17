@@ -37,3 +37,12 @@ export const removeFeedDetailsItem =
         ]
     }, {new: true})
 }
+
+export const changeFeedDetailsItemsOwner =
+    async (oldLogin: string, userLogin: string): Promise<FeedDetailsData[] | null> => {
+        return feedDetailsModel.updateMany({
+            createdBy: oldLogin
+        }, {
+            createdBy: userLogin,
+        }, { multi: true, upsert: true })
+    }
