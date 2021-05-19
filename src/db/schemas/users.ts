@@ -7,6 +7,12 @@ export interface UserData {
     login: string;
     name?: string;
     password: string;
+    loc: string,
+}
+
+export interface LoggedInUserData {
+    token: string;
+    loc: string;
 }
 
 export interface UserRegistrationData extends UserData {
@@ -28,4 +34,5 @@ export const userSchema = new Schema<UserDocument, UserModel>({
     login: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     name: String,
+    loc: {type: String, required: true},
 });

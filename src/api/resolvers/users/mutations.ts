@@ -1,4 +1,5 @@
 import {
+    LoggedInUserData,
     RegisteredUser,
     UserData,
     UserRegistrationData, UserUpdateData
@@ -27,9 +28,9 @@ import {Context} from "../../../utils/types";
 import {changeFeedItemsOwner} from "../../../db/repos/feeds";
 import {changeFeedDetailsItemsOwner} from "../../../db/repos/feedDetails";
 
-const login = async (_: unknown, {login, password}: UserData):
-    Promise<string | void> => {
-    const {errors, isValid} = validateLoginData({login, password})
+const login = async (_: unknown, {login, password, loc}: UserData):
+    Promise<LoggedInUserData | void> => {
+    const {errors, isValid} = validateLoginData({login, password, loc})
 
     if (!isValid) {
         throw new UserInputError('Incorrect user data', {errors})
@@ -46,7 +47,10 @@ const login = async (_: unknown, {login, password}: UserData):
         return throwGeneralError('Password is incorrect', errors)
     }
 
-    return createToken({login: user.login, name: user.name});
+    return {
+        token: createToken({login: user.login, name: user.name, loc: user.loc}),
+        loc: user.loc,
+    };
 }
 
 const register = async (_: unknown, {user}: {user: UserRegistrationData}):
@@ -66,11 +70,12 @@ const register = async (_: unknown, {user}: {user: UserRegistrationData}):
     const createdUser = await createNewUser({...user, password: hashPassword})
 
     if (createdUser) {
-        const token = createToken({login: user.login, name: user.name})
+        const token = createToken({login: user.login, name: user.name, loc: user.loc})
         return {
             login: createdUser.login,
             name: createdUser.name,
             token,
+            loc: createdUser.loc,
         }
     } else {
         return throwGeneralError(
@@ -115,6 +120,10 @@ const updateUser = async (_: unknown, {user}: {user: UserUpdateData},
         updatedUser.login = user.login;
         updatedUser.name = user.name;
 
+        if (updatedUser.loc !== user.loc) {
+            updatedUser.loc = user.loc;
+        }
+
         if (user.login !== user.oldLogin) {
             await changeFeedItemsOwner(user.oldLogin, user.login)
             await changeFeedDetailsItemsOwner(user.oldLogin, user.login)
@@ -135,11 +144,12 @@ const updateUser = async (_: unknown, {user}: {user: UserUpdateData},
 
         if (updatedUserData) {
             const token = createToken({login: updatedUserData.login,
-                    name: updatedUserData.name})
+                    name: updatedUserData.name, loc: updatedUserData.loc})
             return {
                 login: updatedUserData.login,
                 name: updatedUserData.name,
                 token,
+                loc: updatedUserData.loc,
             }
         } else {
             return throwGeneralError(
