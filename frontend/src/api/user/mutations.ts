@@ -1,9 +1,12 @@
 import {gql} from "@apollo/client";
-import {UserAccount} from "./queries";
+import {Localization, UserAccount} from "./queries";
 
 export const MUTATION_AUTH = gql`
     mutation Auth($login: String!, $password: String!) {
-        login(login: $login, password: $password)
+        login(login: $login, password: $password) {
+            token
+            loc
+        }
     }
 `
 
@@ -11,6 +14,7 @@ export const MUTATION_REGISTRATION = gql`
     mutation CreateUser($user: UserInput!) {
         register(user: $user) {
             token
+            loc
         }
     }
 `
@@ -20,6 +24,7 @@ export const MUTATION_UPDATE_USER_DATA = gql`
         updateUser(user: $user) {
             login,
             name,
+            loc,
         }
     }
 `
@@ -33,12 +38,16 @@ export interface UserAccountUpdated extends UserAccount {
 }
 
 export interface LoginResp {
-    login: string;
+    login: {
+        token: string;
+        loc: Localization;
+    };
 }
 
 export interface RegistrationResp {
     register: {
         token: string;
+        loc: Localization;
     }
 }
 

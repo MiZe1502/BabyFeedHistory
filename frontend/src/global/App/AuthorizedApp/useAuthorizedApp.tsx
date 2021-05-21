@@ -8,10 +8,12 @@ import {AuthContext} from "./AuthorizedApp";
 import {routes} from "../../../utils/routes";
 import { useHistory } from "react-router-dom";
 import {ApolloError} from "@apollo/client";
+import {Localization} from "../../../api/user/queries";
 
 export const useAuthorizedApp = (): AuthContext => {
     const [token, setToken] = useState(getDataFromLocalStorageByKey(SESSION_TOKEN));
     const [login, setLogin] = useState(getDataFromLocalStorageByKey(CURRENT_LOGIN));
+    const [loc, setLoc] = useState(getDataFromLocalStorageByKey(CURRENT_LOGIN));
     const history = useHistory();
 
     const updateToken = (token: string) => {
@@ -30,6 +32,14 @@ export const useAuthorizedApp = (): AuthContext => {
         setToken("");
     }
 
+    const updateLoc = (loc: Localization) => {
+        setLoc(loc);
+    }
+
+    const removeLoc = () => {
+        setLoc("");
+    }
+
     const logout = () => {
         removeDataFromLocalStorageByKey(SESSION_TOKEN);
         clearData();
@@ -39,6 +49,7 @@ export const useAuthorizedApp = (): AuthContext => {
     const clearData = () => {
         removeToken();
         removeLogin();
+        removeLoc();
     }
 
     useEffect(() => {
@@ -59,10 +70,13 @@ export const useAuthorizedApp = (): AuthContext => {
     return {
         token,
         login,
+        loc,
         updateToken,
         removeToken,
         updateLogin,
         removeLogin,
+        updateLoc,
+        removeLoc,
         logout,
         logoutIfAuthError,
     }

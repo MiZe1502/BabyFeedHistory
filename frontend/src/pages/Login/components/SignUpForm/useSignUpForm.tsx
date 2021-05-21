@@ -8,7 +8,7 @@ import {
     RegistrationResp
 } from "../../../../api/user/mutations";
 import {
-    addDataToLocalStorage, CURRENT_LOGIN,
+    addDataToLocalStorage, CURRENT_LOC, CURRENT_LOGIN,
     SESSION_TOKEN
 } from "../../../../utils/localStorage";
 import {routes} from "../../../../utils/routes";
@@ -37,12 +37,15 @@ export const useSignUpForm = () => {
     const signUp = (user: RegistrationForm) => {
         regMethod({ variables: { user }})
             .then((res) => {
-                console.log(auth, res, data)
-                auth?.updateToken(res?.data?.register?.token || "")
+                const {token, loc} = res?.data?.register || {};
+                if (!token || !loc) {
+                    throw new Error('Unexpected error occurred');
+                }
+                auth?.updateToken(token)
                 auth?.updateLogin(user.login)
-                addDataToLocalStorage(SESSION_TOKEN,
-                    res?.data?.register?.token || "")
+                addDataToLocalStorage(SESSION_TOKEN, token)
                 addDataToLocalStorage(CURRENT_LOGIN, user.login)
+                addDataToLocalStorage(CURRENT_LOC, loc)
             })
             .then(() => history.push(routes.history))
             .catch((err) => {
