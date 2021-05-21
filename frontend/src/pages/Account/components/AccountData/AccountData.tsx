@@ -7,6 +7,12 @@ import {ErrorMessage} from "../../../../common/components/ErrorMessage/ErrorMess
 import DialogActions from "@material-ui/core/DialogActions";
 import {ButtonWithLoading} from "../../../../common/components/ButtonWithLoading/ButtonWithLoading";
 import {useAccountData} from "./useAccountData";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import {Controller} from "react-hook-form";
+import InputLabel from "@material-ui/core/InputLabel";
+
+import css from "./AccountData.scss";
 
 interface AccountDataProps {
     accountData: UserAccount;
@@ -16,6 +22,7 @@ export const AccountData = ({accountData}: AccountDataProps) => {
     const {
         intl,
         register,
+        control,
         handleSubmit,
         onSubmit,
         loading,
@@ -54,7 +61,26 @@ export const AccountData = ({accountData}: AccountDataProps) => {
             error={Boolean(errors.password)}
             helperText={errors.password?.message}
         />
-
+        <div className={css.LocWrapper}>
+            <InputLabel shrink id="loc-select-label">
+                {intl.formatMessage({id: "Account.Loc.Label"})}
+            </InputLabel>
+            <Controller
+                control={control}
+                name="loc"
+                defaultValue={accountData.loc}
+                as={
+                    <Select id="loc-select">
+                        <MenuItem value={"ru"}>
+                            {intl.formatMessage({id: "Account.Loc.Ru"})}
+                        </MenuItem>
+                        <MenuItem value={"en"}>
+                            {intl.formatMessage({id: "Account.Loc.En"})}
+                        </MenuItem>
+                    </Select>
+                }
+            />
+        </div>
         <PasswordTextField
             inputRef={register({
                 required: {

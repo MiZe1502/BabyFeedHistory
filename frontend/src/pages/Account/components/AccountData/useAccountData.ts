@@ -24,7 +24,7 @@ export const useAccountData = () => {
     const intl = useIntl();
     const auth = useAuth();
 
-    const { register, handleSubmit, formState: {
+    const { control, register, handleSubmit, formState: {
         errors,
     }, getValues} = useForm<AccountForm>({})
 
@@ -66,6 +66,7 @@ export const useAccountData = () => {
     return {
         intl,
         register,
+        control,
         handleSubmit,
         onSubmit,
         loading,

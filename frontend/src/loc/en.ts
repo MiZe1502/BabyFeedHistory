@@ -13,6 +13,9 @@ export const en = {
     "Login.Buttons.SignUp": "Sign Up",
 
     "Account.Buttons.Save": "Save",
+    "Account.Loc.Label": "Language",
+    "Account.Loc.Ru": "Russian",
+    "Account.Loc.En": "English",
 
     "Messages.NoDataFound": "No data found",
 

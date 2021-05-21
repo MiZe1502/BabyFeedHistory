@@ -28,7 +28,8 @@ const userByLogin = async (_: unknown, {login}: Partial<UserData>,
 
     return {
         login: user?.login,
-        name: user?.name
+        name: user?.name,
+        loc: user?.loc
     }
 }
 

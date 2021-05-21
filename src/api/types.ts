@@ -37,6 +37,7 @@ export const typeDefs = gql`
     type User {
         login: String!
         name: String
+        loc: String!
     }
     
     type RegisteredUser {
