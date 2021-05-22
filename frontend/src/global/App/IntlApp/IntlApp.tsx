@@ -15,9 +15,8 @@ const loc: Record<Localization, Record<string, string>> = {
 export const IntlApp = (): React.ReactElement => {
     const auth = useAuth();
 
-
     return <IntlProvider
-        messages={loc[auth?.loc as Localization] || {}}
+        messages={loc[auth?.loc as Localization] || en}
         locale={auth?.loc || "en"} defaultLocale="en">
         <RecoilRoot>
             <StatedApp />
