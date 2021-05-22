@@ -43,6 +43,7 @@ export const useSignUpForm = () => {
                 }
                 auth?.updateToken(token)
                 auth?.updateLogin(user.login)
+                auth?.updateLoc(loc)
                 addDataToLocalStorage(SESSION_TOKEN, token)
                 addDataToLocalStorage(CURRENT_LOGIN, user.login)
                 addDataToLocalStorage(CURRENT_LOC, loc)

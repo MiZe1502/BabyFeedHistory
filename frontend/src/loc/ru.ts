@@ -1,0 +1,61 @@
+export const ru = {
+    "Menu.Tabs.History": "История",
+    "Menu.Tabs.FeedDetails": "Элементы кормления",
+    "Login.Title.SignIn": "Авторизация",
+    "Login.Title.SignUp": "Регистрация",
+    "Login.Validation.Field.Required": "Поле должно быть заполнено",
+    "Login.Fields.Login": "Email-адрес",
+    "Login.Fields.Password": "Пароль",
+    "Login.Fields.ConfirmPassword": "Подтверждение пароля",
+    "Login.Fields.OldPassword": "Текущий пароль",
+    "Login.Fields.Name": "Имя",
+    "Login.Buttons.SignIn": "Войти",
+    "Login.Buttons.SignUp": "Зарегистрироваться",
+
+    "Account.Buttons.Save": "Сохранить",
+    "Account.Loc.Label": "Язык",
+    "Account.Loc.Ru": "Русский",
+    "Account.Loc.En": "Английский",
+
+    "Messages.NoDataFound": "Данные не найдены",
+
+    "FeedItem.Card.Buttons.Edit": "Редактировать",
+    "FeedItem.Card.Buttons.Remove": "Удалить",
+
+    "FeedItem.Card.Edit.Title": "Редактировать записи о кормлении",
+    "FeedItem.Card.Edit.Fields.Timestamp": "Время",
+    "FeedItem.Card.Edit.Fields.Timestamp.Required": "Поле должно быть заполнено",
+    "FeedItem.Card.Edit.Buttons.Save": "Сохранить",
+    "FeedItem.Card.Edit.Buttons.Cancel": "Отмена",
+
+    "FeedItem.Card.Remove.Title": "Удаление записи о кормлении",
+    "FeedItem.Card.Remove.Message": "Вы действительно хотите удалить запись о кормлении?",
+    "FeedItem.Card.Remove.Buttons.Yes": "Да",
+    "FeedItem.Card.Remove.Buttons.No": "Нет",
+
+    "FeedItem.Card.Create.Title": "Создание записи о кормлении",
+
+    "FeedDetails.Card.Edit.Title": "Редактирование элемента кормления",
+    "FeedDetails.Card.Create.Title": "Создание элемента кормления",
+    "FeedDetails.Card.Buttons.Edit": "Редактировать",
+    "FeedDetails.Card.Buttons.Remove": "Удалить",
+
+    "FeedDetails.Card.Remove.Title": "Удаление элемента кормления",
+    "FeedDetails.Card.Remove.Message": "Вы действительно хотите удалить элемент кормления?",
+    "FeedDetails.Card.Remove.Buttons.Yes": "Да",
+    "FeedDetails.Card.Remove.Buttons.No": "Нет",
+
+    "FeedDetails.Card.Edit.Buttons.Save": "Сохранить",
+    "FeedDetails.Card.Edit.Buttons.Cancel": "Отмена",
+    "FeedDetails.Card.Edit.Fields.Name": "Имя",
+    "FeedDetails.Card.Edit.Fields.Amount": "Количество",
+    "FeedDetails.Card.Edit.Fields.AmountOfWhat": "Единица измерения",
+    "FeedDetails.Card.Edit.Fields.Type": "Тип",
+    "FeedDetails.Card.Edit.Fields.WasGiven": "Было дано ребенку",
+    "FeedDetails.Card.Edit.Fields.Type.ValueWithAmount": "Количественное значение",
+    "FeedDetails.Card.Edit.Fields.Type.CheckedValue": "Выбранное значение",
+    "FeedDetails.Card.Edit.Fields.Name.Required": "Имя не должно быть пустым",
+    "FeedDetails.Card.Edit.Fields.Amount.Required": "Количество не должно быть пустым",
+    "FeedDetails.Card.Edit.Fields.Amount.MoreThanZero": "Значение должно быть положительным",
+    "FeedDetails.Card.Edit.Fields.AmountOfWhat.Required": "Единицы измерения не должны быть пустыми",
+}

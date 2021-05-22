@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {
+    CURRENT_LOC,
     CURRENT_LOGIN,
     getDataFromLocalStorageByKey, removeDataFromLocalStorageByKey,
     SESSION_TOKEN
@@ -13,7 +14,7 @@ import {Localization} from "../../../api/user/queries";
 export const useAuthorizedApp = (): AuthContext => {
     const [token, setToken] = useState(getDataFromLocalStorageByKey(SESSION_TOKEN));
     const [login, setLogin] = useState(getDataFromLocalStorageByKey(CURRENT_LOGIN));
-    const [loc, setLoc] = useState(getDataFromLocalStorageByKey(CURRENT_LOGIN));
+    const [loc, setLoc] = useState(getDataFromLocalStorageByKey(CURRENT_LOC));
     const history = useHistory();
 
     const updateToken = (token: string) => {

@@ -37,6 +37,7 @@ export const useSignInForm = () => {
                 }
                 auth?.updateToken(token)
                 auth?.updateLogin(login)
+                auth?.updateLoc(loc)
                 addDataToLocalStorage(SESSION_TOKEN, token)
                 addDataToLocalStorage(CURRENT_LOGIN, login)
                 addDataToLocalStorage(CURRENT_LOC, loc)
