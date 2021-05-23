@@ -53,7 +53,7 @@ export const EditFeedDetailsPopup = (props: EditFeedDetailsPopupProps) => {
                                 id: "FeedDetails.Card.Edit.Fields.Name.Required"}),
                         })}
                         defaultValue={currentFeedDetails?.name || ""}
-                        placeholder="Name"
+                        placeholder={intl.formatMessage({id: "FeedDetails.Card.Edit.Fields.Name"})}
                         id="name"
                         name="name"
                         label={intl.formatMessage({id: "FeedDetails.Card.Edit.Fields.Name"})}
@@ -115,7 +115,7 @@ export const EditFeedDetailsPopup = (props: EditFeedDetailsPopupProps) => {
                                     }),
                                 })}
                                 defaultValue={currentFeedDetails?.amount}
-                                placeholder="Amount"
+                                placeholder={intl.formatMessage({id: "FeedDetails.Card.Edit.Fields.Amount"})}
                                 id="amount"
                                 name="amount"
                                 label={intl.formatMessage({id: "FeedDetails.Card.Edit.Fields.Amount"})}
@@ -131,7 +131,7 @@ export const EditFeedDetailsPopup = (props: EditFeedDetailsPopupProps) => {
                                     }),
                                 })}
                                 defaultValue={currentFeedDetails?.amountOfWhat}
-                                placeholder="Units"
+                                placeholder={intl.formatMessage({id: "FeedDetails.Card.Edit.Fields.AmountOfWhat"})}
                                 id="amountOfWhat"
                                 name="amountOfWhat"
                                 label={intl.formatMessage({id: "FeedDetails.Card.Edit.Fields.AmountOfWhat"})}
