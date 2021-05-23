@@ -4,10 +4,6 @@
     2.2. search and filter feed details on feeds popup
     2.3. search and filter feed details on feed details page
 3. check all warnings and errors
-4. localization
-    4.1. check all localization
-    4.2. add russian loc
-    4.3. save localization to user account + add context to change loc on the fly
 5. deploy
 
 
