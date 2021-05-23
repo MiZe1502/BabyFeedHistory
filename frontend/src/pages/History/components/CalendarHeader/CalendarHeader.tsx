@@ -5,8 +5,12 @@ import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import ru from "date-fns/locale/ru";
+import en from "date-fns/locale/en";
 
 import css from "./CalendarHeader.scss";
+import {useAuth} from "../../../../common/hooks/useAuth";
+import {capitalizeFirstLetter} from "../../../../common/utils/helpers";
 
 interface CalendarHeaderProps {
     currentDate: Date;
@@ -14,12 +18,21 @@ interface CalendarHeaderProps {
     handlePreviousMonth: () => void;
 }
 
+const loc: Record<string, object> = {
+    "ru": ru,
+    "en": en,
+}
+
 export const CalendarHeader = ({currentDate,
                                    handleNextMonth,
                                    handlePreviousMonth}: CalendarHeaderProps) => {
+    const auth = useAuth();
+
     const dateFormat = "MMMM, YYYY";
 
-    const monthAndYear = dateFns.format(currentDate, dateFormat)
+    const monthAndYear = capitalizeFirstLetter(dateFns.format(currentDate,
+        dateFormat,
+        {locale: loc[auth?.loc || "en"]}));
 
     return <div className={css.Header}>
         <Typography component="h1">

@@ -1,18 +1,26 @@
 import React from "react";
 import dateFns from "date-fns";
-// @ts-ignore
-import { ru } from 'date-fns/locale'
-
+import ru from "date-fns/locale/ru";
+import en from "date-fns/locale/en";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 
 import css from "./CalendarDaysTitle.scss";
+import {useAuth} from "../../../../common/hooks/useAuth";
+import {capitalizeFirstLetter} from "../../../../common/utils/helpers";
 
 interface CalendarDaysTitleProps {
     currentDate: Date;
 }
 
+const loc: Record<string, object> = {
+    "ru": ru,
+    "en": en,
+}
+
 export const CalendarDaysTitle = ({currentDate}: CalendarDaysTitleProps) => {
+    const auth = useAuth();
+
     const dateFormat = "dddd";
     const days = [];
 
@@ -22,8 +30,8 @@ export const CalendarDaysTitle = ({currentDate}: CalendarDaysTitleProps) => {
         days.push(
             <Typography component="h4" key={`title-${i}`} className={css.TitleItem}>
                 <Box className={css.DayTitle}>
-                    {dateFns.format(dateFns.addDays(startDate, i),
-                        dateFormat, {locale: ru})}
+                    {capitalizeFirstLetter(dateFns.format(dateFns.addDays(startDate, i),
+                        dateFormat, {locale: loc[auth?.loc || "en"]}))}
                 </Box>
             </Typography>
         );

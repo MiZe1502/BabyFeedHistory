@@ -4,7 +4,7 @@ export const en = {
     "Login.Title.SignIn": "Authorization",
     "Login.Title.SignUp": "Registration",
     "Login.Validation.Field.Required": "Should not be empty",
-    "Login.Fields.Login": "Email Address",
+    "Login.Fields.Login": "Login",
     "Login.Fields.Password": "Password",
     "Login.Fields.ConfirmPassword": "Confirm password",
     "Login.Fields.OldPassword": "Current password",
@@ -24,6 +24,7 @@ export const en = {
 
     "FeedItem.Card.Edit.Title": "Edit feed item",
     "FeedItem.Card.Edit.Fields.Timestamp": "Time",
+    "FeedItem.Card.Edit.Fields.Timestamp.Placeholder": "hh:mm",
     "FeedItem.Card.Edit.Fields.Timestamp.Required": "Time field should not be empty",
     "FeedItem.Card.Edit.Buttons.Save": "Save",
     "FeedItem.Card.Edit.Buttons.Cancel": "Cancel",

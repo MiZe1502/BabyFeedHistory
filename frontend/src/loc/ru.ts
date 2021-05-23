@@ -4,7 +4,7 @@ export const ru = {
     "Login.Title.SignIn": "Авторизация",
     "Login.Title.SignUp": "Регистрация",
     "Login.Validation.Field.Required": "Поле должно быть заполнено",
-    "Login.Fields.Login": "Email-адрес",
+    "Login.Fields.Login": "Логин",
     "Login.Fields.Password": "Пароль",
     "Login.Fields.ConfirmPassword": "Подтверждение пароля",
     "Login.Fields.OldPassword": "Текущий пароль",
@@ -24,6 +24,7 @@ export const ru = {
 
     "FeedItem.Card.Edit.Title": "Редактировать записи о кормлении",
     "FeedItem.Card.Edit.Fields.Timestamp": "Время",
+    "FeedItem.Card.Edit.Fields.Timestamp.Placeholder": "чч:мм",
     "FeedItem.Card.Edit.Fields.Timestamp.Required": "Поле должно быть заполнено",
     "FeedItem.Card.Edit.Buttons.Save": "Сохранить",
     "FeedItem.Card.Edit.Buttons.Cancel": "Отмена",
