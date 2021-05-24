@@ -6,6 +6,10 @@
   @include MarginTop(4);
 }
 
+.FeedDetailsSearchWrapper {
+  @include FlexVertCenter;
+}
+
 .FeedDetailsList {
   display: flex;
   flex-wrap: wrap;

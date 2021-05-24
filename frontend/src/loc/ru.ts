@@ -18,6 +18,7 @@ export const ru = {
     "Account.Loc.En": "Английский",
 
     "Messages.NoDataFound": "Данные не найдены",
+    "Fields.Search": "Поиск...",
 
     "FeedItem.Card.Buttons.Edit": "Редактировать",
     "FeedItem.Card.Buttons.Remove": "Удалить",

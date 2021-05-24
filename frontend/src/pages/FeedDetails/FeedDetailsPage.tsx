@@ -10,14 +10,16 @@ import { AddNewFeedDetailsItem } from "./AddNewFeedDetailsItem/AddNewFeedDetails
 import {useFeedDetailsPage} from "./useFeedDetailsPage";
 
 import css from "./FeedDetailsPage.scss";
+import {SearchField} from "../../common/components/SearchField/SearchField";
 
 export const FeedDetailsPage = () => {
     const {
         intl,
         loading,
         data,
-        availableFeedDetails,
-        error
+        error,
+        onSearch,
+        currentData,
     } = useFeedDetailsPage();
 
     if (loading) {
@@ -35,10 +37,15 @@ export const FeedDetailsPage = () => {
             </CardContent>
         </Card>
     } else if (data) {
-        component = <div className={css.FeedDetailsList}>
-            {availableFeedDetails?.map((item) => {
+        component = <div className={css.FeedDetailsSearchWrapper}>
+            <SearchField onChange={onSearch}
+                         id='FeedDetailsSearch'
+                         placeholder={intl.formatMessage({id: "Fields.Search"})}/>
+            <div className={css.FeedDetailsList}>
+            {currentData?.map((item) => {
                 return <FeedDetailsItem detailsItem={item} />
             })}
+        </div>
         </div>;
     } else if (!data) {
         component = <Card className={css.FeedDetails}>

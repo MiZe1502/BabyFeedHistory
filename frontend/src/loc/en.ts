@@ -18,6 +18,7 @@ export const en = {
     "Account.Loc.En": "English",
 
     "Messages.NoDataFound": "No data found",
+    "Fields.Search": "Search...",
 
     "FeedItem.Card.Buttons.Edit": "Edit",
     "FeedItem.Card.Buttons.Remove": "Remove",
