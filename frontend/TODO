@@ -1,8 +1,4 @@
 1. logout on token expired
-2. search
-    2.1. common search field
-    2.2. search and filter feed details on feeds popup
-    2.3. search and filter feed details on feed details page
 3. check all warnings and errors
 5. deploy
 
