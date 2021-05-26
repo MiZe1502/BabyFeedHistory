@@ -19,8 +19,8 @@ export const useAvailableFeedDetailsState = () => {
         setAvailableFeedDetails(updatedData);
     }
 
-    const addItems = (items: FeedItemDetails[]) => {
-        const updatedData = [...availableFeedDetails, ...items];
+    const addItems = (items: FeedItemDetails[], replace?: boolean) => {
+        const updatedData = replace ? [...items] : [...availableFeedDetails, ...items];
         setAvailableFeedDetails(updatedData);
     }
 

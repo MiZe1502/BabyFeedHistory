@@ -6,6 +6,15 @@
 }
 
 .FeedDetailsAvailableList {
+  width: 100%;
   max-height: 250px;
   overflow-y: auto;
+}
+
+.ListWithSearch {
+  @include FlexVertCenter;
+}
+
+.SearchFieldWrapper {
+  width: 100%;
 }

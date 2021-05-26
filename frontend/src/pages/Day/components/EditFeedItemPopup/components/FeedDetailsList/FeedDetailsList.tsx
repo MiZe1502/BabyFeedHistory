@@ -13,6 +13,7 @@ import {FeedItemDetails} from "../../../../../../api/feedDetails/queries";
 import {CheckedIndicator} from "../../../../../FeedDetails/CheckedIndicator/CheckedIndicator";
 
 import css from "./FeedDetailsList.scss";
+import {SearchField} from "../../../../../../common/components/SearchField/SearchField";
 
 interface FeedDetailsListProps {
     onAddNewFeedDetails: (item: FeedItemDetails) => void;
@@ -26,7 +27,10 @@ export const FeedDetailsList = ({onAddNewFeedDetails,
         error,
         availableFeedDetails,
         onAddNewFeedDetailsItemClick,
-        isFeedsDetailsListOpened
+        isFeedsDetailsListOpened,
+        onSearch,
+        currentData,
+        intl,
     } = useFeedDetailsList();
 
     if (loading) {
@@ -49,18 +53,24 @@ export const FeedDetailsList = ({onAddNewFeedDetails,
             </IconButton>
         </div>
 
-        {isFeedsDetailsListOpened && availableFeedDetails && <List className={css.FeedDetailsAvailableList}>
-            {availableFeedDetails?.map((item) => (
-                <ListItem button onClick={() => onAddNewFeedDetails(item)} key={item.name}>
-                    {item.type !== "checkedValue" ?
-                        <ListItemText primary={item.name} secondary={`${item.amount} ${item.amountOfWhat}`} /> :
-                        <>
-                            <ListItemText primary={item.name} />
-                            <CheckedIndicator type={item.type} wasGiven={item.wasGiven}/>
-                        </>
-                    }
-                </ListItem>
-            ))}
-        </List>}
+        {isFeedsDetailsListOpened && availableFeedDetails && <div className={css.ListWithSearch}>
+            <SearchField className={css.SearchFieldWrapper}
+                         onChange={onSearch}
+                         id='FeedDetailsSearch'
+                         placeholder={intl.formatMessage({id: "Fields.Search"})}/>
+            <List className={css.FeedDetailsAvailableList}>
+                {currentData?.map((item) => (
+                    <ListItem id={item.key} button onClick={() => onAddNewFeedDetails(item)} key={item.key}>
+                        {item.type !== "checkedValue" ?
+                            <ListItemText primary={item.name} secondary={`${item.amount} ${item.amountOfWhat}`} /> :
+                            <>
+                                <ListItemText primary={item.name} />
+                                <CheckedIndicator type={item.type} wasGiven={item.wasGiven}/>
+                            </>
+                        }
+                    </ListItem>
+                ))}
+            </List>
+        </div>}
     </>
 }

@@ -1,16 +1,21 @@
 import {useAvailableFeedDetailsState} from "../../../../../../state/useAvailableFeedDetailsState";
 import {useLazyQuery} from "@apollo/client";
 import {
+    FeedItemDetails,
     GetAvailableFeedDetailsResp,
     QUERY_GET_AVAILABLE_FEED_DETAILS
 } from "../../../../../../api/feedDetails/queries";
 import {useEffect, useState} from "react";
 import {useAuth} from "../../../../../../common/hooks/useAuth";
+import { useIntl } from "react-intl";
 
 export const useFeedDetailsList = () => {
     const auth = useAuth();
+    const intl = useIntl();
 
     const {availableFeedDetails, addItems} = useAvailableFeedDetailsState();
+
+    const [currentData, setCurrentData] = useState<FeedItemDetails[]>([])
 
     const [getFeedDetails, { loading,
         data,
@@ -24,10 +29,19 @@ export const useFeedDetailsList = () => {
     }, [])
 
     useEffect(() => {
+        setCurrentData(availableFeedDetails);
+    }, [availableFeedDetails])
+
+    useEffect(() => {
         if (data) {
             addItems(data?.getAvailableFeedDetails || []);
         }
     }, [data, loading])
+
+    const onSearch = (value: string) => {
+        const slice = availableFeedDetails.filter((item) => item.name.toLowerCase().includes(value.toLowerCase()));
+        setCurrentData([...slice]);
+    }
 
     const [isFeedsDetailsListOpened, setIsFeedsDetailsListOpened] = useState(false);
 
@@ -40,6 +54,9 @@ export const useFeedDetailsList = () => {
         error,
         availableFeedDetails,
         onAddNewFeedDetailsItemClick,
-        isFeedsDetailsListOpened
+        isFeedsDetailsListOpened,
+        onSearch,
+        currentData,
+        intl,
     }
 }

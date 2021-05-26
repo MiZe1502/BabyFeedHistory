@@ -1,16 +1,18 @@
 import React from "react";
+import {TextFieldWrapped} from "../TextField/TextField";
+import cn from "classnames";
 
 import css from "./SearchField.scss";
-import {TextFieldWrapped} from "../TextField/TextField";
 
 interface SearchFieldProps {
     onChange: (value: string) => void;
     placeholder: string;
     id: string;
+    className?: string;
 }
 
-export const SearchField = ({id, onChange, placeholder}: SearchFieldProps) => {
-    return <div className={css.SearchFieldWrapper}>
+export const SearchField = ({id, onChange, placeholder, className}: SearchFieldProps) => {
+    return <div className={cn(css.SearchFieldWrapper, className)}>
         <TextFieldWrapped
             placeholder={placeholder}
             onChange={(event) => onChange(event.target.value)}

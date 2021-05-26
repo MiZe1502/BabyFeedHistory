@@ -66,7 +66,7 @@ export const EditFeedItemPopup = (props: EditFeedItemPopupProps) => {
                 />
                 {currentFeedItem?.details && <List className={css.FeedItemsList}>
                     {currentFeedItem?.details?.map((item, index) => {
-                        return <ListItem key={item.name}>
+                        return <ListItem id={item.key} key={item.key}>
                             {item.type !== "checkedValue" ?
                                 <ListItemText primary={item.name}
                                               secondary={`${item.amount} ${item.amountOfWhat}`}
