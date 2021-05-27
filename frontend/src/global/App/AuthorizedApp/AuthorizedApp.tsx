@@ -16,6 +16,7 @@ export interface AuthContext {
     removeLoc: () => void;
     logout: () => void;
     logoutIfAuthError: (error?: ApolloError) => void;
+    updateAuthData: (token: string, login: string, loc: Localization) => void;
 }
 
 export const authContext = createContext<AuthContext | undefined>(undefined);

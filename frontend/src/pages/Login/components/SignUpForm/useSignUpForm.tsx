@@ -7,10 +7,6 @@ import {
     MUTATION_REGISTRATION,
     RegistrationResp
 } from "../../../../api/user/mutations";
-import {
-    addDataToLocalStorage, CURRENT_LOC, CURRENT_LOGIN,
-    SESSION_TOKEN
-} from "../../../../utils/localStorage";
 import {routes} from "../../../../utils/routes";
 import {LoginForm} from "../SignInForm/useSignInForm";
 
@@ -42,12 +38,7 @@ export const useSignUpForm = () => {
                 if (!token || !loc) {
                     throw new Error('Unexpected error occurred');
                 }
-                auth?.updateToken(token)
-                auth?.updateLogin(user.login)
-                auth?.updateLoc(loc)
-                addDataToLocalStorage(SESSION_TOKEN, token)
-                addDataToLocalStorage(CURRENT_LOGIN, user.login)
-                addDataToLocalStorage(CURRENT_LOC, loc)
+                auth?.updateAuthData(token, user.login, loc);
             })
             .then(() => history.push(routes.history))
             .catch((err) => {

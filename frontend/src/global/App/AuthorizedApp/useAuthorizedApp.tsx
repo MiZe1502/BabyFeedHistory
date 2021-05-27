@@ -1,5 +1,6 @@
-import {useCallback, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {
+    addDataToLocalStorage,
     CURRENT_LOC,
     CURRENT_LOGIN,
     getDataFromLocalStorageByKey, removeDataFromLocalStorageByKey,
@@ -10,6 +11,7 @@ import {routes} from "../../../utils/routes";
 import { useHistory } from "react-router-dom";
 import {ApolloError} from "@apollo/client";
 import {Localization} from "../../../api/user/queries";
+import { parseToken } from "../../../common/utils/helpers";
 
 export const useAuthorizedApp = (): AuthContext => {
     const [token, setToken] = useState(getDataFromLocalStorageByKey(SESSION_TOKEN));
@@ -47,14 +49,35 @@ export const useAuthorizedApp = (): AuthContext => {
         history?.push(routes.auth);
     }
 
-    const clearData = useCallback(() => {
+    const updateAuthData = (token: string, login: string, loc: Localization) => {
+        updateToken(token);
+        updateLogin(login);
+        updateLoc(loc);
+        addDataToLocalStorage(SESSION_TOKEN, token);
+        addDataToLocalStorage(CURRENT_LOGIN, login);
+        addDataToLocalStorage(CURRENT_LOC, loc);
+
+        startExpirationTimer(token);
+    }
+
+    const startExpirationTimer = (token: string) => {
+        const parsedToken = parseToken(token) as {exp: number};
+        const now = new Date();
+        const exp = new Date(parsedToken.exp * 1000);
+
+        setTimeout(() => {
+            logout();
+        }, exp.getTime() - now.getTime());
+    }
+
+    const clearData = () => {
         removeToken();
         removeLogin();
         removeLoc();
         removeDataFromLocalStorageByKey(SESSION_TOKEN);
         removeDataFromLocalStorageByKey(CURRENT_LOGIN);
         removeDataFromLocalStorageByKey(CURRENT_LOC);
-    }, []);
+    }
 
     useEffect(() => {
         const tokenFromStorage = getDataFromLocalStorageByKey(SESSION_TOKEN)
@@ -63,7 +86,8 @@ export const useAuthorizedApp = (): AuthContext => {
         } else {
             updateToken(tokenFromStorage)
         }
-    }, [clearData])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const logoutIfAuthError = (error?: ApolloError) => {
         if (error && error.message === 'Authentication error') {
@@ -83,5 +107,6 @@ export const useAuthorizedApp = (): AuthContext => {
         removeLoc,
         logout,
         logoutIfAuthError,
+        updateAuthData,
     }
 }
