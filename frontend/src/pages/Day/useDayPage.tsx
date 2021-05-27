@@ -46,26 +46,28 @@ export const useDayPage = (): UseDayPageRet => {
             })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [getFeeds])
+    }, [])
 
     useEffect(() => {
         if (data) {
             addItems(data.feedsForDay || []);
         }
-    }, [data, addItems])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data])
 
     const [filteredData, setFilteredData] = useState<FeedItem[]>([])
 
     useEffect(() => {
         setFilteredData(getItemsForDay(match.params.date))
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [historyData, setFilteredData])
+    }, [historyData])
 
     useEffect(() => {
         if (!loading && !error && filteredData && filteredData.length > 0) {
             setReady(true);
         }
-    }, [filteredData, setReady, error, loading])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filteredData])
 
     return {
         loading,

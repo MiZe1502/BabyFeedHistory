@@ -28,7 +28,6 @@ export const useFeedDetailsItem = ({detailsItem}: FeedDetailsItemProps): UseFeed
     const [isEdit, setIsEdit] = useState(false);
     const [isRemove, setIsRemove] = useState(false);
 
-
     const openEditPopup = () => {
         setIsEdit(true);
     }

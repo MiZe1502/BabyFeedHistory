@@ -37,7 +37,8 @@ export const useFeedDetailsPage = (): UseFeedDetailsPageRet => {
 
     useEffect(() => {
         getFeedDetails();
-    }, [getFeedDetails])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     useEffect(() => {
         setCurrentData(availableFeedDetails);
@@ -47,7 +48,8 @@ export const useFeedDetailsPage = (): UseFeedDetailsPageRet => {
         if (data) {
             addItems(data?.getAvailableFeedDetails || []);
         }
-    }, [data, addItems])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data])
 
     const onSearch = (value: string) => {
         const slice = availableFeedDetails.filter((item) => item.name.toLowerCase().includes(value.toLowerCase()));

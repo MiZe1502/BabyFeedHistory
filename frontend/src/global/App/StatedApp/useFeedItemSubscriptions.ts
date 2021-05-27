@@ -45,17 +45,20 @@ export const useFeedItemSubscriptions = (): void => {
         if (!updatedFeedLoading && updatedFeed) {
             updateItem(updatedFeed?.feedUpdated || {})
         }
-    }, [updatedFeed, updatedFeedLoading, updateItem])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [updatedFeed, updatedFeedLoading])
 
     useEffect(() => {
         if (!removedFeedLoading && removedFeed) {
             removeItemByKey(removedFeed?.feedRemoved?.key)
         }
-    }, [removedFeed, removedFeedLoading, removeItemByKey])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [removedFeed, removedFeedLoading])
 
     useEffect(() => {
         if (!createdFeedLoading && createdFeed) {
             addItem(createdFeed?.feedCreated)
         }
-    }, [createdFeed, createdFeedLoading, addItem])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [createdFeed, createdFeedLoading])
 }

@@ -40,7 +40,8 @@ export const useHistoryPage = (): UseHistoryPageRet => {
         if (!loading && data) {
             setHistoryData(data?.lastMonthFeeds || [])
         }
-    }, [loading, data, setHistoryData])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loading, data])
 
     auth?.logoutIfAuthError(error);
 

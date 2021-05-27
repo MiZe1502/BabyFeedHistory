@@ -40,13 +40,14 @@ export const useAccountPage = (): UseAccountPageRet => {
             }
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [auth?.login]);
+    }, []);
 
     useEffect(() => {
         if (data) {
             updateAccountData(data?.userByLogin)
         }
-    }, [data, updateAccountData])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data])
 
     return {
         intl,
