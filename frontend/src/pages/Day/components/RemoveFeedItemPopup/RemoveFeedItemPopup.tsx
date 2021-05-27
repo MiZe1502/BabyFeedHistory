@@ -16,7 +16,10 @@ interface RemoveFeedItemPopupProps {
     error?: string;
 }
 
-export const RemoveFeedItemPopup = ({error, onClose, onRemove, loading}: RemoveFeedItemPopupProps) => {
+export const RemoveFeedItemPopup = ({error,
+                onClose,
+                onRemove,
+                loading}: RemoveFeedItemPopupProps): React.ReactElement => {
     return <Popup titleId="FeedItem.Card.Remove.Title" onClose={onClose}>
         <>
             <DialogContent>

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import {EditFeedItemPopup} from "../EditFeedItemPopup/EditFeedItemPopup";
@@ -6,7 +6,7 @@ import {useAddNewFeedItem} from "./useAddNewFeedItem";
 
 import css from "./AddNewFeedItem.scss";
 
-export const AddNewFeedItem = () => {
+export const AddNewFeedItem = (): React.ReactElement => {
     const {
         isPopupOpened,
         onClose,

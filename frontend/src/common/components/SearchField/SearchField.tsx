@@ -11,7 +11,7 @@ interface SearchFieldProps {
     className?: string;
 }
 
-export const SearchField = ({id, onChange, placeholder, className}: SearchFieldProps) => {
+export const SearchField = ({id, onChange, placeholder, className}: SearchFieldProps): React.ReactElement => {
     return <div className={cn(css.SearchFieldWrapper, className)}>
         <TextFieldWrapped
             placeholder={placeholder}

@@ -5,6 +5,7 @@ import {historyDataState} from "../../state/useHistoryDataState";
 import {useEffect, useState} from "react";
 import {useQuery} from "@apollo/client";
 import {
+    FeedItem,
     FeedsResp,
     FeedsVariables,
     QUERY_GET_FEEDS
@@ -12,7 +13,16 @@ import {
 import dateFns from "date-fns";
 import {routes} from "../../utils/routes";
 
-export const useHistoryPage = () => {
+interface UseHistoryPageRet {
+    loading: boolean;
+    currentDate: Date;
+    historyData: FeedItem[];
+    handleNextMonth: () => void;
+    handlePreviousMonth: () =>  void;
+    onDayClick: (day: string) => void;
+}
+
+export const useHistoryPage = (): UseHistoryPageRet => {
     const auth = useAuth();
     const history = useHistory();
 
@@ -30,7 +40,7 @@ export const useHistoryPage = () => {
         if (!loading && data) {
             setHistoryData(data?.lastMonthFeeds || [])
         }
-    }, [loading, data])
+    }, [loading, data, setHistoryData])
 
     auth?.logoutIfAuthError(error);
 

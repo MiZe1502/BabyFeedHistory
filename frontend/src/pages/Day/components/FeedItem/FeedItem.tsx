@@ -19,7 +19,7 @@ export interface FeedItemProps {
     key: number;
 }
 
-export const FeedItemComponent = ({item, key}: FeedItemProps) => {
+export const FeedItemComponent = ({item, key}: FeedItemProps): React.ReactElement => {
     const {
         intl,
         error,

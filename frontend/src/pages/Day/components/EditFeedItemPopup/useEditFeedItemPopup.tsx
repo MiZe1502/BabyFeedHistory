@@ -18,7 +18,7 @@ export const parseTimestamp = (ts?: number): string => {
         return '00:00';
     }
     const format = "HH:mm";
-    return dateFns.format(ts!, format);
+    return dateFns.format(ts || 0, format);
 }
 
 interface EditFeedItemForm extends FeedItem {
@@ -29,6 +29,7 @@ interface EditFeedItemResp {
     updateFeed: FeedItem[];
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useEditFeedItemPopup = ({feedItem, onClose, currentDay}: EditFeedItemPopupProps) => {
     const [currentFeedItem, setCurrentFeedItem] = useState<FeedItem | undefined>(feedItem);
     const [isPopupOpened, setIsPopupOpened] = useState(false);

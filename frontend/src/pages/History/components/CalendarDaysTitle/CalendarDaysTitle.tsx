@@ -13,12 +13,12 @@ interface CalendarDaysTitleProps {
     currentDate: Date;
 }
 
-const loc: Record<string, object> = {
+const loc: Record<string, Record<string, string>> = {
     "ru": ru,
     "en": en,
 }
 
-export const CalendarDaysTitle = ({currentDate}: CalendarDaysTitleProps) => {
+export const CalendarDaysTitle = ({currentDate}: CalendarDaysTitleProps): React.ReactElement => {
     const auth = useAuth();
 
     const dateFormat = "dddd";

@@ -12,7 +12,7 @@ import {useFeedDetailsPage} from "./useFeedDetailsPage";
 import css from "./FeedDetailsPage.scss";
 import {SearchField} from "../../common/components/SearchField/SearchField";
 
-export const FeedDetailsPage = () => {
+export const FeedDetailsPage = (): React.ReactElement => {
     const {
         intl,
         loading,

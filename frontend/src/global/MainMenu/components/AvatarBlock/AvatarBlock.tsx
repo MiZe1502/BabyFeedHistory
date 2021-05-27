@@ -10,15 +10,11 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
-import {
-    removeDataFromLocalStorageByKey,
-    SESSION_TOKEN
-} from "../../../../utils/localStorage";
 import { useHistory } from "react-router-dom";
 import {routes} from "../../../../utils/routes";
 import {useAuth} from "../../../../common/hooks/useAuth";
 
-export const AvatarBlock = () => {
+export const AvatarBlock = (): React.ReactElement => {
     const anchorRef = React.useRef(null);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -56,7 +52,7 @@ export const AvatarBlock = () => {
         </IconButton>
         <Popper open={isOpen} anchorEl={anchorRef.current}
                 role={undefined} transition disablePortal>
-            {({ TransitionProps, placement }) => (
+            {({ TransitionProps }) => (
                 <Grow
                     {...TransitionProps}
                     style={{ transformOrigin: 'bottom left' }}

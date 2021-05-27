@@ -7,7 +7,16 @@ export const historyDataState = atom<FeedItem[]>({
     default: [],
 });
 
-export const useHistoryDataState = () => {
+interface UseHistoryDataStateRet {
+    historyData: FeedItem[];
+    removeItemByKey: (key: string) => void;
+    addItem: (item: FeedItem) => void;
+    addItems: (items: FeedItem[]) => void;
+    updateItem: (updatedItem: FeedItem) => void;
+    getItemsForDay: (date: string) => FeedItem[];
+}
+
+export const useHistoryDataState = (): UseHistoryDataStateRet => {
     const [historyData, setHistoryData] = useRecoilState(historyDataState);
 
     const removeItemByKey = (key: string) => {

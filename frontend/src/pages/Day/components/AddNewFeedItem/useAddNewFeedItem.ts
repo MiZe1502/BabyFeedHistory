@@ -1,7 +1,14 @@
 import {useState} from "react";
-import {useRouteMatch} from "react-router-dom";
+import {match, useRouteMatch} from "react-router-dom";
 
-export const useAddNewFeedItem = () => {
+interface UseAddNewFeedItemRet {
+    isPopupOpened: boolean;
+    onClose: () => void;
+    onOpen: () => void;
+    match: match<{date: string}>;
+}
+
+export const useAddNewFeedItem = (): UseAddNewFeedItemRet => {
     const [isPopupOpened, setIsPopupOpened] = useState(false);
     const match = useRouteMatch<{date: string}>();
 

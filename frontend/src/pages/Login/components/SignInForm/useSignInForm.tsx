@@ -15,6 +15,7 @@ export interface LoginForm {
     password: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useSignInForm = () => {
     const auth = useAuth();
     const intl = useIntl();

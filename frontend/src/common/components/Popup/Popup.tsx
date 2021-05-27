@@ -9,7 +9,9 @@ interface PopupProps {
     titleId?: string;
 }
 
-export const Popup = ({titleId, onClose, children}: PopupProps & PropsWithChildren<PopupProps>) => {
+export const Popup = ({titleId,
+                      onClose,
+                      children}: PopupProps & PropsWithChildren<PopupProps>): React.ReactElement => {
     return <Dialog open={true}>
         <div className={css.PopupTitleWrapper}>
             <Header onClose={onClose} titleId={titleId}/>

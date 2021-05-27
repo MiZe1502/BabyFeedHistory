@@ -8,7 +8,7 @@ interface FeedDetailsItemProps {
     feedDetails?: FeedItemDetails[]
 }
 
-export const FeedDetailsItem = ({feedDetails}: FeedDetailsItemProps) => {
+export const FeedDetailsItem = ({feedDetails}: FeedDetailsItemProps): React.ReactElement => {
     return <List component="div">
         {feedDetails?.map((detailsItem) => {
             return <ListItem>

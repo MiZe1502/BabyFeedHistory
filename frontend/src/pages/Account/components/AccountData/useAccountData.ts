@@ -20,6 +20,7 @@ interface AccountForm extends UserAccount {
     confirmPassword?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useAccountData = () => {
     const intl = useIntl();
     const auth = useAuth();
@@ -39,7 +40,7 @@ export const useAccountData = () => {
         })
             .then((res) => {
                 if (!res?.data?.updateUser) {
-                    throw 'Unexpected error'
+                    throw new Error('Unexpected error');
                 }
 
                 auth?.updateToken(res.data.updateUser.token || "")

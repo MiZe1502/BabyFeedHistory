@@ -10,7 +10,7 @@ interface FeedDetailsItemDataProps {
     detailsItem: FeedItemDetails;
 }
 
-export const FeedDetailsItemData = ({detailsItem}: FeedDetailsItemDataProps) => {
+export const FeedDetailsItemData = ({detailsItem}: FeedDetailsItemDataProps): React.ReactElement => {
     return <div className={css.FeedDetailsWrapper}>
         <Typography className={css.DetailsValue} variant="h6" component="div">
             {detailsItem.name}
@@ -19,7 +19,8 @@ export const FeedDetailsItemData = ({detailsItem}: FeedDetailsItemDataProps) => 
             <Divider/>
         </div>
         <div className={css.FeedDetailsItemData}>
-            {detailsItem.type !== "checkedValue" && <Typography className={css.DetailsValue} variant="body1" component="div">
+            {detailsItem.type !== "checkedValue" &&
+            <Typography className={css.DetailsValue} variant="body1" component="div">
                 {`${detailsItem.amount} ${detailsItem.amountOfWhat}`}
             </Typography>}
             <CheckedIndicator type={detailsItem.type} wasGiven={detailsItem.wasGiven}/>

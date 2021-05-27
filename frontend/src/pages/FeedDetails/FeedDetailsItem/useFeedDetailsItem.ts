@@ -1,14 +1,27 @@
-import {useIntl} from "react-intl";
+import {IntlShape, useIntl} from "react-intl";
 import {useAuth} from "../../../common/hooks/useAuth";
 import {useState} from "react";
-import {useMutation} from "@apollo/client";
+import {ApolloError, useMutation} from "@apollo/client";
 import {
     MUTATION_REMOVE_FEED_DETAILS,
     RemoveFeedDetailsResp
 } from "../../../api/feedDetails/mutations";
 import {FeedDetailsItemProps} from "./FeedDetailsItem";
 
-export const useFeedDetailsItem = ({detailsItem}: FeedDetailsItemProps) => {
+interface UseFeedDetailsItemRet {
+    intl: IntlShape;
+    isEdit: boolean;
+    isRemove: boolean;
+    loading: boolean;
+    error?: ApolloError;
+    openEditPopup: () => void;
+    openRemovePopup: () => void;
+    closeEditPopup: () => void;
+    closeRemovePopup: () => void;
+    removeFeedItem: () => void;
+}
+
+export const useFeedDetailsItem = ({detailsItem}: FeedDetailsItemProps): UseFeedDetailsItemRet => {
     const intl = useIntl();
     const auth = useAuth();
 

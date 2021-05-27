@@ -26,7 +26,7 @@ export interface EditFeedDetailsPopupProps {
     onClose?: () => void;
 }
 
-export const EditFeedDetailsPopup = (props: EditFeedDetailsPopupProps) => {
+export const EditFeedDetailsPopup = (props: EditFeedDetailsPopupProps): React.ReactElement => {
     const {currentFeedDetails,
         setCurrentFeedDetails,
         register,
@@ -71,7 +71,7 @@ export const EditFeedDetailsPopup = (props: EditFeedDetailsPopupProps) => {
                             control={control}
                             defaultValue="valueWithAmount"
                             name="type"
-                            render={({ name, onBlur, onChange, value }) => (
+                            render={() => (
                                 <RadioGroup
                                     value={currentFeedDetails?.type}
                                     onChange={(e) => {

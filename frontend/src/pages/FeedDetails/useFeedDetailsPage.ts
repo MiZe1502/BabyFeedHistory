@@ -1,7 +1,7 @@
 import {useAuth} from "../../common/hooks/useAuth";
-import {useIntl} from "react-intl";
+import {IntlShape, useIntl} from "react-intl";
 import {useAvailableFeedDetailsState} from "../../state/useAvailableFeedDetailsState";
-import {useLazyQuery} from "@apollo/client";
+import {ApolloError, useLazyQuery} from "@apollo/client";
 import {
     FeedItemDetails,
     GetAvailableFeedDetailsResp,
@@ -9,7 +9,17 @@ import {
 } from "../../api/feedDetails/queries";
 import {useEffect, useState} from "react";
 
-export const useFeedDetailsPage = () => {
+interface UseFeedDetailsPageRet {
+    intl: IntlShape;
+    loading: boolean;
+    data?: GetAvailableFeedDetailsResp;
+    availableFeedDetails: FeedItemDetails[];
+    error?: ApolloError;
+    onSearch: (value: string) => void;
+    currentData: FeedItemDetails[];
+}
+
+export const useFeedDetailsPage = (): UseFeedDetailsPageRet => {
     const auth = useAuth();
     const intl = useIntl();
 
@@ -17,13 +27,17 @@ export const useFeedDetailsPage = () => {
 
     const [currentData, setCurrentData] = useState<FeedItemDetails[]>([])
 
-    const [getFeedDetails, {loading, data, error}] = useLazyQuery<GetAvailableFeedDetailsResp>(QUERY_GET_AVAILABLE_FEED_DETAILS)
+    const [getFeedDetails, {
+        loading,
+        data,
+        error
+    }] = useLazyQuery<GetAvailableFeedDetailsResp>(QUERY_GET_AVAILABLE_FEED_DETAILS)
 
     auth?.logoutIfAuthError(error);
 
     useEffect(() => {
         getFeedDetails();
-    }, [])
+    }, [getFeedDetails])
 
     useEffect(() => {
         setCurrentData(availableFeedDetails);
@@ -33,7 +47,7 @@ export const useFeedDetailsPage = () => {
         if (data) {
             addItems(data?.getAvailableFeedDetails || []);
         }
-    }, [data])
+    }, [data, addItems])
 
     const onSearch = (value: string) => {
         const slice = availableFeedDetails.filter((item) => item.name.toLowerCase().includes(value.toLowerCase()));

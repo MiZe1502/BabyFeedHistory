@@ -6,7 +6,15 @@ export const availableFeedDetailsState = atom<FeedItemDetails[]>({
     default: [],
 });
 
-export const useAvailableFeedDetailsState = () => {
+interface UseAvailableFeedDetailsStateRet {
+    availableFeedDetails: FeedItemDetails[];
+    removeItemByKey: (key: string) => void;
+    addItem: (item: FeedItemDetails) => void;
+    addItems: (items: FeedItemDetails[], replace?: boolean) => void;
+    updateItem: (updatedItem: FeedItemDetails) => void;
+}
+
+export const useAvailableFeedDetailsState = (): UseAvailableFeedDetailsStateRet => {
     const [availableFeedDetails, setAvailableFeedDetails] = useRecoilState(availableFeedDetailsState);
 
     const removeItemByKey = (key: string) => {

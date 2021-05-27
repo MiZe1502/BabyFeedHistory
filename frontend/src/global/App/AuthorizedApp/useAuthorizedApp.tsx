@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {
     CURRENT_LOC,
     CURRENT_LOGIN,
@@ -47,14 +47,14 @@ export const useAuthorizedApp = (): AuthContext => {
         history?.push(routes.auth);
     }
 
-    const clearData = () => {
+    const clearData = useCallback(() => {
         removeToken();
         removeLogin();
         removeLoc();
         removeDataFromLocalStorageByKey(SESSION_TOKEN);
         removeDataFromLocalStorageByKey(CURRENT_LOGIN);
         removeDataFromLocalStorageByKey(CURRENT_LOC);
-    }
+    }, []);
 
     useEffect(() => {
         const tokenFromStorage = getDataFromLocalStorageByKey(SESSION_TOKEN)
@@ -63,7 +63,7 @@ export const useAuthorizedApp = (): AuthContext => {
         } else {
             updateToken(tokenFromStorage)
         }
-    }, [])
+    }, [clearData])
 
     const logoutIfAuthError = (error?: ApolloError) => {
         if (error && error.message === 'Authentication error') {

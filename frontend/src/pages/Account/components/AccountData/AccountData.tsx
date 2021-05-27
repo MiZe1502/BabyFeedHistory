@@ -18,7 +18,7 @@ interface AccountDataProps {
     accountData: UserAccount;
 }
 
-export const AccountData = ({accountData}: AccountDataProps) => {
+export const AccountData = ({accountData}: AccountDataProps): React.ReactElement => {
     const {
         intl,
         register,

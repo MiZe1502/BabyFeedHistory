@@ -9,7 +9,7 @@ interface FeedDetailsSimpleItemProps {
     detailsItem: FeedItemDetails;
 }
 
-export const FeedDetailsSimpleItem = ({detailsItem}: FeedDetailsSimpleItemProps) => {
+export const FeedDetailsSimpleItem = ({detailsItem}: FeedDetailsSimpleItemProps): React.ReactElement => {
     return <div className={css.DetailsItem}>
         <Typography className={css.DetailsValue} variant="body1" component="div">
             {detailsItem.name}

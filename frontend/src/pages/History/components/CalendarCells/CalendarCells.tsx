@@ -17,7 +17,7 @@ interface CalendarCellsProps {
 }
 
 export const CalendarCells =
-    ({currentDate, data, onDayClick}: CalendarCellsProps) => {
+    ({currentDate, data, onDayClick}: CalendarCellsProps): React.ReactElement => {
     const monthStart = dateFns.startOfMonth(currentDate);
     const monthEnd = dateFns.endOfMonth(monthStart);
     const startDate = dateFns.startOfWeek(monthStart, {weekStartsOn: 1});

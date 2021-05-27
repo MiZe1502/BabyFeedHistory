@@ -18,14 +18,14 @@ interface CalendarHeaderProps {
     handlePreviousMonth: () => void;
 }
 
-const loc: Record<string, object> = {
+const loc: Record<string, Record<string, string>> = {
     "ru": ru,
     "en": en,
 }
 
 export const CalendarHeader = ({currentDate,
                                    handleNextMonth,
-                                   handlePreviousMonth}: CalendarHeaderProps) => {
+                                   handlePreviousMonth}: CalendarHeaderProps): React.ReactElement => {
     const auth = useAuth();
 
     const dateFormat = "MMMM, YYYY";

@@ -21,6 +21,7 @@ interface RegistrationForm extends LoginForm {
 
 export const MaxNameLength = 256;
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useSignUpForm = () => {
     const auth = useAuth();
     const intl = useIntl();

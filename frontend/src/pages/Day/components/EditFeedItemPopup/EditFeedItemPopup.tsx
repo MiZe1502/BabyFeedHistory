@@ -25,7 +25,7 @@ export interface EditFeedItemPopupProps {
     currentDay?: string;
 }
 
-export const EditFeedItemPopup = (props: EditFeedItemPopupProps) => {
+export const EditFeedItemPopup = (props: EditFeedItemPopupProps): React.ReactElement => {
     const {
         currentFeedItem,
         updateLoading,

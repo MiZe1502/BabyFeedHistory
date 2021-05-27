@@ -1,6 +1,12 @@
 import {useState} from "react";
 
-export const useAddNewFeedDetailsItem = () => {
+interface UseAddNewFeedDetailsItemRet {
+    isPopupOpened: boolean;
+    onClose: () => void;
+    onOpen: () => void;
+}
+
+export const useAddNewFeedDetailsItem = (): UseAddNewFeedDetailsItemRet => {
     const [isPopupOpened, setIsPopupOpened] = useState(false);
 
     const onClose = () => {

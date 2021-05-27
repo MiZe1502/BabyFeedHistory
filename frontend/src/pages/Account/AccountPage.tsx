@@ -9,7 +9,7 @@ import {AccountData} from "./components/AccountData/AccountData";
 
 import css from "./AccountPage.scss";
 
-export const AccountPage = () => {
+export const AccountPage = (): React.ReactElement => {
     const {
         intl,
         loading,

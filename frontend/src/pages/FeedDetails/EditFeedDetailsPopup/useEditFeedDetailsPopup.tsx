@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {EditFeedDetailsPopupProps} from "./EditFeedDetailsPopup";
 import {useIntl} from "react-intl";
 import {useForm} from "react-hook-form";
@@ -12,8 +12,9 @@ import {
 import { FeedItemDetails } from "../../../api/feedDetails/queries";
 import {useAuth} from "../../../common/hooks/useAuth";
 
-interface FeedItemDetailsForm extends FeedItemDetails {}
+type FeedItemDetailsForm = FeedItemDetails
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useEditFeedDetailsPopup = ({feedDetails, onClose}: EditFeedDetailsPopupProps) => {
     const auth = useAuth();
 
@@ -69,7 +70,7 @@ export const useEditFeedDetailsPopup = ({feedDetails, onClose}: EditFeedDetailsP
         createMethod({variables: {
                 feedDetails: data,
             }})
-            .then((res) => {
+            .then(() => {
                 onCancel();
             })
             .catch((err) => {
@@ -81,7 +82,7 @@ export const useEditFeedDetailsPopup = ({feedDetails, onClose}: EditFeedDetailsP
         updateMethod({variables: {
                 feedDetails: data,
             }})
-            .then((res) => {
+            .then(() => {
                 onCancel();
             })
             .catch((err) => {

@@ -10,7 +10,7 @@ import {
 import {useEffect} from "react";
 import {useAuth} from "../../../common/hooks/useAuth";
 
-export const useFeedDetailsSubscriptions = () => {
+export const useFeedDetailsSubscriptions = (): void => {
     const auth = useAuth();
 
     const {addItem,
@@ -46,17 +46,17 @@ export const useFeedDetailsSubscriptions = () => {
         if (!updatedFeedDetailsLoading && updatedFeedDetails) {
             updateItem(updatedFeedDetails?.feedDetailsUpdated || {});
         }
-    }, [updatedFeedDetails, updatedFeedDetailsLoading])
+    }, [updatedFeedDetails, updatedFeedDetailsLoading, updateItem])
 
     useEffect(() => {
         if (!createdFeedDetailsLoading && createdFeedDetails) {
             addItem(createdFeedDetails?.feedDetailsCreated)
         }
-    }, [createdFeedDetails, createdFeedDetailsLoading])
+    }, [createdFeedDetails, createdFeedDetailsLoading, addItem])
 
     useEffect(() => {
         if (!removedFeedDetailsLoading && removedFeedDetails) {
             removeItemByKey(removedFeedDetails?.feedDetailsRemoved?.key as string)
         }
-    }, [removedFeedDetails, removedFeedDetailsLoading])
+    }, [removedFeedDetails, removedFeedDetailsLoading, removeItemByKey])
 }

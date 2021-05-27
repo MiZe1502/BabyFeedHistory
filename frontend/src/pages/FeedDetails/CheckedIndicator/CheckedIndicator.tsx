@@ -7,7 +7,7 @@ interface CheckedIndicatorProps {
     wasGiven?: boolean;
 }
 
-export const CheckedIndicator = ({type, wasGiven}: CheckedIndicatorProps) => {
+export const CheckedIndicator = ({type, wasGiven}: CheckedIndicatorProps): React.ReactElement | null => {
     if (type === "checkedValue") {
         if (wasGiven) {
             return <CheckBoxIcon />

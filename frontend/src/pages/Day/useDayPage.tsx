@@ -1,7 +1,7 @@
 import {useRouteMatch} from "react-router-dom";
-import {useIntl} from "react-intl";
+import {IntlShape, useIntl} from "react-intl";
 import {useHistoryDataState} from "../../state/useHistoryDataState";
-import {useLazyQuery} from "@apollo/client";
+import {ApolloError, useLazyQuery} from "@apollo/client";
 import {useEffect, useState} from "react";
 import dateFns from "date-fns";
 import {
@@ -10,7 +10,15 @@ import {
 } from "../../api/feedItems/queries";
 import {useAuth} from "../../common/hooks/useAuth";
 
-export const useDayPage = () => {
+interface UseDayPageRet {
+    loading: boolean;
+    error?: ApolloError;
+    filteredData: FeedItem[];
+    intl: IntlShape;
+    ready: boolean;
+}
+
+export const useDayPage = (): UseDayPageRet => {
     const auth = useAuth();
     const match = useRouteMatch<{date: string}>();
     const intl = useIntl();
@@ -37,25 +45,27 @@ export const useDayPage = () => {
                 }
             })
         }
-    }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [getFeeds])
 
     useEffect(() => {
         if (data) {
             addItems(data.feedsForDay || []);
         }
-    }, [data])
+    }, [data, addItems])
 
     const [filteredData, setFilteredData] = useState<FeedItem[]>([])
 
     useEffect(() => {
         setFilteredData(getItemsForDay(match.params.date))
-    }, [historyData])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [historyData, setFilteredData])
 
     useEffect(() => {
         if (!loading && !error && filteredData && filteredData.length > 0) {
             setReady(true);
         }
-    }, [filteredData])
+    }, [filteredData, setReady, error, loading])
 
     return {
         loading,
