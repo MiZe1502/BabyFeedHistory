@@ -48,7 +48,7 @@ module.exports = {
     mode: dev ? "development" : "production",
     //devtool: dev? 'source-map': 'hidden-source-map',
     entry: {
-        app: path.join(__dirname, 'src', 'index.tsx')
+        app: path.join(__dirname, 'src', 'index.tsx'),
     },
     output: {
         path: outputDir,
