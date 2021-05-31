@@ -20,7 +20,8 @@ Just to learn new libraries and technologies.
 - Remove dist and config directories from .gitignore
 - Build release by npm `npm run build_prod`
 - Commit config and dist directories
-- git push heroku main
+- Merge into heroku/main
+- git push heroku HEAD:main
     - in case src refspec master does not match any - git remote -v
     - and add heroku repository as remote heroku git:remote -a <app-name>
     - push again
