@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Client for app to store baby feeding history",
   "scripts": {
+    "start": "node server.js",
     "start:dev": "cross-env NODE_ENV=development webpack serve",
     "start:prod": "cross-env NODE_ENV=production webpack serve",
     "build:dev": "cross-env NODE_ENV=development webpack",
