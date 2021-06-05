@@ -1,7 +1,6 @@
 - Fix errors on backend build
 - Pass backend api (and wss) to fe on build from env
 - Main menu - select current tab
-- Redirect from /* route to history or auth
 - Suggestion on fields in edit popups
 - Custom scroll
 - Preserve last localization to local storage (for correct auth popup)

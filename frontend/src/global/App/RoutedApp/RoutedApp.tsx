@@ -1,6 +1,6 @@
 import React from 'react';
 import {LoginPage} from "../../../pages/Login/LoginPage";
-import {Route, Switch, BrowserRouter} from 'react-router-dom';
+import {Route, Switch, BrowserRouter, Redirect} from 'react-router-dom';
 import {routes} from "../../../utils/routes";
 import {PrivateRoute} from "../../PrivateRoute/PrivateRoute";
 import {HistoryPage} from "../../../pages/History/HistoryPage";
@@ -31,6 +31,7 @@ export const RoutedApp = (): React.ReactElement => {
             <PrivateRoute path={routes.account}>
                 <AccountPage />
             </PrivateRoute>
+            <Redirect from="*" to={routes.history} />
         </Switch>
     </BrowserRouter>
 }
