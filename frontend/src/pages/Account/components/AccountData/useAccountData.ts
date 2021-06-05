@@ -7,7 +7,7 @@ import {
     UpdateUserResp
 } from "../../../../api/user/mutations";
 import {
-    addDataToLocalStorage, CURRENT_LOGIN,
+    addDataToLocalStorage, CURRENT_LOC, CURRENT_LOGIN,
     SESSION_TOKEN
 } from "../../../../utils/localStorage";
 import React, {useState} from "react";
@@ -45,9 +45,11 @@ export const useAccountData = () => {
 
                 auth?.updateToken(res.data.updateUser.token || "")
                 auth?.updateLogin(res.data.updateUser.login)
-                addDataToLocalStorage(SESSION_TOKEN,
-                    res.data.updateUser.token || "")
+                auth?.updateLoc(res.data.updateUser.loc)
+
+                addDataToLocalStorage(SESSION_TOKEN, res.data.updateUser.token || "")
                 addDataToLocalStorage(CURRENT_LOGIN, res.data.updateUser.login)
+                addDataToLocalStorage(CURRENT_LOC, res.data.updateUser.loc);
             })
             .catch((err) => {
                 console.log(err)

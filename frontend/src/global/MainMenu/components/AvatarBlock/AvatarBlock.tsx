@@ -13,8 +13,10 @@ import IconButton from "@material-ui/core/IconButton";
 import { useHistory } from "react-router-dom";
 import {routes} from "../../../../utils/routes";
 import {useAuth} from "../../../../common/hooks/useAuth";
+import {useIntl} from "react-intl";
 
 export const AvatarBlock = (): React.ReactElement => {
+    const intl = useIntl();
     const anchorRef = React.useRef(null);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -61,8 +63,12 @@ export const AvatarBlock = (): React.ReactElement => {
                         <ClickAwayListener onClickAway={handleClose}>
                             <MenuList className={css.Menu}
                                       autoFocusItem={isOpen} id="menu-list-grow">
-                                <MenuItem onClick={goToAccountPage}>Profile</MenuItem>
-                                <MenuItem onClick={logout}>Logout</MenuItem>
+                                <MenuItem onClick={goToAccountPage}>
+                                    {intl.formatMessage({id: "Menu.User.Profile"})}
+                                </MenuItem>
+                                <MenuItem onClick={logout}>
+                                    {intl.formatMessage({id: "Menu.User.Logout"})}
+                                </MenuItem>
                             </MenuList>
                         </ClickAwayListener>
                     </Paper>

@@ -1,6 +1,8 @@
 export const en = {
     "Menu.Tabs.History": "History",
     "Menu.Tabs.FeedDetails": "Feed details",
+    "Menu.User.Profile": "Profile",
+    "Menu.User.Logout": "Logout",
     "Login.Title.SignIn": "Authorization",
     "Login.Title.SignUp": "Registration",
     "Login.Validation.Field.Required": "Should not be empty",

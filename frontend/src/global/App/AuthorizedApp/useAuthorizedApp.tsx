@@ -44,7 +44,6 @@ export const useAuthorizedApp = (): AuthContext => {
     }
 
     const logout = () => {
-        removeDataFromLocalStorageByKey(SESSION_TOKEN);
         clearData();
         history?.push(routes.auth);
     }
@@ -76,7 +75,7 @@ export const useAuthorizedApp = (): AuthContext => {
         removeLoc();
         removeDataFromLocalStorageByKey(SESSION_TOKEN);
         removeDataFromLocalStorageByKey(CURRENT_LOGIN);
-        removeDataFromLocalStorageByKey(CURRENT_LOC);
+        // removeDataFromLocalStorageByKey(CURRENT_LOC);
     }
 
     useEffect(() => {

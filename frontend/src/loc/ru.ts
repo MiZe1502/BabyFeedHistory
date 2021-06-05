@@ -1,6 +1,8 @@
 export const ru = {
     "Menu.Tabs.History": "История",
     "Menu.Tabs.FeedDetails": "Элементы кормления",
+    "Menu.User.Profile": "Профиль",
+    "Menu.User.Logout": "Выход",
     "Login.Title.SignIn": "Авторизация",
     "Login.Title.SignUp": "Регистрация",
     "Login.Validation.Field.Required": "Поле должно быть заполнено",
