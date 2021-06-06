@@ -7,3 +7,12 @@
 
   justify-content: space-between;
 }
+
+.ScrollPreserver {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 64px;
+  width: 10px;
+  background-color: #3f51b5;
+}

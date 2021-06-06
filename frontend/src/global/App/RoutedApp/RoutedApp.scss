@@ -1,0 +1,7 @@
+@import "../../../common/styles/positioning";
+
+.Content {
+  overflow: scroll;
+  height: calc(100vh - 44px);
+  @include Scroll;
+}

@@ -9,29 +9,32 @@ import {MainMenu} from "../../MainMenu/MainMenu";
 import {useAuth} from "../../../common/hooks/useAuth";
 import {DayPage} from "../../../pages/Day/DayPage";
 import {AccountPage} from "../../../pages/Account/AccountPage";
+import css from "./RoutedApp.scss";
 
 export const RoutedApp = (): React.ReactElement => {
     const auth = useAuth();
 
     return <BrowserRouter>
         {auth?.token && <MainMenu />}
-        <Switch>
-            <Route path={routes.auth}>
-                <LoginPage />
-            </Route>
-            <PrivateRoute path={routes.dayInHistory}>
-                <DayPage />
-            </PrivateRoute>
-            <PrivateRoute path={routes.history}>
-                <HistoryPage />
-            </PrivateRoute>
-            <PrivateRoute path={routes.feedDetails}>
-                <FeedDetailsPage />
-            </PrivateRoute>
-            <PrivateRoute path={routes.account}>
-                <AccountPage />
-            </PrivateRoute>
-            <Redirect from="*" to={routes.history} />
-        </Switch>
+        <div className={css.Content}>
+            <Switch>
+                <Route path={routes.auth}>
+                    <LoginPage />
+                </Route>
+                <PrivateRoute path={routes.dayInHistory}>
+                    <DayPage />
+                </PrivateRoute>
+                <PrivateRoute path={routes.history}>
+                    <HistoryPage />
+                </PrivateRoute>
+                <PrivateRoute path={routes.feedDetails}>
+                    <FeedDetailsPage />
+                </PrivateRoute>
+                <PrivateRoute path={routes.account}>
+                    <AccountPage />
+                </PrivateRoute>
+                <Redirect from="*" to={routes.history} />
+            </Switch>
+        </div>
     </BrowserRouter>
 }

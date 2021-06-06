@@ -34,6 +34,7 @@ export const MainMenu = (): React.ReactElement => {
     }
 
     return <AppBar position="static">
+        <div className={css.ScrollPreserver}/>
         <div className={css.MenuInnerWrapper}>
             <Tabs
                 variant="fullWidth"
