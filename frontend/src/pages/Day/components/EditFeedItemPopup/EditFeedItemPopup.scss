@@ -1,6 +1,8 @@
 @import "../../../../common/styles/positioning";
 
 .FeedItemsList {
-  max-height: 350px;
+  max-height: 300px;
   overflow-y: auto;
+
+  @include Scroll;
 }

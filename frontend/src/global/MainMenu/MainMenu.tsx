@@ -5,9 +5,9 @@ import {MenuTab} from "./components/MenuTab/MenuTab";
 import {routes} from "../../utils/routes";
 import {AvatarBlock} from "./components/AvatarBlock/AvatarBlock";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router-dom";
 
 import css from "./MainMenu.scss";
-import { useLocation } from "react-router-dom";
 
 
 export const MainMenu = (): React.ReactElement => {
@@ -19,7 +19,9 @@ export const MainMenu = (): React.ReactElement => {
     const tabs = [routes.history, routes.feedDetails];
 
     useEffect(() => {
-        const currentRouteIndex = tabs.findIndex((tab) => tab === location.pathname);
+        const index = location.pathname.lastIndexOf('/');
+        const loc = index > 0 ? location.pathname.substring(0, index) : location.pathname;
+        const currentRouteIndex = tabs.findIndex((tab) => tab === loc);
         setValue(currentRouteIndex);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location])
