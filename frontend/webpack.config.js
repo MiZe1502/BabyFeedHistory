@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -13,7 +14,19 @@ console.log(`prod: ${prod}`)
 
 const outputDir = path.resolve(__dirname, 'dist');
 
+const apiUrl = prod ?
+        'https://baby-feed-history-be.herokuapp.com/graphql' :
+        'http://localhost:3000/graphql'
+
+const apiWs = prod ?
+    'wss://baby-feed-history-be.herokuapp.com/subscriptions' :
+    'ws://localhost:3000/subscriptions'
+
 const commonPlugins = [
+    new webpack.DefinePlugin({
+        'process.env.API_URL': JSON.stringify(apiUrl),
+        'process.env.API_WS': JSON.stringify(apiWs),
+    }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
         template: path.join(__dirname, 'src', 'index.html'),
