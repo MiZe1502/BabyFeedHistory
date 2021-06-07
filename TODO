@@ -1,4 +1,3 @@
 - Fix errors on backend build
-- Pass backend api (and wss) to fe on build from env
 - Suggestion on fields in edit popups
 - (bug) Load old data for user account page after changing and logout-login
