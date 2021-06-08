@@ -50,6 +50,7 @@ export const EditFeedItemPopup = (props: EditFeedItemPopupProps): React.ReactEle
         <form onSubmit={handleSubmit(onSubmit)}>
             <DialogContent>
                 <TextFieldWrapped
+                    mask="99:99"
                     inputRef={register({
                         required: intl.formatMessage({
                             id: "FeedItem.Card.Edit.Fields.Timestamp.Required"}),
