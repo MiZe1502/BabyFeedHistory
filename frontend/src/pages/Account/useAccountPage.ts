@@ -29,7 +29,10 @@ export const useAccountPage = (): UseAccountPageRet => {
         data,
         error
     }] = useLazyQuery<GetUserAccountDataResp,
-        GetUserAccountDataVariables>(QUERY_GET_CURRENT_ACCOUNT_DATA)
+        GetUserAccountDataVariables>(QUERY_GET_CURRENT_ACCOUNT_DATA,
+        {
+            fetchPolicy: "no-cache"
+        })
 
     auth?.logoutIfAuthError(error);
 

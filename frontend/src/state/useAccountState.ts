@@ -9,21 +9,25 @@ export const currentAccountState = atom<UserAccount | null>({
 interface UseAccountStateRet {
     currentAccount: UserAccount | null;
     updateAccountData: (newData: UserAccount) => void;
+    clearAccountData: () => void;
 }
 
 export const useAccountState = (): UseAccountStateRet => {
     const [currentAccount, setCurrentAccount] = useRecoilState(currentAccountState)
 
     const updateAccountData = (newData: UserAccount) => {
-        const oldData = currentAccount ? currentAccount : {};
         setCurrentAccount({
-            ...oldData,
             ...newData,
         })
+    }
+
+    const clearAccountData = () => {
+        setCurrentAccount(null);
     }
 
     return {
         currentAccount,
         updateAccountData,
+        clearAccountData,
     }
 }

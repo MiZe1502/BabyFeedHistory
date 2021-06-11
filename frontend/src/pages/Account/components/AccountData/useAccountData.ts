@@ -6,12 +6,9 @@ import {
     MUTATION_UPDATE_USER_DATA,
     UpdateUserResp
 } from "../../../../api/user/mutations";
-import {
-    addDataToLocalStorage, CURRENT_LOC, CURRENT_LOGIN,
-    SESSION_TOKEN
-} from "../../../../utils/localStorage";
 import React, {useState} from "react";
 import {UserAccount} from "../../../../api/user/queries";
+import {useAccountState} from "../../../../state/useAccountState";
 
 interface AccountForm extends UserAccount {
     password?: string;
@@ -29,6 +26,10 @@ export const useAccountData = () => {
         errors,
     }, getValues} = useForm<AccountForm>({})
 
+    const {
+        clearAccountData
+    } = useAccountState();
+
     const [updateUser, { error, loading }] = useMutation<UpdateUserResp>(MUTATION_UPDATE_USER_DATA);
 
     const onSubmit = (user: AccountForm) => {
@@ -38,22 +39,18 @@ export const useAccountData = () => {
                     oldLogin: auth?.login
                 } }
         })
-            .then((res) => {
-                if (!res?.data?.updateUser) {
-                    throw new Error('Unexpected error');
-                }
+        .then((res) => {
+            if (!res?.data?.updateUser) {
+                throw new Error('Unexpected error');
+            }
 
-                auth?.updateToken(res.data.updateUser.token || "")
-                auth?.updateLogin(res.data.updateUser.login)
-                auth?.updateLoc(res.data.updateUser.loc)
-
-                addDataToLocalStorage(SESSION_TOKEN, res.data.updateUser.token || "")
-                addDataToLocalStorage(CURRENT_LOGIN, res.data.updateUser.login)
-                addDataToLocalStorage(CURRENT_LOC, res.data.updateUser.loc);
-            })
-            .catch((err) => {
-                console.log(err)
-            });
+            clearAccountData();
+            auth?.updateLoc(res?.data?.updateUser.loc);
+            auth?.logout();
+        })
+        .catch((err) => {
+            console.log(err)
+        });
     }
 
     const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {

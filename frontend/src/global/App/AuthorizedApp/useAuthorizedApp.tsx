@@ -72,10 +72,9 @@ export const useAuthorizedApp = (): AuthContext => {
     const clearData = () => {
         removeToken();
         removeLogin();
-        removeLoc();
+        // removeLoc();
         removeDataFromLocalStorageByKey(SESSION_TOKEN);
         removeDataFromLocalStorageByKey(CURRENT_LOGIN);
-        // removeDataFromLocalStorageByKey(CURRENT_LOC);
     }
 
     useEffect(() => {
